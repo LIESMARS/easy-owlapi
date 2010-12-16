@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<db:DBOntology db:name="http://test.com/ontology" xmlns:db="http://kaon2.semanticweb.org/db#">
+
+<db:Database db:connectionString="jdbc:mysql://localhost/test" db:userName="root" db:password="root" db:driverClassName="com.mysql.jdbc.Driver"/>
+
+<db:OWLClass db:name="http://test.com/ontology#Person">
+    <db:Table db:tableName="persons">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p" db:primaryKey="true"/>
+    </db:Table>
+</db:OWLClass>
+
+<db:ObjectProperty db:name="http://test.com/ontology#personHasParent">
+    <db:Table db:tableName="parents">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p"/>
+        <db:IndividualInteger db:fieldName="parentID" db:uriPrefix="http://test.com/ontology#p"/>
+    </db:Table>
+</db:ObjectProperty>
+
+<db:DatatypeProperty db:name="http://test.com/ontology#personHasName">
+    <db:Table db:tableName="persons">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p" db:primaryKey="true"/>
+        <db:String db:fieldName="name"/>
+    </db:Table>
+</db:DatatypeProperty>
+
+<db:DatatypeProperty db:name="http://test.com/ontology#personHasStreet">
+    <db:Table db:tableName="persons">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p" db:primaryKey="true"/>
+        <db:String db:fieldName="street"/>
+    </db:Table>
+</db:DatatypeProperty>
+
+<db:DatatypeProperty db:name="http://test.com/ontology#personHasZIP">
+    <db:Table db:tableName="persons">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p" db:primaryKey="true"/>
+        <db:Integer db:fieldName="zip"/>
+    </db:Table>
+</db:DatatypeProperty>
+
+<db:PredicateSymbol db:name="http://test.com/ontology#PersonData">
+    <db:Table db:tableName="persons">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p" db:primaryKey="true"/>
+        <db:String db:fieldName="name"/>
+        <db:String db:fieldName="street"/>
+        <db:Integer db:fieldName="zip"/>
+    </db:Table>
+</db:PredicateSymbol>
+
+<db:SameIndividual>
+    <db:Table db:tableName="equals">
+        <db:IndividualInteger db:fieldName="object1" db:uriPrefix="http://test.com/ontology#p"/>
+        <db:IndividualInteger db:fieldName="object2" db:uriPrefix="http://test.com/ontology#p"/>
+    </db:Table>
+</db:SameIndividual>
+
+<db:DifferentIndividuals>
+    <db:Table db:tableName="notequals">
+        <db:IndividualInteger db:fieldName="object1" db:uriPrefix="http://test.com/ontology#p"/>
+        <db:IndividualInteger db:fieldName="object2" db:uriPrefix="http://test.com/ontology#p"/>
+    </db:Table>
+</db:DifferentIndividuals>
+
+<db:HerbrandUniverse>
+    <db:Table db:tableName="hu">
+        <db:IndividualInteger db:fieldName="objectID" db:uriPrefix="http://test.com/ontology#p"/>
+    </db:Table>
+</db:HerbrandUniverse>
+
+<db:AnnotationProperty db:name="http://www.w3.org/2000/01/rdf-schema#label">
+    <db:Table db:tableName="labels">
+        <db:IndividualInteger db:fieldName="personID" db:uriPrefix="http://test.com/ontology#p" db:primaryKey="true"/>
+        <db:String db:fieldName="label"/>
+    </db:Table>
+</db:AnnotationProperty>
+
+</db:DBOntology>

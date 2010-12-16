@@ -1,0 +1,8 @@
+arq
+arq.cmd
+arq.cmdline
+arq.cmdline.test
+com.hp.hpl.jena.query
+com.hp.hpl.jena.query.larq
+com.hp.hpl.jena.sparql
+com.hp.hpl.jena.update

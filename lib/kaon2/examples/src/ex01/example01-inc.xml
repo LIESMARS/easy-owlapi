@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<owlx:Ontology owlx:name="http://kaon2.semanticweb.org/example01-inc"
+    xml:base="http://kaon2.semanticweb.org/example01-inc"
+    xmlns:owlx="http://www.w3.org/2003/05/owl-xml#">
+
+<owlx:Class owlx:name="http://kaon2.semanticweb.org/example1#document" owlx:complete="false"/>
+
+<owlx:Class owlx:name="#journal-paper" owlx:complete="false">
+    <owlx:Class owlx:name="http://kaon2.semanticweb.org/example01#document"/>
+</owlx:Class>
+
+<owlx:Class owlx:name="#conference-paper" owlx:complete="false">
+    <owlx:Class owlx:name="http://kaon2.semanticweb.org/example01#document"/>
+</owlx:Class>
+
+<owlx:Class owlx:name="#presentation" owlx:complete="false">
+    <owlx:Class owlx:name="http://kaon2.semanticweb.org/example01#document"/>
+</owlx:Class>
+
+</owlx:Ontology>

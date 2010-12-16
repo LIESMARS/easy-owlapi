@@ -1,0 +1,12 @@
+org.semanticweb.kaon2.api
+org.semanticweb.kaon2.api.flogic
+org.semanticweb.kaon2.api.formatting
+org.semanticweb.kaon2.api.logic
+org.semanticweb.kaon2.api.owl.axioms
+org.semanticweb.kaon2.api.owl.elements
+org.semanticweb.kaon2.api.reasoner
+org.semanticweb.kaon2.extensionapi.builtins
+org.semanticweb.kaon2.extensionapi.datatype
+org.semanticweb.kaon2.extensionapi.formats
+org.semanticweb.kaon2.extensionapi.jdbc
+org.semanticweb.kaon2.extensionapi.rewriter

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<owlx:Ontology owlx:name="http://kaon2.semanticweb.org/example01"
+    xml:base="http://kaon2.semanticweb.org/example01"
+    xmlns:owlx="http://www.w3.org/2003/05/owl-xml#">
+<owlx:Imports owlx:ontology="http://kaon2.semanticweb.org/example01-inc"/>
+
+<owlx:Class owlx:name="#technical-report" owlx:complete="false">
+    <owlx:Class owlx:name="#document"/>
+</owlx:Class>
+
+<owlx:Class owlx:name="#dip-deliverable" owlx:complete="false">
+    <owlx:Class owlx:name="#document"/>
+</owlx:Class>
+
+<owlx:Class owlx:name="#person" owlx:complete="false">
+    <owlx:Annotation>
+        <owlx:Label>This class represents a person.</owlx:Label>
+    </owlx:Annotation>
+</owlx:Class>
+
+<owlx:ObjectProperty owlx:name="#is-author">
+    <owlx:domain owlx:class="#person"/>
+    <owlx:range owlx:class="#document"/>
+</owlx:ObjectProperty>
+
+</owlx:Ontology>

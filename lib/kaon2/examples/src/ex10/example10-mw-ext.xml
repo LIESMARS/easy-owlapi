@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl 'http://www.w3.org/2002/07/owl#'>
+    <!ENTITY xsd 'http://www.w3.org/2001/XMLSchema#'>
+    <!ENTITY a 'http://kaon2.semanticweb.org/example10-ontology#'>
+]>
+
+<rdf:RDF
+    xml:base="http://kaon2.semanticweb.org/example10-mw-ext"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+<owl:Ontology rdf:about=""/>
+
+<owl:DatatypeProperty rdf:about="&a;name">
+    <rdfs:subPropertyOf rdf:resource="#textAnnotation"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="&a;description">
+    <rdfs:subPropertyOf rdf:resource="#textAnnotation"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="textAnnotation"/>
+
+</rdf:RDF>

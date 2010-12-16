@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl 'http://www.w3.org/2002/07/owl#'>
+    <!ENTITY xsd 'http://www.w3.org/2001/XMLSchema#'>
+]>
+
+<rdf:RDF
+    xml:base="http://kaon2.semanticweb.org/example10-ontology"
+    xmlns:a="http://kaon2.semanticweb.org/example10-ontology#"
+    xmlns:entns="http://www.cs.man.ac.uk/EntityMetaview#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+<owl:Ontology rdf:about="">
+    <entns:import rdf:resource="http://kaon2.semanticweb.org/example10-mw-ext"/>
+</owl:Ontology>
+
+<owl:Class rdf:ID="Person">
+    <a:name rdf:datatype="&xsd;string">Person</a:name>
+    <a:description rdf:datatype="&xsd;string">Represents a person (homosapiens).</a:description>
+</owl:Class>
+
+<owl:Class rdf:ID="Woman">
+    <rdfs:subClassOf rdf:resource="#Person"/>
+    <a:name rdf:datatype="&xsd;string">Woman</a:name>
+    <a:description rdf:datatype="&xsd;string">A subclass of person representing all women.</a:description>
+</owl:Class>
+
+<owl:Class rdf:ID="Man">
+    <rdfs:subClassOf rdf:resource="#Person"/>
+    <a:name rdf:datatype="&xsd;string">Man</a:name>
+    <a:description rdf:datatype="&xsd;string">A subclass of person representing all men.</a:description>
+</owl:Class>
+
+<a:Woman rdf:ID="Eve">
+    <a:name rdf:datatype="&xsd;string">Eve - the primordial mother</a:name>
+    <a:description rdf:datatype="&xsd;string">The girl who trusted the snake</a:description>
+</a:Woman>
+
+<a:Man rdf:ID="Adam">
+    <a:name rdf:datatype="&xsd;string">Adam - the primordial father</a:name>
+    <a:description rdf:datatype="&xsd;string">The guy who got mislead (aren't we all?) by a girl</a:description>
+</a:Man>
+
+<owl:AnnotationProperty rdf:ID="description"/>
+
+<owl:AnnotationProperty rdf:ID="name"/>
+
+</rdf:RDF>

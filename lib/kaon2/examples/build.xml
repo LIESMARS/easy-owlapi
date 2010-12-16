@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="kaon2examples" default="compile" basedir=".">
+
+    <!-- LOCATIONS OF VARIOUS DIRECTORIES -->
+    <property name="kaon2jar" value="../kaon2.jar"/>
+    <property name="classdir" value="./class"/>
+
+
+    <!-- SOURCE PATH -->
+    <path id="sourcepath">
+        <pathelement path="./src"/>
+    </path>
+
+
+    <!-- CLASS PATH -->
+    <path id="classpath">
+        <pathelement path="${kaon2jar}"/>
+        <pathelement path="${classdir}"/>
+    </path>
+
+    <!-- PATH for the JDBC driver used in Examples 8 and 9 -->
+    <path id="JDBCpath">
+        <pathelement path="file:/c:/Documents and Settings/bmotik/workspace/test/mysql-connector-java-3.1.12-bin.jar"/>  <!-- Replace with the appropriate path. -->
+    </path>
+
+
+    <!-- BUILD TARGETS  -->
+    <target name="compile">
+        <mkdir dir="${classdir}"/>
+        <javac destdir="${classdir}" deprecation="yes" source="1.5">
+            <src refid="sourcepath"/>
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="clean">
+        <delete dir="${classdir}"/>
+    </target>
+
+    <target name="ex01">
+        <java classname="ex01.Example01" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex02">
+        <java classname="ex02.Example02" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex03">
+        <java classname="ex03.Example03" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex04">
+        <java classname="ex04.Example04" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex05">
+        <java classname="ex05.Example05" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex06">
+        <java classname="ex06.Example06" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex07">
+        <java classname="ex07.Example07" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+    <target name="ex07server">
+        <copy todir="./server_root" >
+            <fileset dir="./src/ex01" excludes="**/*.java,**/*.html"/>
+        </copy>
+        <java classname="org.semanticweb.kaon2.server.ServerMain" fork="yes">
+            <classpath refid="classpath"/>
+            <arg value="-registry"/>
+            <arg value="-rmi"/>
+            <arg value="-dig"/>
+            <arg value="-ontologies"/>
+            <arg value="server_root"/>
+       </java>
+    </target>
+
+    <target name="ex08">
+        <java classname="ex08.Example08" fork="yes">
+            <classpath refid="classpath"/>
+            <classpath refid="JDBCpath"/>
+       </java>
+    </target>
+
+    <target name="ex09">
+        <java classname="ex09.Example09" fork="yes">
+            <classpath refid="classpath"/>
+            <classpath refid="JDBCpath"/>
+       </java>
+    </target>
+
+    <target name="ex10">
+        <java classname="ex10.Example10" fork="yes">
+            <classpath refid="classpath"/>
+       </java>
+    </target>
+
+</project>
