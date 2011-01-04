@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.pellet;
+package cz.cvut.kbss.owl2query.model.pellet;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import org.semanticweb.kaon2.api.owl.elements.Individual;
 import org.semanticweb.kaon2.api.owl.elements.OWLEntity;
 import org.semanticweb.kaon2.api.owl.elements.ObjectPropertyExpression;
 
-import cz.cvut.kbss.owl2query.simpleversion.engine.AbstractOWL2QueryFactory;
+import cz.cvut.kbss.owl2query.engine.AbstractOWL2QueryFactory;
 
 public class KaonQueryFactory extends AbstractOWL2QueryFactory<Object> {
 

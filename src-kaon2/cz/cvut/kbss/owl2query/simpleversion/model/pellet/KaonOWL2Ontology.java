@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.pellet;
+package cz.cvut.kbss.owl2query.model.pellet;
 
 import java.util.Collection;
 import java.util.Map;
@@ -10,13 +10,13 @@ import org.semanticweb.kaon2.api.OntologyManager;
 import org.semanticweb.kaon2.api.owl.elements.OWLClass;
 import org.semanticweb.kaon2.api.reasoner.Reasoner;
 
-import cz.cvut.kbss.owl2query.simpleversion.model.Hierarchy;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2QueryException;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2QueryFactory;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWLObjectType;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimate;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimateImpl;
+import cz.cvut.kbss.owl2query.model.Hierarchy;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2QueryException;
+import cz.cvut.kbss.owl2query.model.OWL2QueryFactory;
+import cz.cvut.kbss.owl2query.model.OWLObjectType;
+import cz.cvut.kbss.owl2query.model.SizeEstimate;
+import cz.cvut.kbss.owl2query.model.SizeEstimateImpl;
 
 public class KaonOWL2Ontology implements OWL2Ontology<Object> {
 

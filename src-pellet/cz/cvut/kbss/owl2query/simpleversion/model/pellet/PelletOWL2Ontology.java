@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.pellet;
+package cz.cvut.kbss.owl2query.model.pellet;
 
 import static com.clarkparsia.pellet.utils.TermFactory.TOP_OBJECT_PROPERTY;
 import java.util.Collection;
@@ -17,12 +17,12 @@ import org.mindswap.pellet.utils.Bool;
 import org.mindswap.pellet.utils.CandidateSet;
 
 import aterm.ATermAppl;
-import cz.cvut.kbss.owl2query.simpleversion.model.Hierarchy;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2QueryFactory;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWLObjectType;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimate;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimateImpl;
+import cz.cvut.kbss.owl2query.model.Hierarchy;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2QueryFactory;
+import cz.cvut.kbss.owl2query.model.OWLObjectType;
+import cz.cvut.kbss.owl2query.model.SizeEstimate;
+import cz.cvut.kbss.owl2query.model.SizeEstimateImpl;
 
 public class PelletOWL2Ontology implements OWL2Ontology<ATermAppl> {
 

@@ -19,12 +19,12 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
-import cz.cvut.kbss.owl2query.simpleversion.engine.OWL2QueryEngine;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Query;
-import cz.cvut.kbss.owl2query.simpleversion.model.QueryResult;
-import cz.cvut.kbss.owl2query.simpleversion.model.Variable;
-import cz.cvut.kbss.owl2query.simpleversion.model.owlapi.OWLAPIv3OWL2Ontology;
+import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2Query;
+import cz.cvut.kbss.owl2query.model.QueryResult;
+import cz.cvut.kbss.owl2query.model.Variable;
+import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
 
 public class GenericOWLAPIv3Simple extends TestCase {
 

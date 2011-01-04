@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.factplusplus;
+package cz.cvut.kbss.owl2query.model.factplusplus;
 
 import java.util.Set;
 
@@ -11,8 +11,8 @@ import uk.ac.manchester.cs.factplusplus.FaCTPlusPlusException;
 import uk.ac.manchester.cs.factplusplus.IndividualPointer;
 import uk.ac.manchester.cs.factplusplus.ObjectPropertyPointer;
 import uk.ac.manchester.cs.factplusplus.Pointer;
-import cz.cvut.kbss.owl2query.simpleversion.engine.AbstractOWL2QueryFactory;
-import cz.cvut.kbss.owl2query.simpleversion.model.InternalReasonerException;
+import cz.cvut.kbss.owl2query.engine.AbstractOWL2QueryFactory;
+import cz.cvut.kbss.owl2query.model.InternalReasonerException;
 
 class FactPlusPlusQueryFactory extends AbstractOWL2QueryFactory<Pointer> {
 

@@ -7,11 +7,11 @@ import org.mindswap.pellet.PelletOptions;
 import org.mindswap.pellet.utils.ATermUtils;
 
 import aterm.ATermAppl;
-import cz.cvut.kbss.owl2query.simpleversion.engine.OWL2QueryEngine;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Query;
-import cz.cvut.kbss.owl2query.simpleversion.model.QueryResult;
-import cz.cvut.kbss.owl2query.simpleversion.model.Variable;
-import cz.cvut.kbss.owl2query.simpleversion.model.pellet.PelletOWL2Ontology;
+import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
+import cz.cvut.kbss.owl2query.model.OWL2Query;
+import cz.cvut.kbss.owl2query.model.QueryResult;
+import cz.cvut.kbss.owl2query.model.Variable;
+import cz.cvut.kbss.owl2query.model.pellet.PelletOWL2Ontology;
 
 public class PelletSimple extends TestCase {
 
@@ -38,7 +38,7 @@ public class PelletSimple extends TestCase {
 	}
 
 	private <T> OWL2Query<T> query1(
-			final cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology<T> ont,
+			final cz.cvut.kbss.owl2query.model.OWL2Ontology<T> ont,
 			final T c1) {
 		final OWL2Query<T> q = ont.getFactory().createQuery(ont);
 		final Variable<T> varX = ont.getFactory().variable("x");

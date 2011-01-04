@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.pellet;
+package cz.cvut.kbss.owl2query.model.pellet;
 
 import java.util.Set;
 
@@ -6,7 +6,7 @@ import org.mindswap.pellet.utils.ATermUtils;
 
 import aterm.ATermAppl;
 import aterm.ATermList;
-import cz.cvut.kbss.owl2query.simpleversion.engine.AbstractOWL2QueryFactory;
+import cz.cvut.kbss.owl2query.engine.AbstractOWL2QueryFactory;
 
 public class PelletQueryFactory extends AbstractOWL2QueryFactory<ATermAppl> {
 

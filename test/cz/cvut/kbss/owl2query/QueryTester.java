@@ -32,17 +32,17 @@ import org.semanticweb.owlapi.util.OWLOntologyMerger;
 import uk.ac.manchester.cs.factplusplus.FaCTPlusPlus;
 
 import aterm.ATermAppl;
-import cz.cvut.kbss.owl2query.simpleversion.engine.OWL2QueryEngine;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Query;
-import cz.cvut.kbss.owl2query.simpleversion.model.QueryResult;
-import cz.cvut.kbss.owl2query.simpleversion.model.ResultBinding;
-import cz.cvut.kbss.owl2query.simpleversion.model.Variable;
-import cz.cvut.kbss.owl2query.simpleversion.model.factplusplus.FactPlusPlusOWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.owlapi.OWLAPIv3OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.pellet.KaonOWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.pellet.PelletOWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.parser.QueryParseException;
+import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2Query;
+import cz.cvut.kbss.owl2query.model.QueryResult;
+import cz.cvut.kbss.owl2query.model.ResultBinding;
+import cz.cvut.kbss.owl2query.model.Variable;
+import cz.cvut.kbss.owl2query.model.factplusplus.FactPlusPlusOWL2Ontology;
+import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.pellet.KaonOWL2Ontology;
+import cz.cvut.kbss.owl2query.model.pellet.PelletOWL2Ontology;
+import cz.cvut.kbss.owl2query.parser.QueryParseException;
 
 public class QueryTester {
 
@@ -81,7 +81,7 @@ public class QueryTester {
 		@Override
 		public void loadQuery(String queryURI) {
 			try {
-				q = new cz.cvut.kbss.owl2query.simpleversion.parser.arq.SparqlARQParser<ATermAppl>()
+				q = new cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser<ATermAppl>()
 						.parse(new FileInputStream(new File(URI
 								.create(queryURI))), o);
 			} catch (FileNotFoundException e) {
@@ -131,7 +131,7 @@ public class QueryTester {
 		@Override
 		public void loadQuery(String queryURI) {
 			try {
-				q = new cz.cvut.kbss.owl2query.simpleversion.parser.arq.SparqlARQParser<Object>()
+				q = new cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser<Object>()
 						.parse(new FileInputStream(new File(URI
 								.create(queryURI))), o);
 			} catch (FileNotFoundException e) {
@@ -204,7 +204,7 @@ public class QueryTester {
 			@Override
 			public void loadQuery(String queryURI) {
 				try {
-					q = new cz.cvut.kbss.owl2query.simpleversion.parser.arq.SparqlARQParser<OWLObject>()
+					q = new cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser<OWLObject>()
 							.parse(new FileInputStream(new File(URI
 									.create(queryURI))), o);
 				} catch (FileNotFoundException e) {
@@ -282,7 +282,7 @@ public class QueryTester {
 	// public void loadQuery(String queryURI) {
 	// try {
 	// q = new
-	// cz.cvut.kbss.owl2query.simpleversion.parser.arq.SparqlARQParser<OWLObject>()
+	// cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser<OWLObject>()
 	// .parse(new FileInputStream(new File(URI
 	// .create(queryURI))), o);
 	// } catch (FileNotFoundException e) {

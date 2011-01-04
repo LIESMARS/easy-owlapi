@@ -1,10 +1,10 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.pellet;
+package cz.cvut.kbss.owl2query.model.pellet;
 
 import java.util.Set;
 
 import aterm.ATermAppl;
-import cz.cvut.kbss.owl2query.simpleversion.model.KBOperation;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimate;
+import cz.cvut.kbss.owl2query.model.KBOperation;
+import cz.cvut.kbss.owl2query.model.SizeEstimate;
 
 class PelletSizeEstimate implements SizeEstimate<ATermAppl> {
 

@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.factplusplus;
+package cz.cvut.kbss.owl2query.model.factplusplus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,12 +16,12 @@ import uk.ac.manchester.cs.factplusplus.FaCTPlusPlusException;
 import uk.ac.manchester.cs.factplusplus.IndividualPointer;
 import uk.ac.manchester.cs.factplusplus.ObjectPropertyPointer;
 import uk.ac.manchester.cs.factplusplus.Pointer;
-import cz.cvut.kbss.owl2query.simpleversion.model.Hierarchy;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2QueryFactory;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWLObjectType;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimate;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimateImpl;
+import cz.cvut.kbss.owl2query.model.Hierarchy;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2QueryFactory;
+import cz.cvut.kbss.owl2query.model.OWLObjectType;
+import cz.cvut.kbss.owl2query.model.SizeEstimate;
+import cz.cvut.kbss.owl2query.model.SizeEstimateImpl;
 
 public class FactPlusPlusOWL2Ontology implements OWL2Ontology<Pointer> {
 

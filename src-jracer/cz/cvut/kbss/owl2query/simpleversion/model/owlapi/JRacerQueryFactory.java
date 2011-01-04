@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.owlapi;
+package cz.cvut.kbss.owl2query.model.owlapi;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
-import cz.cvut.kbss.owl2query.simpleversion.engine.AbstractOWL2QueryFactory;
+import cz.cvut.kbss.owl2query.engine.AbstractOWL2QueryFactory;
 
 public class JRacerQueryFactory extends AbstractOWL2QueryFactory<OWLObject> {
 

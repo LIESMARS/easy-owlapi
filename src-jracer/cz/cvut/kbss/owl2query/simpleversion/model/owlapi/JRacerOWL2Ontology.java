@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owl2query.simpleversion.model.owlapi;
+package cz.cvut.kbss.owl2query.model.owlapi;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,13 +11,13 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import cz.cvut.kbss.owl2query.simpleversion.model.Hierarchy;
-import cz.cvut.kbss.owl2query.simpleversion.model.InternalReasonerException;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWL2QueryFactory;
-import cz.cvut.kbss.owl2query.simpleversion.model.OWLObjectType;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimate;
-import cz.cvut.kbss.owl2query.simpleversion.model.SizeEstimateImpl;
+import cz.cvut.kbss.owl2query.model.Hierarchy;
+import cz.cvut.kbss.owl2query.model.InternalReasonerException;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2QueryFactory;
+import cz.cvut.kbss.owl2query.model.OWLObjectType;
+import cz.cvut.kbss.owl2query.model.SizeEstimate;
+import cz.cvut.kbss.owl2query.model.SizeEstimateImpl;
 
 public class JRacerOWL2Ontology {
 //	implements OWL2Ontology<RacerSymbol> {

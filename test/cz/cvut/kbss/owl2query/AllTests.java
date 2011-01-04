@@ -10,7 +10,7 @@ public class AllTests {
 	
 	public static Test suite() {
 		TestSuite suite = new TestSuite(
-				"Test for cz.cvut.kbss.owl2query.simpleversion.engine");
+				"Test for cz.cvut.kbss.owl2query.engine");
 		//$JUnit-BEGIN$
 		suite.addTestSuite(GenericOWLAPIv3Simple.class);
 //		suite.addTestSuite(NativeLUBMQueries.class);
