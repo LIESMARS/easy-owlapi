@@ -1,144 +1,86 @@
-/*
- * Permutation Generator
- * by Michael Gilleland, Merriam Park Software
- * URL: http://www.merriampark.com/perm.htm
- * 
- * The PermutationGenerator Java class systematically generates permutations. 
- * It relies on the fact that any set with n elements can be placed in one-to-one 
- * correspondenG with the set {1, 2, 3, ..., n}. The algorithm is described by 
- * Kenneth H. Rosen, Discrete Mathematics and Its Applications, 2nd edition 
- * (NY: McGraw-Hill, 1991), pp. 282-284. 
- * 
- */
-
 package cz.cvut.kbss.owl2query.util;
-//--------------------------------------
-// Systematically generate permutations. 
-//--------------------------------------
 
 import java.math.BigInteger;
 
 public class PermutationGenerator {
 
-  private int[] a;
-  private BigInteger numLeft;
-  private BigInteger total;
+	private int[] array;
+	private BigInteger left;
+	private BigInteger total;
 
-  //-----------------------------------------------------------
-  // Constructor. WARNING: Don't make n too large.
-  // Recall that the number of permutations is n!
-  // which can be very large, even when n is as small as 20 --
-  // 20! = 2,432,902,008,176,640,000 and
-  // 21! is too big to fit into a Java long, which is
-  // why we use BigInteger instead.
-  //----------------------------------------------------------
+	public PermutationGenerator(int n) {
+		if (n < 1) {
+			throw new IllegalArgumentException("Min 1");
+		}
+		array = new int[n];
+		total = getFactorial(n);
+		reset();
+	}
 
-  public PermutationGenerator (int n) {
-    if (n < 1) {
-      throw new IllegalArgumentException ("Min 1");
-    }
-    a = new int[n];
-    total = getFactorial (n);
-    reset ();
-  }
+	public void reset() {
+		for (int i = 0; i < array.length; i++) {
+			array[i] = i;
+		}
+		left = new BigInteger(total.toString());
+	}
 
-  //------
-  // Reset
-  //------
+	public BigInteger getNumLeft() {
+		return left;
+	}
 
-  public void reset () {
-    for (int i = 0; i < a.length; i++) {
-      a[i] = i;
-    }
-    numLeft = new BigInteger (total.toString ());
-  }
+	public BigInteger getTotal() {
+		return total;
+	}
 
-  //------------------------------------------------
-  // Return number of permutations not yet generated
-  //------------------------------------------------
+	public boolean hasMore() {
+		return left.compareTo(BigInteger.ZERO) == 1;
+	}
 
-  public BigInteger getNumLeft () {
-    return numLeft;
-  }
+	private static BigInteger getFactorial(int n) {
+		BigInteger fact = BigInteger.ONE;
+		for (int i = n; i > 1; i--) {
+			fact = fact.multiply(new BigInteger(Integer.toString(i)));
+		}
+		return fact;
+	}
 
-  //------------------------------------
-  // Return total number of permutations
-  //------------------------------------
+	public int[] getNext() {
 
-  public BigInteger getTotal () {
-    return total;
-  }
+		if (left.equals(total)) {
+			left = left.subtract(BigInteger.ONE);
+			return array;
+		}
 
-  //-----------------------------
-  // Are there more permutations?
-  //-----------------------------
+		int temp;
 
-  public boolean hasMore () {
-    return numLeft.compareTo (BigInteger.ZERO) == 1;
-  }
+		int j = array.length - 2;
+		while (array[j] > array[j + 1]) {
+			j--;
+		}
 
-  //------------------
-  // Compute factorial
-  //------------------
+		int k = array.length - 1;
+		while (array[j] > array[k]) {
+			k--;
+		}
 
-  private static BigInteger getFactorial (int n) {
-    BigInteger fact = BigInteger.ONE;
-    for (int i = n; i > 1; i--) {
-      fact = fact.multiply (new BigInteger (Integer.toString (i)));
-    }
-    return fact;
-  }
+		temp = array[k];
+		array[k] = array[j];
+		array[j] = temp;
 
-  //--------------------------------------------------------
-  // Generate next permutation (algorithm from Rosen p. 284)
-  //--------------------------------------------------------
+		int r = array.length - 1;
+		int s = j + 1;
 
-  public int[] getNext () {
+		while (r > s) {
+			temp = array[s];
+			array[s] = array[r];
+			array[r] = temp;
+			r--;
+			s++;
+		}
 
-    if (numLeft.equals (total)) {
-      numLeft = numLeft.subtract (BigInteger.ONE);
-      return a;
-    }
+		left = left.subtract(BigInteger.ONE);
+		return array;
 
-    int temp;
-
-    // Find largest index j with a[j] < a[j+1]
-
-    int j = a.length - 2;
-    while (a[j] > a[j+1]) {
-      j--;
-    }
-
-    // Find index k such that a[k] is smallest integer
-    // greater than a[j] to the right of a[j]
-
-    int k = a.length - 1;
-    while (a[j] > a[k]) {
-      k--;
-    }
-
-    // Interchange a[j] and a[k]
-
-    temp = a[k];
-    a[k] = a[j];
-    a[j] = temp;
-
-    // Put tail end of permutation after jth position in increasing order
-
-    int r = a.length - 1;
-    int s = j + 1;
-
-    while (r > s) {
-      temp = a[s];
-      a[s] = a[r];
-      a[r] = temp;
-      r--;
-      s++;
-    }
-
-    numLeft = numLeft.subtract (BigInteger.ONE);
-    return a;
-
-  }
+	}
 
 }

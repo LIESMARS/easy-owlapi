@@ -1488,35 +1488,4 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 									.length() - 1));
 		}
 	}
-	//
-	// public static void main(String[] args) {
-	// // OWL2Query<OWLObject> q =
-	//
-	// OWLOntologyManager m = OWLManager.createOWLOntologyManager();
-	// OWLOntology ont;
-	// try {
-	// ont = m.createOntology();
-	// final OWL2Ontology<OWLObject> o = new OWLAPIv3OWL2Ontology(m, ont,
-	// new StructuralReasonerFactory().createReasoner(ont));
-	// SparqlARQParser<OWLObject> parser = new SparqlARQParser<OWLObject>();
-	//
-	// OWL2Query<OWLObject> q = parser.parse(new FileInputStream(new File(
-	// "/home/kremen/lubm-query4.sparql")), o);
-	//
-	// StringWriter sw = new StringWriter();
-	// parser.write(q, sw, o);
-	//
-	// System.out.println(sw.toString());
-	//
-	// } catch (OWLOntologyCreationException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (QueryParseException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (FileNotFoundException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
 }
