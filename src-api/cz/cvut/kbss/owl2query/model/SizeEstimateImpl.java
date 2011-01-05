@@ -25,10 +25,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//import org.mindswap.pellet.utils.StatisticsTable;
-//
-//import cz.cvut.kbss.owl2query.util.Statistics;
-
 public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 
 	protected static final Logger log = Logger.getLogger(SizeEstimate.class
@@ -328,12 +324,12 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 			pSubj.put(p, 0);
 			pObj.put(p, 0);
 
-			subProperties.put(p, ontology.getPropertyHierarchy().getSubs(p,
-					false).size());
-			directSubProperties.put(p, ontology.getPropertyHierarchy().getSubs(
-					p, true).size());
-			superProperties.put(p, ontology.getPropertyHierarchy().getSupers(p,
-					false).size());
+			subProperties.put(p,
+					ontology.getPropertyHierarchy().getSubs(p, false).size());
+			directSubProperties.put(p,
+					ontology.getPropertyHierarchy().getSubs(p, true).size());
+			superProperties.put(p,
+					ontology.getPropertyHierarchy().getSupers(p, false).size());
 			directSuperProperties.put(p, ontology.getPropertyHierarchy()
 					.getSupers(p, true).size());
 			equivProperties.put(p, ontology.getPropertyHierarchy().getEquivs(p)
@@ -408,12 +404,11 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 				log.finer("Computing instances per class");
 			for (final G c : concepts) {
 				Integer size = instancesPC.get(c);
-					log.finest("Computing instancesPC="+instancesPC+", c=" +c);
-				if ( size == null ) {
+				log.finest("Computing instancesPC=" + instancesPC + ", c=" + c);
+				if (size == null) {
 					size = 0;
 				}
-				
-				
+
 				// post processing in case of sampling
 				if (size == 0)
 					instancesPC.put(c, 1);
@@ -422,12 +417,11 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 							(int) (size / Configuration.SAMPLING_RATIO));
 
 				size = directInstancesPC.get(c);
-				
 
-				if ( size == null ) {
+				if (size == null) {
 					size = 0;
 				}
-				
+
 				// postprocessing in case of sampling
 				if (size == 0)
 					directInstancesPC.put(c, 1);
@@ -559,10 +553,10 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 	}
 
 	private void printStatistics() {
-//		final Statistics<G, String> instances = new Statistics<G, String>();
-//		instances.add("classes", classesPI);
-//		instances.add("sames", sames);
-//		instances.add("differents", differents);
+		// final Statistics<G, String> instances = new Statistics<G, String>();
+		// instances.add("classes", classesPI);
+		// instances.add("sames", sames);
+		// instances.add("differents", differents);
 		// System.out.println(instances.toString());
 
 		System.out.println("Avg classes per instance:" + avgClassesPI);
@@ -570,16 +564,16 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		System.out.println("Avg differents per individual:"
 				+ avgDifferentsPerInstance());
 
-//		final Statistics<G, String> classes = new Statistics<G, String>();
+		// final Statistics<G, String> classes = new Statistics<G, String>();
 
-//		classes.add("size", instancesPC);
-//		classes.add("subs", subClasses);
-//		classes.add("supers", superClasses);
-//		classes.add("equivs", equivClasses);
-//		// classes.add("complements", complements);
+		// classes.add("size", instancesPC);
+		// classes.add("subs", subClasses);
+		// classes.add("supers", superClasses);
+		// classes.add("equivs", equivClasses);
+		// // classes.add("complements", complements);
 		// classes.add("disjoints", disjoints);
 		//
-//		System.out.println(classes.toString());
+		// System.out.println(classes.toString());
 
 		System.out.println("Avg individuals per class:" + avgInstancesPC);
 		System.out.println("Avg subclasses:" + avgSubClasses(false));
@@ -592,16 +586,17 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		// System.out.println("Avg disjoint classes:" + avgDisjointClasses());
 
 		// TODO
-//		final StatisticsTable<G, String> properties = new StatisticsTable<G, String>();
+		// final StatisticsTable<G, String> properties = new StatisticsTable<G,
+		// String>();
 
-//		properties.add("size", pairsPP);
-//		properties.add("avgs", avgObjectsPP);
-//		properties.add("subs", subProperties);
-//		properties.add("supers", superProperties);
-//		properties.add("equivs", equivProperties);
-//		// properties.add("inverses", inverses);
-//
-//		System.out.println(properties.toString());
+		// properties.add("size", pairsPP);
+		// properties.add("avgs", avgObjectsPP);
+		// properties.add("subs", subProperties);
+		// properties.add("supers", superProperties);
+		// properties.add("equivs", equivProperties);
+		// // properties.add("inverses", inverses);
+		//
+		// System.out.println(properties.toString());
 
 		System.out.println("Avg pairs per property:" + avgPairsPerProperty());
 		System.out.println("Avg subjects per property:"
@@ -830,12 +825,12 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 			}
 		}
 		Integer d = equivClasses.get(sup);
-		
-		if ( d != null ) {
+
+		if (d != null) {
 			return d.doubleValue();
 		} else {
 			return 0;
-		}		
+		}
 	}
 
 	public double equivProperties(G sup) {
@@ -845,14 +840,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 				log.fine("Computing additionally " + sup);
 			}
 		}
-		
+
 		Integer d = equivProperties.get(sup);
-		
-		if ( d != null ) {
+
+		if (d != null) {
 			return d.doubleValue();
 		} else {
 			return 0;
-		}		
+		}
 	}
 
 	public double sames(G sup) {
