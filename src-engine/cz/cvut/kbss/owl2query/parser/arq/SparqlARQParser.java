@@ -74,9 +74,6 @@ import cz.cvut.kbss.owl2query.parser.QueryParseException;
 import cz.cvut.kbss.owl2query.parser.QueryParser;
 import cz.cvut.kbss.owl2query.parser.QueryWriter;
 
-/**
- * Parser (based on ARQ) for the SPARQL serialization of SPARQL-DL
- */
 public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 	private Set<Triple> triples;
 

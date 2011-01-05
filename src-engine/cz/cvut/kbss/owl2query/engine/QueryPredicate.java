@@ -14,10 +14,6 @@
  *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
-/**
- * @author Petr Kremen
- */
-
 public enum QueryPredicate {
 	Type("T"), PropertyValue("PV"), SameAs("SA"), DifferentFrom("DF"), ObjectProperty("OP"), DatatypeProperty("DP"), SubClassOf("SCO"), EquivalentClass("EC"), DisjointWith("DW"), ComplementOf("CO"), EquivalentProperty("EP"), SubPropertyOf("SPO"), InverseOf("IO"), Annotation("A"),
 

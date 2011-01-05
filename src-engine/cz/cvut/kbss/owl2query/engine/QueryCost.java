@@ -27,9 +27,6 @@ import cz.cvut.kbss.owl2query.model.OWLObjectType;
 import cz.cvut.kbss.owl2query.model.SizeEstimate;
 import cz.cvut.kbss.owl2query.model.Term;
 
-/**
- * @author Petr Kremen
- */
 class QueryCost<G> {
 	private double staticCost;
 

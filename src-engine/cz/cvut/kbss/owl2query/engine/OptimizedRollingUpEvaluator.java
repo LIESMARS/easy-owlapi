@@ -33,7 +33,7 @@ import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
 
-class OptimizedRollingUpExec<G> extends AbstractABoxExec<G> {
+class OptimizedRollingUpEvaluator<G> extends AbstractABoxEvaluator<G> {
 	private static final Logger log = OWL2QueryEngine.log;
 
 	@Override

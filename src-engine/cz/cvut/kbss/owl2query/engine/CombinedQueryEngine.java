@@ -39,14 +39,7 @@ import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
 import cz.cvut.kbss.owl2query.util.DisjointSet;
 
-/**
- * <p>
- * Title: Engine for SPARQL-DL queries with distinguished variables.
- * </p>
- * 
- * @author Petr Kremen
- */
-class CombinedQueryEngine<G> implements QueryExec<G> {
+class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 	public static final Logger log = Logger.getLogger(CombinedQueryEngine.class
 			.getName());
 
@@ -266,7 +259,7 @@ class CombinedQueryEngine<G> implements QueryExec<G> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public QueryResult<G> exec(InternalQuery<G> query) {
+	public QueryResult<G> evaluate(InternalQuery<G> query) {
 		if (log.isLoggable(Level.FINE)) {
 			log.fine("Executing query " + query);
 		}

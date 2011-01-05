@@ -43,9 +43,9 @@ public class OWL2QueryEngine {
 	public static Logger log = Logger
 			.getLogger(OWL2QueryEngine.class.getName());
 
-	private static <G> QueryExec<G> getQueryExec() {
+	private static <G> QueryEvaluator<G> getQueryExec() {
 		return new CombinedQueryEngine<G>();
-		// return new OptimizedRollingUpExec<G>();
+		// return new OptimizedRollingUpEvaluator<G>();
 		// return new SimpleRollingUpExec<G>();
 	}
 
@@ -115,12 +115,12 @@ public class OWL2QueryEngine {
 			return new QueryResultImpl<G>(query);
 		}
 
-		final QueryExec<G> e = getQueryExec();
+		final QueryEvaluator<G> e = getQueryExec();
 
 		// long satCount = onto.getSatisfiabilityCount();
 		// long consCount = onto.getConsistencyCount();
 
-		final QueryResult<G> qr = e.exec(query);
+		final QueryResult<G> qr = e.evaluate(query);
 
 		// if (log.isLoggable(Level.FINE)) {
 		// log.fine("Results: " + qr);

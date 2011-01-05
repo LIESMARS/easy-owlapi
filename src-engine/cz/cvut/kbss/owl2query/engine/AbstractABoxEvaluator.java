@@ -32,10 +32,7 @@ import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
 
-/**
- * @author Petr Kremen
- */
-abstract class AbstractABoxExec<G> implements QueryExec<G> {
+abstract class AbstractABoxEvaluator<G> implements QueryEvaluator<G> {
 	private static final Logger log = OWL2QueryEngine.log;
 
 	protected InternalQuery<G> schemaQuery;
@@ -46,7 +43,7 @@ abstract class AbstractABoxExec<G> implements QueryExec<G> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public QueryResult<G> exec(InternalQuery<G> query) {
+	public QueryResult<G> evaluate(InternalQuery<G> query) {
 		if (log.isLoggable(Level.FINE)) {
 			log.fine("Executing query " + query.getAtoms());
 		}
@@ -62,7 +59,7 @@ abstract class AbstractABoxExec<G> implements QueryExec<G> {
 			if (log.isLoggable(Level.FINE)) {
 				log.fine("Executing TBox query: " + schemaQuery);
 			}
-			result = new CombinedQueryEngine<G>().exec(schemaQuery);
+			result = new CombinedQueryEngine<G>().evaluate(schemaQuery);
 			if (log.isLoggable(Level.FINE)) {
 				log.fine("Partial binding after schema query : " + result);
 			}

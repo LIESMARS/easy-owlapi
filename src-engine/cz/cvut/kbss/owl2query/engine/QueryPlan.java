@@ -16,9 +16,6 @@ package cz.cvut.kbss.owl2query.engine;
 
 import cz.cvut.kbss.owl2query.model.ResultBinding;
 
-/**
- * @author Petr Kremen
- */
 abstract class QueryPlan<G> {
 
 	protected InternalQuery<G> query;

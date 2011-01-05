@@ -26,8 +26,6 @@ public abstract class AbstractOWL2QueryFactory<G> implements OWL2QueryFactory<G>
 		return new QueryImpl<G>(o);
 	}
 
-	// TERMS
-	// variable
 	public Variable<G> variable(String name) {
 		return new VariableImpl<G>(name);
 	}
