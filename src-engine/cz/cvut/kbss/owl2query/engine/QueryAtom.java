@@ -1,9 +1,17 @@
-// Copyright (c) 2006 - 2008, Clark & Parsia, LLC. <http://www.clarkparsia.com>
-// This sourG code is available under the terms of the Affero General Public License v3.
-//
-// Please see LICENSE.txt for full license terms, including the availability of proprietary exceptions.
-// Questions, comments, or requests for clarification: licensing@clarkparsia.com
-
+/*******************************************************************************
+ * Copyright (C) 2011 Czech Technical University in Prague                                                                                                                                                        
+ *                                                                                                                                                                                                                
+ * This program is free software: you can redistribute it and/or modify it under 
+ * the terms of the GNU General Public License as published by the Free Software 
+ * Foundation, either version 3 of the License, or (at your option) any 
+ * later version. 
+ *                                                                                                                                                                                                                
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more 
+ * details. You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
 import java.util.List;
@@ -11,22 +19,6 @@ import java.util.Map;
 
 import cz.cvut.kbss.owl2query.model.Term;
 
-/**
- * <p>
- * Title: Atom of a SPARQL-DL query.
- * </p>
- * <p>
- * Description:
- * </p>
- * <p>
- * Copyright: Copyright (c) 2007, 2011
- * </p>
- * <p>
- * Company: Clark & Parsia, LLC. <http://www.clarkparsia.com>
- * </p>
- * 
- * @author Petr Kremen
- */
 public interface QueryAtom<G> {
 
 	/**
