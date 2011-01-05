@@ -19,7 +19,7 @@ import cz.cvut.kbss.owl2query.model.Term;
  * Description:
  * </p>
  * <p>
- * Copyright: Copyright (c) 2007
+ * Copyright: Copyright (c) 2007, 2011
  * </p>
  * <p>
  * Company: Clark & Parsia, LLC. <http://www.clarkparsia.com>
