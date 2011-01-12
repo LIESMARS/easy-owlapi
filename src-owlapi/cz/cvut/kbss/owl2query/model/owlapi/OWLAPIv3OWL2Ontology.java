@@ -203,7 +203,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	@Override
 	public Set<? extends OWLObject> getInverses(OWLObject ope) {
-		final OWLPropertyExpression<?, ?> opex = asOWLPropertyExpression(ope);
+		final OWLPropertyExpression opex = asOWLPropertyExpression(ope);
 
 		if (opex.isObjectPropertyExpression()) {
 
@@ -373,7 +373,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 	@Override
 	public Set<? extends OWLObject> getIndividualsWithProperty(OWLObject pvP,
 			OWLObject pvIL) {
-		final OWLPropertyExpression<?, ?> pex = asOWLPropertyExpression(pvP);
+		final OWLPropertyExpression pex = asOWLPropertyExpression(pvP);
 
 		final Set<OWLObject> set = new HashSet<OWLObject>();
 
@@ -405,7 +405,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	public Set<? extends OWLObject> getPropertyValues(OWLObject pvP,
 			OWLObject pvI) {
-		final OWLPropertyExpression<?, ?> pex = asOWLPropertyExpression(pvP);
+		final OWLPropertyExpression pex = asOWLPropertyExpression(pvP);
 		final OWLNamedIndividual ni = asOWLNamedIndividual(pvI);
 
 		if (pex != null) {
@@ -425,7 +425,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 	}
 
 	public boolean hasPropertyValue(OWLObject p, OWLObject s, OWLObject o) {
-		final OWLPropertyExpression<?, ?> pex = asOWLPropertyExpression(p);
+		final OWLPropertyExpression pex = asOWLPropertyExpression(p);
 
 		if (pex.isObjectPropertyExpression()) {
 			return r.isEntailed(f.getOWLObjectPropertyAssertionAxiom(
@@ -469,7 +469,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	public Set<? extends OWLObject> retrieveIndividualsWithProperty(
 			OWLObject odpe) {
-		final OWLPropertyExpression<?, ?> ope = asOWLPropertyExpression(odpe);
+		final OWLPropertyExpression ope = asOWLPropertyExpression(odpe);
 
 		final Set<OWLObject> set = new HashSet<OWLObject>();
 		try {
@@ -523,7 +523,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	public Boolean hasKnownPropertyValue(OWLObject p, OWLObject s, OWLObject ob) {
 		final OWLIndividual is = asOWLNamedIndividual(s);
-		final OWLPropertyExpression<?, ?> pex = asOWLPropertyExpression(p);
+		final OWLPropertyExpression pex = asOWLPropertyExpression(p);
 
 		if (pex != null) {
 			if (pex.isObjectPropertyExpression()) {
