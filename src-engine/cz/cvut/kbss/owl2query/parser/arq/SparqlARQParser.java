@@ -31,6 +31,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
+
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.graph.impl.LiteralLabel;
@@ -70,6 +78,7 @@ import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.UnionOf;
 import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
+import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
 import cz.cvut.kbss.owl2query.parser.QueryParseException;
 import cz.cvut.kbss.owl2query.parser.QueryParser;
 import cz.cvut.kbss.owl2query.parser.QueryWriter;
@@ -135,6 +144,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 		final ElementGroup elementGroup = (ElementGroup) pattern;
 		final List<Element> elements = elementGroup.getElements();
+		
 		if (elements.size() != 1
 				|| !(elements.get(0) instanceof ElementTriplesBlock)) {
 			System.out.println("elements = " + elements);
@@ -1497,6 +1507,22 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 							1,
 							p.asGroundTerm().getWrappedObject().toString()
 									.length() - 1));
+		}
+	}
+	
+	public static void main(String[] args) {
+		SparqlARQParser<OWLObject> o = new SparqlARQParser<OWLObject>();
+		OWLOntologyManager m = OWLManager.createOWLOntologyManager();
+		OWLOntology ont;
+		try {
+			ont = m.createOntology();
+		OWLReasoner r = new StructuralReasonerFactory().createNonBufferingReasoner(ont);
+		
+		o.parse("SELECT * WHERE {?x ?y ?z.}" , new OWLAPIv3OWL2Ontology(m, ont, r));
+
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
