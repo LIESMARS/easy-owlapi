@@ -1386,34 +1386,42 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL.FunctionalProperty.asNode()));
+				break;
 			case Symmetric:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL.SymmetricProperty.asNode()));
+				break;
 			case Asymmetric:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL2.AsymmetricProperty.asNode()));
+				break;
 			case Reflexive:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL2.ReflexiveProperty.asNode()));
+				break;
 			case Irreflexive:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL2.IrreflexiveProperty.asNode()));
+				break;
 			case Transitive:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL.TransitiveProperty.asNode()));
+				break;
 			case InverseFunctional:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), RDF.type.asNode(),
 						OWL.InverseFunctionalProperty.asNode()));
+				break;
 			case InverseOf:
 				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
 						internalQuery), OWL.inverseOf.asNode(), property2Node(a
 						.getArguments().get(1), internalQuery)));
+				break;
 			default:
 				throw new UnsupportedOperationException("Not Supported Yet");
 			}
