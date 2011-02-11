@@ -262,7 +262,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 				// Type(c,i)
 				else {
-					query.Type(s, o);
+					query.Type(o, s);
 					setupIndividualTerm(subj, s, query);
 					setupClassTerm(obj, o, query);
 				}
@@ -362,7 +362,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 			// DirectType(i,c) - nonmonotonic
 			else if (pred.equals(SparqlDL.directType.asNode())) {
-				query.DirectType(s, o);
+				query.DirectType(o, s);
 				setupIndividualTerm(subj, s, query);
 				setupClassTerm(obj, o, query);
 			}
