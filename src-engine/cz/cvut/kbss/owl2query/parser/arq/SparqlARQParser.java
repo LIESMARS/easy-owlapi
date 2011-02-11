@@ -262,7 +262,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 				// Type(c,i)
 				else {
-					query.Type(o, s);
+					query.Type(s, o);
 					setupIndividualTerm(subj, s, query);
 					setupClassTerm(obj, o, query);
 				}
