@@ -148,22 +148,22 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	@Override
 	public Set<OWLClass> getClasses() {
-		return o.getClassesInSignature();
+		return o.getClassesInSignature(true);
 	}
 
 	@Override
 	public Set<OWLObjectProperty> getObjectProperties() {
-		return o.getObjectPropertiesInSignature();
+		return o.getObjectPropertiesInSignature(true);
 	}
 
 	@Override
 	public Set<OWLDataProperty> getDataProperties() {
-		return o.getDataPropertiesInSignature();
+		return o.getDataPropertiesInSignature(true);
 	}
 
 	@Override
 	public Set<OWLNamedIndividual> getIndividuals() {
-		return o.getIndividualsInSignature();
+		return o.getIndividualsInSignature(true);
 	}
 
 	@Override
@@ -815,6 +815,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					set.add(f.getOWLBottomDataProperty());
 				}
 
+				System.out.println("super="+cex + ", subs="+set);
+				
 			} else if (cex.isObjectPropertyExpression()) {
 				final Set<OWLProperty> props = new HashSet<OWLProperty>();
 				for (final OWLObjectPropertyExpression ex : r
