@@ -105,6 +105,5 @@
             </plugin>
         </plugins>
     </build>
-    <modules>
-    </modules>
+
 </project>
