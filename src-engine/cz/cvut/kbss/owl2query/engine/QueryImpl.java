@@ -699,39 +699,4 @@ class QueryImpl<G> implements InternalQuery<G> {
 		return add(new Core<G>(c, rollUp, q));
 	}
 
-	public String toString(boolean multiLine) {
-		final String indent = multiLine ? "     " : " ";
-		final StringBuffer sb = new StringBuffer();
-	
-		sb.append("Q(");
-		for (int i = 0; i < resultVars.size(); i++) {
-			Variable<G> var = resultVars.get(i);
-			if (i > 0)
-				sb.append(", ");
-			sb.append(var.asVariable().getName());
-		}
-		sb.append(")");
-	
-		if (allAtoms.size() > 0) {
-			sb.append(" :-");
-			if (multiLine)
-				sb.append("\n");
-			for (int i = 0; i < allAtoms.size(); i++) {
-				final QueryAtom<G> a = allAtoms.get(i);
-				if (i > 0) {
-					sb.append(",");
-					if (multiLine)
-						sb.append("\n");
-				}
-	
-				sb.append(a.toString());
-			}
-		}
-	
-		sb.append(".");
-		if (multiLine)
-			sb.append("\n");
-		return sb.toString();
-	}
-
 }
