@@ -813,10 +813,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 						.getFlattened());
 				if (!direct || set.isEmpty()) {
 					set.add(f.getOWLBottomDataProperty());
-				}
-
-				System.out.println("super="+cex + ", subs="+set);
-				
+				}				
 			} else if (cex.isObjectPropertyExpression()) {
 				final Set<OWLProperty> props = new HashSet<OWLProperty>();
 				for (final OWLObjectPropertyExpression ex : r
