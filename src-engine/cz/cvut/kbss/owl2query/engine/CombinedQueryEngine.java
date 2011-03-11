@@ -524,8 +524,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 							for (final G subject : subjectCandidates) {
 								for (final G object : kb.getPropertyValues(
 										property, subject)) {
-									runNext(binding, arguments, subject,
-											property, object);
+									runNext(binding, arguments, 
+											property, subject, object);
 								}
 							}
 						} else {
