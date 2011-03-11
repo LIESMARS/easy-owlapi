@@ -227,8 +227,9 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 		}
 
 		for (final Variable<G> var : map.keySet()) {
-			transformedQuery.Core(var, f.wrap(f.objectIntersectionOf(map
-					.get(var))), map2.get(var));
+			transformedQuery
+					.Core(var, f.wrap(f.objectIntersectionOf(map.get(var))),
+							map2.get(var));
 			transformedQuery.addDistVar(var);
 			transformedQuery.addResultVar(var);
 		}
@@ -361,8 +362,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 							if (kb.isTypeOf(ic, ic, direct)) {
 								final ResultBinding<G> candidateBinding = binding
 										.clone();
-								candidateBinding.put(tI.asVariable(), f
-										.wrap(ic));
+								candidateBinding.put(tI.asVariable(),
+										f.wrap(ic));
 								exec(candidateBinding);
 							}
 						}
@@ -473,9 +474,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 											property, property);
 								} else {
 									for (final G i : kb.getIndividuals()) {
-										if (!kb
-												.hasPropertyValue(property, i,
-														i)) {
+										if (!kb.hasPropertyValue(property, i, i)) {
 											continue;
 										}
 										runNext(binding, arguments, property,
@@ -544,8 +543,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 													.emptySet();
 										}
 									} else {
-										subjectCandidates = new HashSet<G>(kb
-												.getIndividualsWithProperty(
+										subjectCandidates = new HashSet<G>(
+												kb.getIndividualsWithProperty(
 														property, object));
 									}
 								}
@@ -603,10 +602,9 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 						}
 					} else {
 						if (log.isLoggable(Level.FINER)) {
-							log
-									.finer("Atom "
-											+ current
-											+ "cannot be satisfied in any consistent ontology.");
+							log.finer("Atom "
+									+ current
+									+ "cannot be satisfied in any consistent ontology.");
 						}
 					}
 					// TODO What about undist vars ?
@@ -754,8 +752,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 						final boolean rhsDM = isDownMonotonic(scRHS);
 
 						if (lhsDM || rhsDM) {
-							downMonotonic(kb.getClassHierarchy(), kb
-									.getClasses(), lhsDM, scLHS, scRHS,
+							downMonotonic(kb.getClassHierarchy(),
+									kb.getClasses(), lhsDM, scLHS, scRHS,
 									binding, direct, strict);
 						} else {
 							final Collection<G> lhsCandidates;
@@ -869,32 +867,27 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 					}
 					break;
 
-				// case DisjointWith: // TODO implementation of
-				// downMonotonic
-				// vars
-				// final Term<G> dwLHS = arguments.get(0);
-				// final Term<G> dwRHS = arguments.get(1);
-				//
-				// if (!dwLHS.equals(dwRHS)) {
-				// // TODO optimizeTBox
-				// for (final Term<G> known : getSymmetricCandidates(
-				// VarType.CLASS, dwLHS, dwRHS)) {
-				// for (final Set<Term> dependents : kb
-				// .getDisjointClasses(known)) {
-				// for (final Term<G> dependent : dependents) {
-				// runSymetricCheck(current, dwLHS, known, dwRHS,
-				// dependent, binding);
-				// }
-				// }
-				// }
-				// } else {
-				// log
-				// .finer("Atom "
-				// + current
-				// + "cannot be satisfied in any consistent ontology.");
-				// }
-				// break;
-				//
+				case DisjointWith: // TODO implementation of downMonotonic vars
+					final Term<G> dwLHS = arguments.get(0);
+					final Term<G> dwRHS = arguments.get(1);
+
+					if (!dwLHS.equals(dwRHS)) {
+						// TODO optimizeTBox
+						for (final G known : getSymmetricCandidates(
+								VarType.CLASS, dwLHS, dwRHS)) {
+							for (final G dependent : kb.getClassHierarchy()
+									.getDisjoints(known)) {
+								runSymetricCheck(current, dwLHS, known, dwRHS,
+										dependent, binding);
+							}
+						}
+					} else {
+						log.finer("Atom "
+								+ current
+								+ "cannot be satisfied in any consistent ontology.");
+					}
+					break;
+
 				// case ComplementOf: // TODO implementation of
 				// downMonotonic
 				// vars
@@ -918,7 +911,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 				// + "cannot be satisfied in any consistent ontology.");
 				// }
 				// break;
-				//
+
 				// RBOX ATOMS
 				case DirectSubPropertyOf:
 					direct = true;
@@ -1068,48 +1061,48 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 					// just
 					// retrieve all symmetric properties.
 				case Symmetric:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getSymmetricProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getSymmetricProperties(), binding);
 					break;
 
 				case ObjectProperty:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getObjectProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getObjectProperties(), binding);
 					break;
 
 				case DatatypeProperty:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getDataProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getDataProperties(), binding);
 					break;
 
 				case Functional:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getFunctionalProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getFunctionalProperties(), binding);
 					break;
 
 				case InverseFunctional:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getInverseFunctionalProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getInverseFunctionalProperties(), binding);
 					break;
 
 				case Transitive:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getTransitiveProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getTransitiveProperties(), binding);
 					break;
 
 				case Asymmetric:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getAsymmetricProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getAsymmetricProperties(), binding);
 					break;
 
 				case Reflexive:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getReflexiveProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getReflexiveProperties(), binding);
 					break;
 
 				case Irreflexive:
-					runAllPropertyChecks(arguments.get(0).asVariable(), kb
-							.getIrreflexiveProperties(), binding);
+					runAllPropertyChecks(arguments.get(0).asVariable(),
+							kb.getIrreflexiveProperties(), binding);
 					break;
 
 				case Core:
@@ -1206,8 +1199,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 		final OWL2Ontology<G> kb = q.getOntology();
 
 		for (final Variable<G> currVar : distVars) {
-			G rolledUpClass = q.rollUpTo(currVar, Collections
-					.<Term<G>> emptySet());
+			G rolledUpClass = q.rollUpTo(currVar,
+					Collections.<Term<G>> emptySet());
 
 			if (log.isLoggable(Level.FINER)) {
 				log.finer(currVar + " rolled to " + rolledUpClass);
@@ -1348,8 +1341,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 			final ResultBinding<G> newBinding = binding.clone();
 
 			if (theOther.isVariable()) {
-				newBinding.put(theOther.asVariable(), kb.getFactory().wrap(
-						candidate));
+				newBinding.put(theOther.asVariable(),
+						kb.getFactory().wrap(candidate));
 			}
 
 			// final Set<Term> toDo = lhsDM ? taxonomy.getFlattenedSubs(
@@ -1387,8 +1380,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 
 		for (int i = 0; i < arguments.size(); i++) {
 			if (arguments.get(i).isVariable()) {
-				candidateBinding.put(arguments.get(i).asVariable(), f
-						.wrap(values[i]));
+				candidateBinding.put(arguments.get(i).asVariable(),
+						f.wrap(values[i]));
 			}
 		}
 

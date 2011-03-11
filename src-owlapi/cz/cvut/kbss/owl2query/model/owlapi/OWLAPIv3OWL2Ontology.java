@@ -378,26 +378,26 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		final Set<OWLObject> set = new HashSet<OWLObject>();
 
 		if (pex != null) {
-		
-		if (pex.isObjectPropertyExpression()) {
-			final OWLNamedIndividual object = asOWLNamedIndividual(pvIL);
 
-			for (final OWLNamedIndividual i : getIndividuals()) {
-				if (r.isEntailed(f.getOWLObjectPropertyAssertionAxiom(
-						(OWLObjectPropertyExpression) pex, i, object))) {
-					set.add(i);
+			if (pex.isObjectPropertyExpression()) {
+				final OWLNamedIndividual object = asOWLNamedIndividual(pvIL);
+
+				for (final OWLNamedIndividual i : getIndividuals()) {
+					if (r.isEntailed(f.getOWLObjectPropertyAssertionAxiom(
+							(OWLObjectPropertyExpression) pex, i, object))) {
+						set.add(i);
+					}
+				}
+			} else if (pex.isDataPropertyExpression()) {
+				final OWLLiteral object = asOWLLiteral(pvIL);
+
+				for (final OWLNamedIndividual i : getIndividuals()) {
+					if (r.isEntailed(f.getOWLDataPropertyAssertionAxiom(
+							(OWLDataPropertyExpression) pex, i, object))) {
+						set.add(i);
+					}
 				}
 			}
-		} else if (pex.isDataPropertyExpression()) {
-			final OWLLiteral object = asOWLLiteral(pvIL);
-
-			for (final OWLNamedIndividual i : getIndividuals()) {
-				if (r.isEntailed(f.getOWLDataPropertyAssertionAxiom(
-						(OWLDataPropertyExpression) pex, i, object))) {
-					set.add(i);
-				}
-			}
-		}
 		}
 
 		return set;
@@ -591,10 +591,10 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 		Collection result;
 
-		if ( p == null || ni == null ) {
+		if (p == null || ni == null) {
 			return Collections.emptySet();
 		}
-		
+
 		if (p.isObjectPropertyExpression()) {
 			result = structuralReasoner.getObjectPropertyValues(ni,
 					(OWLObjectPropertyExpression) p).getFlattened();
@@ -643,6 +643,12 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		@Override
 		public Set<OWLClass> getBottoms() {
 			return Collections.singleton(f.getOWLNothing());
+		}
+
+		@Override
+		public Set<OWLClass> getDisjoints(OWLObject disjointG) {
+			return r.getDisjointClasses(asOWLClassExpression(disjointG))
+					.getFlattened();
 		}
 	};
 
@@ -729,6 +735,17 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		public Set<OWLClass> getBottoms() {
 			return Collections.singleton(f.getOWLNothing());
 		}
+
+		@Override
+		public Set<OWLClass> getDisjoints(OWLObject disjointG) {
+			final OWLClassExpression cex = asOWLClassExpression(disjointG);
+			if (cex.isAnonymous()) {
+				return Collections.emptySet();
+			} else {
+				return structuralReasoner.getDisjointClasses(cex)
+						.getFlattened();
+			}
+		}
 	};
 
 	@Override
@@ -813,7 +830,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 						.getFlattened());
 				if (!direct || set.isEmpty()) {
 					set.add(f.getOWLBottomDataProperty());
-				}				
+				}
 			} else if (cex.isObjectPropertyExpression()) {
 				final Set<OWLProperty> props = new HashSet<OWLProperty>();
 				for (final OWLObjectPropertyExpression ex : r
@@ -921,6 +938,30 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			return new HashSet<OWLProperty>(Arrays.asList(
 					f.getOWLBottomObjectProperty(),
 					f.getOWLBottomDataProperty()));
+		}
+
+		@Override
+		public Set<OWLProperty> getDisjoints(OWLObject disjointG) {
+			final OWLPropertyExpression cex = asOWLPropertyExpression(disjointG);
+
+			if (cex.isDataPropertyExpression()) {
+				return new HashSet<OWLProperty>(r.getDisjointDataProperties(
+						(OWLDataProperty) cex).getFlattened());
+			} else if (cex.isObjectPropertyExpression()) {
+				final Set<OWLProperty> props = new HashSet<OWLProperty>();
+				for (final OWLObjectPropertyExpression ex : r
+						.getDisjointObjectProperties(((OWLObjectProperty) cex))
+						.getFlattened()) {
+					if (ex.isAnonymous()) {
+						continue;
+					} else {
+						props.add(ex.asOWLObjectProperty());
+					}
+				}
+				return props;
+			} else {
+				throw new InternalReasonerException();
+			}
 		}
 	};
 

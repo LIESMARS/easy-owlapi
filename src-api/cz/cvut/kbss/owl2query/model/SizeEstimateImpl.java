@@ -74,13 +74,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 	private final Map<G, Integer> directSubClasses = new HashMap<G, Integer>();
 	private final Map<G, Integer> superClasses = new HashMap<G, Integer>();
 	private final Map<G, Integer> directSuperClasses = new HashMap<G, Integer>();
-	// private Map<G, Integer> disjoints = new HashMap<G, Integer>();
+	private Map<G, Integer> disjointClasses = new HashMap<G, Integer>();
 	// private Map<G, Integer> complements = new HashMap<G, Integer>();;
 	private final Map<G, Integer> equivProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> subProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> directSubProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> superProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> directSuperProperties = new HashMap<G, Integer>();
+	private Map<G, Integer> disjointProperties = new HashMap<G, Integer>();
 	// private Map<G, Integer> inverses;
 
 	private double avgClassesPI;
@@ -92,13 +93,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 	private double avgSuperClasses;
 	private double avgDirectSuperClasses;
 	private double avgEquivClasses;
-	// private double avgDisjoints;
+	private double avgDisjointClasses;
 	// private double avgComplements;
 	private double avgSubProperties;
 	private double avgDirectSubProperties;
 	private double avgSuperProperties;
 	private double avgDirectSuperProperties;
 	private double avgEquivProperties;
+	private double avgDisjointProperties;
 	// private double avgInversesPP;
 	private double avgPairsPP;
 	private double avgSubjectsPerProperty;
@@ -138,8 +140,11 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		equivClasses.put(ontology.getFactory().getThing(), 1);
 		equivClasses.put(ontology.getFactory().getNothing(), 1);
 
-		// disjoints.put(kb.getFactory().getThing(), 1);
-		// disjoints.put(kb.getFactory().getNothing(), cCount);
+		disjointClasses.put(kb.getFactory().getThing(), 1);
+		disjointClasses.put(kb.getFactory().getNothing(), pCount);
+
+		disjointProperties.put(kb.getFactory().getThing(), 1);
+		disjointProperties.put(kb.getFactory().getNothing(), pCount);
 
 		// complements.put(ATermUtils.TOP, 1);
 		// complements.put(ATermUtils.BOTTOM, 1);
@@ -274,6 +279,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 			superClasses.put(c, taxonomy.getSupers(c, false).size());
 			directSuperClasses.put(c, taxonomy.getSupers(c, true).size());
 			equivClasses.put(c, taxonomy.getEquivs(c).size() + 1);
+			disjointClasses.put(c, taxonomy.getDisjoints(c).size() + 1);
 			// } else {
 			// subClasses.put(c, 1);
 			// directSubClasses.put(c, 1);
@@ -334,6 +340,9 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 					.getSupers(p, true).size());
 			equivProperties.put(p, ontology.getPropertyHierarchy().getEquivs(p)
 					.size() + 1);
+			disjointProperties.put(p, ontology.getPropertyHierarchy()
+					.getEquivs(p).size() + 1);
+
 			// inverses.put(p, kb.getInverses(p).size());
 		}
 
@@ -530,13 +539,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		avgSuperClasses = average(superClasses.values());
 		avgDirectSuperClasses = average(directSuperClasses.values());
 		avgEquivClasses = average(equivClasses.values());
-		// avgDisjoints = average(disjoints.values());
+		avgDisjointClasses = average(disjointClasses.values());
 		// avgComplements = average(complements.values());
 		avgSubProperties = average(subProperties.values());
 		avgDirectSubProperties = average(directSubProperties.values());
 		avgSuperProperties = average(superProperties.values());
 		avgDirectSuperProperties = average(directSuperProperties.values());
 		avgEquivProperties = average(equivProperties.values());
+		avgDisjointProperties = average(disjointProperties.values());
 		// avgInversesPP = average(inverses.values());
 
 		// timer.stop();
@@ -583,7 +593,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		System.out.println("Avg equivalent classes:" + avgEquivClasses());
 		// System.out.println("Avg complement classes:" +
 		// avgComplementClasses());
-		// System.out.println("Avg disjoint classes:" + avgDisjointClasses());
+		System.out.println("Avg disjoint classes:" + avgDisjointClasses());
 
 		// TODO
 		// final StatisticsTable<G, String> properties = new StatisticsTable<G,
@@ -604,6 +614,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		System.out.println("Avg subproperties:" + avgSubProperties(false));
 		System.out.println("Avg superproperties:" + avgSuperProperties(false));
 		System.out.println("Avg equivalent properties:" + avgEquivProperties());
+		System.out.println("Avg disjoint property:" + avgDisjointProperties());
 
 		System.out.println("NoSatCost: " + noSatCost);
 		System.out.println("OneSatCost: " + oneSatCost);
@@ -719,9 +730,10 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		return avgEquivClasses;
 	}
 
-	// public double avgDisjointClasses() {
-	// return avgDisjoints;
-	// }
+	public double avgDisjointClasses() {
+		return avgDisjointClasses;
+	}
+
 	//
 	// public double avgComplementClasses() {
 	// return avgComplements;
@@ -737,6 +749,10 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 
 	public double avgEquivProperties() {
 		return avgEquivProperties;
+	}
+
+	public double avgDisjointProperties() {
+		return avgDisjointProperties;
 	}
 
 	// public double avgInverseProperties() {
@@ -850,6 +866,16 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		}
 	}
 
+	public double disjointProperties(G sup) {
+		if (!disjointProperties.containsKey(sup)) {
+			compute(EMPTY_SET, Collections.singleton(sup));
+			if (log.isLoggable(Level.FINE)) {
+				log.fine("Computing additionally " + sup);
+			}
+		}
+		return disjointProperties.get(sup);
+	}
+
 	public double sames(G sup) {
 		if (sames.containsKey(sup)) {
 			return sames.get(sup);
@@ -868,15 +894,16 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 				+ " is not found!");
 	}
 
-	// public double disjoints(G sup) {
-	// if (!disjoints.containsKey(sup)) {
-	// compute(Collections.singleton(sup), EMPTY_SET);
-	// if (log.isLoggable(Level.FINE)) {
-	// log.fine("Computing additionally " + sup);
-	// }
-	// }
-	// return disjoints.get(sup);
-	// }
+	public double disjointClasses(G sup) {
+		if (!disjointClasses.containsKey(sup)) {
+			compute(Collections.singleton(sup), EMPTY_SET);
+			if (log.isLoggable(Level.FINE)) {
+				log.fine("Computing additionally " + sup);
+			}
+		}
+		return disjointClasses.get(sup);
+	}
+
 	//
 	// public double complements(G sup) {
 	// if (!complements.containsKey(sup)) {
@@ -929,14 +956,15 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 			break;
 		//
 		// // 1 sat
-		// case IS_DISJOINT_WITH:
-		// case IS_COMPLEMENT_OF:
-		// cost = oneSatCost;
-		// break;
-		//
+		case IS_DISJOINTCLASS_WITH:
+		case IS_COMPLEMENTCLASS_OF:
+			cost = oneSatCost;
+			break;
+
 		// // triv
 		case IS_SUBPROPERTY_OF:
 		case IS_EQUIVALENT_PROPERTY:
+		case IS_DISJOINTPROPERTY_WITH:
 			cost = noSatCost;
 			break;
 
@@ -1039,6 +1067,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		case GET_SUB_OR_SUPERPROPERTIES:
 		case GET_DIRECT_SUB_OR_SUPERPROPERTIES: // TODO
 		case GET_EQUIVALENT_PROPERTIES:
+		case GET_DISJOINT_PROPERTIES:
 			cost = noSatCost;
 			break;
 

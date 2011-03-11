@@ -344,32 +344,30 @@ class QueryCost<G> {
 						* estimate.avgEquivClasses();
 			}
 			break;
-		// case DisjointWith:
-		// Term<G> dwLHS = arguments.get(0);
-		// Term<G> dwRHS = arguments.get(1);
-		//
-		// if (bound.containsAll(arguments)) {
-		// staticCost = estimate.getCost(KBOperation.IS_DISJOINT_WITH);
-		// branchCount = 1;
-		// } else if (bound.contains(dwLHS) || bound.contains(dwRHS)) {
-		// staticCost = estimate.getCost(KBOperation.GET_DISJOINT_CLASSES);
-		//
-		// if (bound.contains(dwLHS)) {
-		// branchCount = (!dwLHS.getTermType().equals(
-		// TermType.Variable)) ? estimate.disjoints(dwLHS
-		// .asGroundTerm()) : estimate.avgEquivClasses();
-		// } else {
-		// branchCount = (!dwRHS.getTermType().equals(
-		// TermType.Variable)) ? estimate.disjoints(dwRHS
-		// .asGroundTerm()) : estimate.avgEquivClasses();
-		// }
-		// } else {
-		// staticCost = estimate.getClassCount()
-		// * estimate.getCost(KBOperation.GET_DISJOINT_CLASSES);
-		// branchCount = estimate.getClassCount()
-		// * estimate.avgEquivClasses();
-		// }
-		// break;
+		case DisjointWith:
+			Term<G> dwLHS = arguments.get(0);
+			Term<G> dwRHS = arguments.get(1);
+
+			if (bound.containsAll(arguments)) {
+				staticCost = estimate.getCost(KBOperation.IS_DISJOINTCLASS_WITH);
+				branchCount = 1;
+			} else if (bound.contains(dwLHS) || bound.contains(dwRHS)) {
+				staticCost = estimate.getCost(KBOperation.GET_DISJOINT_CLASSES);
+
+				if (bound.contains(dwLHS)) {
+					branchCount = (dwLHS.isGround() ? estimate.disjointClasses(dwLHS
+							.asGroundTerm().getWrappedObject()) : estimate.avgDisjointClasses());
+				} else {
+					branchCount = (dwRHS.isGround() ? estimate.disjointClasses(dwRHS
+							.asGroundTerm().getWrappedObject()) : estimate.avgDisjointClasses());
+				}
+			} else {
+				staticCost = estimate.getClassCount()
+						* estimate.getCost(KBOperation.GET_DISJOINT_CLASSES);
+				branchCount = estimate.getClassCount()
+						* estimate.avgDisjointClasses();
+			}
+			break;
 		// case ComplementOf:
 		// Term<G> coLHS = arguments.get(0);
 		// Term<G> coRHS = arguments.get(1);

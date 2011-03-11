@@ -62,7 +62,10 @@ public interface SizeEstimate<G> {
 
 	double avgSubClasses(boolean direct);
 
-	// int disjoints(G dwLHS);
+	double disjointClasses(G dwLHS);
+	
+	double avgDisjointClasses();
+
 	//
 	// int complements(G coLHS);
 	//
@@ -73,6 +76,10 @@ public interface SizeEstimate<G> {
 	double superProperties(G spLHS, boolean direct);
 
 	double equivProperties(G spLHS);
+
+	double disjointProperties(G dwLHS);
+
+	double avgDisjointProperties();
 
 	double avgEquivProperties();
 

@@ -66,6 +66,13 @@ public interface Hierarchy<G, T extends G> {
 	public Set<T> getEquivs(final G equivG);
 
 	/**
+	 * Returns a set of all disjoint classes.
+	 * 
+	 * @return a set of named elements that are disjoint with disjointG
+	 */
+	public Set<T> getDisjoints(final G disjointG);
+
+	/**
 	 * Returns a set of all bottom elements (in case no common sink is defined).
 	 * E.g. OWL property hierarchy can have two sinks - owl:bottomObjectProperty
 	 * and owl:bottomDataProperty.
