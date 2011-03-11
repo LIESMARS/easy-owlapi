@@ -221,12 +221,12 @@ public class OWLAPIv3QueryFactory extends AbstractOWL2QueryFactory<OWLObject> {
 
 	@Override
 	public OWLObject literal(String s) {
-		return f.getOWLStringLiteral(s);
+		return f.getOWLLiteral(s);
 	}
 
 	@Override
 	public OWLObject literal(String s, String lang) {
-		return f.getOWLStringLiteral(s, lang);
+		return f.getOWLLiteral(s, lang);
 	}
 
 	@Override
@@ -318,7 +318,7 @@ public class OWLAPIv3QueryFactory extends AbstractOWL2QueryFactory<OWLObject> {
 
 	@Override
 	public OWLObject typedLiteral(String s, String datatype) {
-		return f.getOWLTypedLiteral(s, f.getOWLDatatype(IRI.create(datatype)));
+		return f.getOWLLiteral(s, f.getOWLDatatype(IRI.create(datatype)));
 
 	}
 

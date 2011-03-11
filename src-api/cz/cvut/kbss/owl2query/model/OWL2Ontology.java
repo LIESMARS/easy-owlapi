@@ -123,12 +123,6 @@ public interface OWL2Ontology<G> {
 
 	public Boolean isKnownTypeOf(G ce, G i);
 
-	// Collection<G> getDisjointClasses(
-	// G known);
-	//
-	// boolean isDisjoint(G ce1, G
-	// ce2);
-	//
 	// Collection<G> getComplements(G
 	// ce);
 	//
