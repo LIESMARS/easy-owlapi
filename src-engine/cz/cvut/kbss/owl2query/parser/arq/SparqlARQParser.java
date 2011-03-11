@@ -49,9 +49,15 @@ import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.sparql.core.BasicPattern;
 import com.hp.hpl.jena.sparql.core.Var;
+import com.hp.hpl.jena.sparql.lang.MyParserSPARQL10;
+import com.hp.hpl.jena.sparql.lang.Parser;
+import com.hp.hpl.jena.sparql.lang.ParserFactory;
+import com.hp.hpl.jena.sparql.lang.ParserRegistry;
+import com.hp.hpl.jena.sparql.serializer.MySerializer;
 import com.hp.hpl.jena.sparql.syntax.Element;
 import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementTriplesBlock;
+import com.hp.hpl.jena.sparql.util.IndentedLineBuffer;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
@@ -121,6 +127,15 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 	 */
 	public OWL2Query<G> parse(final String queryStr, final OWL2Ontology<G> kb)
 			throws QueryParseException {
+
+		//Register parser factory that preserves bnode labels
+		ParserRegistry.addFactory(
+				Syntax.syntaxSPARQL, 
+                new ParserFactory() {
+					public boolean accept( Syntax syntax ) { return Syntax.syntaxSPARQL.equals(syntax) ; } 
+					public Parser create( Syntax syntax ) { return new MyParserSPARQL10(); } 
+				}) ;
+		
 		return parse(QueryFactory.create(queryStr, Syntax.syntaxSPARQL), kb);
 	}
 
@@ -144,7 +159,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 		final ElementGroup elementGroup = (ElementGroup) pattern;
 		final List<Element> elements = elementGroup.getElements();
-		
+
 		if (elements.size() != 1
 				|| !(elements.get(0) instanceof ElementTriplesBlock)) {
 			System.out.println("elements = " + elements);
@@ -247,6 +262,12 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 				// Symmetric(p)
 				else if (obj.equals(OWL2.SymmetricProperty.asNode())) {
 					query.Symmetric(s);
+					setupPropertyTerm(subj, s, null, query);
+				}
+				
+				// Asymmetric(p)
+				else if (obj.equals(OWL2.AsymmetricProperty.asNode())) {
+					query.Asymmetric(s);
 					setupPropertyTerm(subj, s, null, query);
 				}
 
@@ -1113,6 +1134,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 			throws UnsupportedQueryException {
 		Term<G> t = (Term<G>) terms.get(node);
 
+
 		if (t == null) {
 			if (node.equals(OWL2.Thing.asNode()))
 				return f.wrap(f.getThing());
@@ -1261,13 +1283,17 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 		return t;
 	}
+	
 
 	@Override
 	public void write(OWL2Query<G> query, Writer os, final OWL2Ontology<G> kb) {
 		undistVars.clear();
 		InternalQuery<G> internalQuery = (InternalQuery<G>) query;
 
-		Query q = QueryFactory.make();
+//		Query q = QueryFactory.make();
+		Query q = new Query(){
+			public void serialize(IndentedLineBuffer buff, Syntax outSyntax) { MySerializer.serialize(this, buff, outSyntax) ; }
+		};
 
 		if (internalQuery.getResultVars().isEmpty()) {
 			q.setQueryAskType();
@@ -1422,6 +1448,16 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 						internalQuery), OWL.inverseOf.asNode(), property2Node(a
 						.getArguments().get(1), internalQuery)));
 				break;
+			case ObjectProperty:
+				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
+						internalQuery), RDF.type.asNode(), OWL.ObjectProperty
+						.asNode()));
+				break;
+			case DatatypeProperty:
+				bp.addTriple(new Triple(property2Node(a.getArguments().get(0),
+						internalQuery), RDF.type.asNode(), OWL.DatatypeProperty
+						.asNode()));
+				break;
 			default:
 				throw new UnsupportedOperationException("Not Supported Yet");
 			}
@@ -1437,15 +1473,15 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 	private String BASE_NM = "http://pellet.owldl.com/ns/sdle#";
 
-	private Map<String,Variable<G>> undistVars = new HashMap<String, Variable<G>>();
-	
+	private Map<String, Variable<G>> undistVars = new HashMap<String, Variable<G>>();
+
 	private Node getVariable(final Variable<G> var, final InternalQuery<G> query) {
 		Variable<G> v = undistVars.get(var.getName());
-		if ( v == null ) {
+		if (v == null) {
 			v = var;
 			undistVars.put(var.getName(), var);
-		}		
-		
+		}
+
 		if (query.getUndistVars().contains(v)) {
 			return Var.createAnon(new AnonId(v.getName()));
 		} else {
@@ -1476,9 +1512,15 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		} else {
 			try {
 				String s = i.asGroundTerm().getWrappedObject().toString();
-
-				URI uri = URI.create(s.substring(1, s.length() - 1));
-				return Node.createURI(uri.toString());
+				String val = s.substring(1, s.length() - 1);
+//				System.out.println(s);
+				if(s != null && s.length() > 0 && s.charAt(0) == '"'){//literal
+					return Node.createLiteral(val);
+				}else{//uri
+					URI uri = URI.create(val);
+					return Node.createURI(uri.toString());
+				}
+				
 			} catch (IllegalArgumentException e) {
 				return Node.createLiteral(i.asGroundTerm().getWrappedObject()
 						.toString());
@@ -1517,16 +1559,18 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 									.length() - 1));
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		SparqlARQParser<OWLObject> o = new SparqlARQParser<OWLObject>();
 		OWLOntologyManager m = OWLManager.createOWLOntologyManager();
 		OWLOntology ont;
 		try {
 			ont = m.createOntology();
-		OWLReasoner r = new StructuralReasonerFactory().createNonBufferingReasoner(ont);
-		
-		o.parse("SELECT * WHERE {?x ?y ?z.}" , new OWLAPIv3OWL2Ontology(m, ont, r));
+			OWLReasoner r = new StructuralReasonerFactory()
+					.createNonBufferingReasoner(ont);
+
+			o.parse("SELECT * WHERE {?x ?y ?z.}", new OWLAPIv3OWL2Ontology(m,
+					ont, r));
 
 		} catch (OWLOntologyCreationException e) {
 			// TODO Auto-generated catch block
