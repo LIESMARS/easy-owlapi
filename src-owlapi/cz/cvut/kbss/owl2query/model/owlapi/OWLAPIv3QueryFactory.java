@@ -33,6 +33,7 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
 import cz.cvut.kbss.owl2query.engine.AbstractOWL2QueryFactory;
 
@@ -221,7 +222,7 @@ public class OWLAPIv3QueryFactory extends AbstractOWL2QueryFactory<OWLObject> {
 
 	@Override
 	public OWLObject literal(String s) {
-		return f.getOWLLiteral(s);
+		return f.getOWLLiteral(s,OWL2Datatype.RDF_PLAIN_LITERAL);
 	}
 
 	@Override
