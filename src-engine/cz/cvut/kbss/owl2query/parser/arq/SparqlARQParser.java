@@ -1534,8 +1534,11 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		} else {
 			try {
 				String s = c.asGroundTerm().getWrappedObject().toString();
-
-				URI uri = URI.create(s.substring(1, s.length() - 1));
+				if(s.charAt(0) == '<'){
+					s = s.substring(1, s.length() - 1);
+				}
+				URI uri = URI.create(s);
+//				URI uri = URI.create(s.substring(1, s.length() - 1));
 				return Node.createURI(uri.toString());
 			} catch (IllegalArgumentException e) {
 				throw new UnsupportedQueryException(
@@ -1549,14 +1552,18 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		if (p.isVariable()) {
 			return getVariable(p.asVariable(), query);
 		} else {
-			return Node.createURI(p
-					.asGroundTerm()
-					.getWrappedObject()
-					.toString()
-					.substring(
-							1,
-							p.asGroundTerm().getWrappedObject().toString()
-									.length() - 1));
+			String uri = p.asGroundTerm().getWrappedObject().toString();
+			if(uri.charAt(0) == '<')
+				uri = uri.substring(1,uri.length() - 1);
+			return Node.createURI(uri);
+//			return Node.createURI(p
+//					.asGroundTerm()
+//					.getWrappedObject()
+//					.toString()
+//					.substring(
+//							1,
+//							p.asGroundTerm().getWrappedObject().toString()
+//									.length() - 1));
 		}
 	}
 
