@@ -31,14 +31,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedObject;
 import org.semanticweb.owlapi.model.OWLObject;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
+import com.hp.hpl.jena.datatypes.BaseDatatype;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.graph.impl.LiteralLabel;
@@ -84,7 +81,6 @@ import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.UnionOf;
 import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
-import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
 import cz.cvut.kbss.owl2query.parser.QueryParseException;
 import cz.cvut.kbss.owl2query.parser.QueryParser;
 import cz.cvut.kbss.owl2query.parser.QueryWriter;
@@ -128,14 +124,17 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 	public OWL2Query<G> parse(final String queryStr, final OWL2Ontology<G> kb)
 			throws QueryParseException {
 
-		//Register parser factory that preserves bnode labels
-		ParserRegistry.addFactory(
-				Syntax.syntaxSPARQL, 
-                new ParserFactory() {
-					public boolean accept( Syntax syntax ) { return Syntax.syntaxSPARQL.equals(syntax) ; } 
-					public Parser create( Syntax syntax ) { return new MyParserSPARQL10(); } 
-				}) ;
-		
+		// Register parser factory that preserves bnode labels
+		ParserRegistry.addFactory(Syntax.syntaxSPARQL, new ParserFactory() {
+			public boolean accept(Syntax syntax) {
+				return Syntax.syntaxSPARQL.equals(syntax);
+			}
+
+			public Parser create(Syntax syntax) {
+				return new MyParserSPARQL10();
+			}
+		});
+
 		return parse(QueryFactory.create(queryStr, Syntax.syntaxSPARQL), kb);
 	}
 
@@ -264,7 +263,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 					query.Symmetric(s);
 					setupPropertyTerm(subj, s, null, query);
 				}
-				
+
 				// Asymmetric(p)
 				else if (obj.equals(OWL2.AsymmetricProperty.asNode())) {
 					query.Asymmetric(s);
@@ -537,17 +536,19 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		return false;
 	}
 
-	private boolean hasObject(Node subj, Node pred, Node obj)
-			throws UnsupportedQueryException {
+	private boolean hasObject(Node subj, Node pred, Node obj,
+			boolean strictParsing) throws UnsupportedQueryException {
 		for (final Iterator<Triple> i = triples.iterator(); i.hasNext();) {
 			final Triple t = i.next();
 			if (subj.equals(t.getSubject()) && pred.equals(t.getPredicate())) {
-				i.remove();
 				if (obj.equals(t.getObject())) {
+					i.remove();
 					return true;
 				}
-				throw new UnsupportedQueryException("Expecting rdf:type " + obj
-						+ " but found rdf:type " + t.getObject());
+				if (strictParsing) {
+					throw new UnsupportedQueryException("Expecting rdf:type "
+							+ obj + " but found rdf:type " + t.getObject());
+				}
 			}
 		}
 
@@ -573,7 +574,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		else if (terms.containsKey(node))
 			return lists.get(node);
 
-		hasObject(node, RDF.type.asNode(), RDF.List.asNode());
+		hasObject(node, RDF.type.asNode(), RDF.List.asNode(), true);
 
 		final Node first = getObject(node, RDF.first.asNode());
 		final Node rest = getObject(node, RDF.rest.asNode());
@@ -597,7 +598,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 			throws UnsupportedQueryException {
 		Term<G> t = f.wrap(f.getThing());
 
-		hasObject(node, RDF.type.asNode(), OWL2.Restriction.asNode());
+		hasObject(node, RDF.type.asNode(), OWL2.Restriction.asNode(), true);
 
 		final Node p = getObject(node, OWL2.onProperty.asNode());
 
@@ -631,7 +632,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		if ((o = getObject(node, OWL2.hasValue.asNode())) != null) {
 			t = hasValue(pt, node2term(o, VarType.INDIVIDUAL_OR_LITERAL));
 		} else if (hasObject(node, OWL2.hasSelf.asNode(), ResourceFactory
-				.createTypedLiteral(Boolean.TRUE).asNode())) {
+				.createTypedLiteral(Boolean.TRUE).asNode(), true)) {
 			t = objectHasSelf(pt);
 		} else if ((o = getObject(node, OWL2.allValuesFrom.asNode())) != null) {
 			t = allValuesFrom(pt, node2term(o, VarType.CLASS));
@@ -1134,7 +1135,6 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 			throws UnsupportedQueryException {
 		Term<G> t = (Term<G>) terms.get(node);
 
-
 		if (t == null) {
 			if (node.equals(OWL2.Thing.asNode()))
 				return f.wrap(f.getThing());
@@ -1189,7 +1189,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 				} else if ((o = getObject(node, OWL2.unionOf.asNode())) != null) {
 					final Collection<Term<G>> list = createList(o,
 							VarType.CLASS);
-					hasObject(node, RDF.type.asNode(), OWL2.Class.asNode());
+					hasObject(node, RDF.type.asNode(), OWL2.Class.asNode(), true);
 
 					// if (hasObject(node, RDF.type.asNode(),
 					// OWL2.Class.asNode())) {
@@ -1201,7 +1201,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 					// // aTerm = f.wrap(f.dataUnionOf(list)); TODO
 					// }
 				} else if ((o = getObject(node, OWL2.oneOf.asNode())) != null) {
-					hasObject(node, RDF.type.asNode(), OWL2.Class.asNode());
+					hasObject(node, RDF.type.asNode(), OWL2.Class.asNode(), true);
 
 					final Collection<Term<G>> list = createList(o,
 							VarType.CLASS);
@@ -1236,19 +1236,19 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 				if (ont.is(f.namedClass(uri), OWLObjectType.OWLClass)
 						|| hasObject(node, RDF.type.asNode(),
-								OWL2.Class.asNode())) {
+								OWL2.Class.asNode(), false)) {
 					t = f.wrap(f.namedClass(uri));
-				} else if (ont.is(f.namedClass(uri),
+				} else if (ont.is(f.namedObjectProperty(uri),
 						OWLObjectType.OWLObjectProperty)
 						|| hasObject(node, RDF.type.asNode(),
-								OWL2.ObjectProperty.asNode())) {
+								OWL2.ObjectProperty.asNode(), false)) {
 					t = f.wrap(f.namedObjectProperty(uri));
-				} else if (ont.is(f.namedClass(uri),
+				} else if (ont.is(f.namedDataProperty(uri),
 						OWLObjectType.OWLDataProperty)
 						|| hasObject(node, RDF.type.asNode(),
-								OWL2.DatatypeProperty.asNode())) {
+								OWL2.DatatypeProperty.asNode(), false)) {
 					t = f.wrap(f.namedDataProperty(uri));
-				} else if (ont.is(f.namedClass(uri),
+				} else if (ont.is(f.namedIndividual(uri),
 						OWLObjectType.OWLNamedIndividual)) {
 					t = f.wrap(f.namedIndividual(uri));
 				} else {
@@ -1283,16 +1283,17 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 
 		return t;
 	}
-	
 
 	@Override
 	public void write(OWL2Query<G> query, Writer os, final OWL2Ontology<G> kb) {
 		undistVars.clear();
 		InternalQuery<G> internalQuery = (InternalQuery<G>) query;
 
-//		Query q = QueryFactory.make();
-		Query q = new Query(){
-			public void serialize(IndentedLineBuffer buff, Syntax outSyntax) { MySerializer.serialize(this, buff, outSyntax) ; }
+		// Query q = QueryFactory.make();
+		Query q = new Query() {
+			public void serialize(IndentedLineBuffer buff, Syntax outSyntax) {
+				MySerializer.serialize(this, buff, outSyntax);
+			}
 		};
 
 		if (internalQuery.getResultVars().isEmpty()) {
@@ -1511,16 +1512,36 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 			return getVariable(i.asVariable(), query);
 		} else {
 			try {
-				String s = i.asGroundTerm().getWrappedObject().toString();
+				String s = i.asGroundTerm().toString();
 				String val = s.substring(1, s.length() - 1);
-//				System.out.println(s);
-				if(s != null && s.length() > 0 && s.charAt(0) == '"'){//literal
-					return Node.createLiteral(val);
-				}else{//uri
+				
+				// System.out.println(s);
+//				if (s != null && s.length() > 0 && s.charAt(0) == '"') {// literal
+				
+				if (i.asGroundTerm().getWrappedObject() instanceof OWLLiteral) {// literal
+					int ti = s.lastIndexOf("^^");
+					String type = null;
+					String lit = s;
+					if (ti > -1) {
+						OWLLiteral literal = (OWLLiteral)i.asGroundTerm().getWrappedObject();
+						if(literal.getDatatype() != null){
+							type = literal.getDatatype().getIRI().toString();
+						}else
+							type = s.substring(ti + 2);
+						lit = s.substring(0, ti);
+					}
+					if (lit.charAt(0) == '"')
+						lit = lit.substring(1, lit.length() - 1);
+					if (type != null)
+						return Node.createLiteral(lit, null, new BaseDatatype(
+								type));
+					else
+						return Node.createLiteral(lit);
+				} else {// uri
 					URI uri = URI.create(val);
 					return Node.createURI(uri.toString());
 				}
-				
+
 			} catch (IllegalArgumentException e) {
 				return Node.createLiteral(i.asGroundTerm().getWrappedObject()
 						.toString());
@@ -1534,11 +1555,15 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 		} else {
 			try {
 				String s = c.asGroundTerm().getWrappedObject().toString();
-				if(s.charAt(0) == '<'){
+				if (s.charAt(0) == '<') {
 					s = s.substring(1, s.length() - 1);
 				}
+				OWL2QueryFactory f = query.getOntology().getFactory();
+				OWLNamedObject o = (OWLNamedObject)c.asGroundTerm().getWrappedObject();
+				if(o.equals(f.getThing()))
+					s = o.getIRI().toString();
 				URI uri = URI.create(s);
-//				URI uri = URI.create(s.substring(1, s.length() - 1));
+				// URI uri = URI.create(s.substring(1, s.length() - 1));
 				return Node.createURI(uri.toString());
 			} catch (IllegalArgumentException e) {
 				throw new UnsupportedQueryException(
@@ -1553,35 +1578,39 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 			return getVariable(p.asVariable(), query);
 		} else {
 			String uri = p.asGroundTerm().getWrappedObject().toString();
-			if(uri.charAt(0) == '<')
-				uri = uri.substring(1,uri.length() - 1);
+			if (uri.charAt(0) == '<')
+				uri = uri.substring(1, uri.length() - 1);
+			OWL2QueryFactory f = query.getOntology().getFactory();
+			OWLNamedObject o = (OWLNamedObject)p.asGroundTerm().getWrappedObject();
+			if(o.equals(f.getTopDataProperty()) || o.equals(f.getTopObjectProperty()))
+				uri = o.getIRI().toString();
 			return Node.createURI(uri);
-//			return Node.createURI(p
-//					.asGroundTerm()
-//					.getWrappedObject()
-//					.toString()
-//					.substring(
-//							1,
-//							p.asGroundTerm().getWrappedObject().toString()
-//									.length() - 1));
+			// return Node.createURI(p
+			// .asGroundTerm()
+			// .getWrappedObject()
+			// .toString()
+			// .substring(
+			// 1,
+			// p.asGroundTerm().getWrappedObject().toString()
+			// .length() - 1));
 		}
 	}
 
-	public static void main(String[] args) {
-		SparqlARQParser<OWLObject> o = new SparqlARQParser<OWLObject>();
-		OWLOntologyManager m = OWLManager.createOWLOntologyManager();
-		OWLOntology ont;
-		try {
-			ont = m.createOntology();
-			OWLReasoner r = new StructuralReasonerFactory()
-					.createNonBufferingReasoner(ont);
-
-			o.parse("SELECT * WHERE {?x ?y ?z.}", new OWLAPIv3OWL2Ontology(m,
-					ont, r));
-
-		} catch (OWLOntologyCreationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	// public static void main(String[] args) {
+	// SparqlARQParser<OWLObject> o = new SparqlARQParser<OWLObject>();
+	// OWLOntologyManager m = OWLManager.createOWLOntologyManager();
+	// OWLOntology ont;
+	// try {
+	// ont = m.createOntology();
+	// OWLReasoner r = new StructuralReasonerFactory()
+	// .createNonBufferingReasoner(ont);
+	//
+	// o.parse("SELECT * WHERE {?x ?y ?z.}", new OWLAPIv3OWL2Ontology(m,
+	// ont, r));
+	//
+	// } catch (OWLOntologyCreationException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 }
