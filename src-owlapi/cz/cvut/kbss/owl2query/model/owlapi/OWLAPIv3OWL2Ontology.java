@@ -123,7 +123,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			final OWLEntity ee = (OWLEntity) e;
 			if (is(ee, OWLObjectType.OWLObjectProperty)) {
 				return f.getOWLObjectProperty(ee.getIRI());
-			} else if (o.containsDataPropertyInSignature(ee.getIRI())) {
+			} else if (is(ee, OWLObjectType.OWLDataProperty)) {
 				return f.getOWLDataProperty(ee.getIRI());
 			}
 		} else if (e instanceof OWLPropertyExpression<?, ?>) {
@@ -271,13 +271,13 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 				if (e instanceof OWLEntity) {
 					result = o
 							.containsAnnotationPropertyInSignature(((OWLEntity) e)
-									.getIRI());
+									.getIRI(),true);
 				}
 				break;
 			case OWLDataProperty:
 				if (e instanceof OWLEntity) {
 					result = o.containsDataPropertyInSignature(((OWLEntity) e)
-							.getIRI())
+							.getIRI(),true)
 							|| e.equals(f.getOWLTopDataProperty())
 							|| e.equals(f.getOWLBottomDataProperty());
 				}
@@ -286,7 +286,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 				if (e instanceof OWLEntity) {
 					result = o
 							.containsObjectPropertyInSignature(((OWLEntity) e)
-									.getIRI())
+									.getIRI(),true)
 							|| (e.equals(f.getOWLTopObjectProperty()) || e
 									.equals(f.getOWLBottomObjectProperty()));
 				}
@@ -294,7 +294,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			case OWLClass:
 				if (e instanceof OWLEntity) {
 					result = o.containsClassInSignature(((OWLEntity) e)
-							.getIRI())
+							.getIRI(),true)
 							|| e.equals(f.getOWLThing())
 							|| e.equals(f.getOWLNothing());
 				}
@@ -302,7 +302,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			case OWLNamedIndividual:
 				if (e instanceof OWLEntity) {
 					result = o.containsIndividualInSignature(((OWLEntity) e)
-							.getIRI());
+							.getIRI(),true);
 				}
 
 				break;
@@ -342,6 +342,11 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	@Override
 	public boolean isTypeOf(OWLObject ce, OWLObject i, boolean direct) {
+
+		if ( is(i,OWLObjectType.OWLLiteral) ) {
+			return false;
+		}
+		
 		final OWLNamedIndividual ii = asOWLNamedIndividual((OWLEntity) i);
 		final OWLClassExpression cce = asOWLClassExpression(ce);
 
@@ -779,7 +784,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 		@Override
 		public Set<OWLProperty> getSubs(OWLObject superCE, boolean direct) {
-			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);
+			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);			
 			if (cex.equals(f.getOWLBottomObjectProperty())) {
 				return Collections.emptySet();
 			} else if (cex.equals(f.getOWLTopObjectProperty())) {
