@@ -119,17 +119,16 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	private OWLPropertyExpression<?, ?> asOWLPropertyExpression(
 			final OWLObject e) {
-		if (e instanceof OWLPropertyExpression<?, ?>) {
-			return (OWLPropertyExpression<?, ?>) e;
-		} else if (e instanceof OWLEntity) {
+		if (e instanceof OWLEntity) {
 			final OWLEntity ee = (OWLEntity) e;
 			if (is(ee, OWLObjectType.OWLObjectProperty)) {
 				return f.getOWLObjectProperty(ee.getIRI());
 			} else if (o.containsDataPropertyInSignature(ee.getIRI())) {
 				return f.getOWLDataProperty(ee.getIRI());
 			}
+		} else if (e instanceof OWLPropertyExpression<?, ?>) {
+			return (OWLPropertyExpression<?, ?>) e;
 		}
-
 		return null;
 	}
 
@@ -378,7 +377,6 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		final Set<OWLObject> set = new HashSet<OWLObject>();
 
 		if (pex != null) {
-
 			if (pex.isObjectPropertyExpression()) {
 				final OWLNamedIndividual object = asOWLNamedIndividual(pvIL);
 
