@@ -88,14 +88,13 @@
                 <directory>resources</directory>
             </resource>
         </resources>
-        <sourceDirectory>.</sourceDirectory>
+        <sourceDirectory>src-api</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <includes>
-                        <include>src-api/**/*.java</include>
                         <include>src-engine/**/*.java</include>
                         <include>src-owlapi/**/*.java</include>
                     </includes>

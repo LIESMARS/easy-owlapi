@@ -1,6 +1,6 @@
 <projectDescription>
   <name>owl2query</name>
-  <comment>SPARQL-DL^NOT query engine for OWL 2. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <comment>SPARQL-DL^NOT query engine for OWL 2</comment>
   <projects/>
   <buildSpec>
     <buildCommand>

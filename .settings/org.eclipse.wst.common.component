@@ -3,9 +3,8 @@
     <wb-module deploy-name="owl2query">
 <wb-resource deploy-path="/" source-path="/src-hermit"/>
         <wb-resource deploy-path="/" source-path="/resources"/>
-        <wb-resource deploy-path="/" source-path="/"/>
-        <wb-resource deploy-path="/" source-path="/src-api"/>
         <wb-resource deploy-path="/" source-path="/src-engine"/>
         <wb-resource deploy-path="/" source-path="/src-owlapi"/>
+        <wb-resource deploy-path="/" source-path="/src-api"/>
     </wb-module>
 </project-modules>
