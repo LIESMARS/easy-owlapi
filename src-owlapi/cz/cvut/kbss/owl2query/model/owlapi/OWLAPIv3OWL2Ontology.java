@@ -383,6 +383,10 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 		if (pex != null) {
 			if (pex.isObjectPropertyExpression()) {
+				if ( !is(pvIL,OWLObjectType.OWLNamedIndividual) ) {
+					return set;
+				}
+				
 				final OWLNamedIndividual object = asOWLNamedIndividual(pvIL);
 
 				for (final OWLNamedIndividual i : getIndividuals()) {
@@ -392,6 +396,10 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					}
 				}
 			} else if (pex.isDataPropertyExpression()) {
+				if ( !is(pvIL,OWLObjectType.OWLLiteral) ) {
+					return set;
+				}
+
 				final OWLLiteral object = asOWLLiteral(pvIL);
 
 				for (final OWLNamedIndividual i : getIndividuals()) {

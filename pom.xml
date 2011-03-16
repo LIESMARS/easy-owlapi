@@ -4,7 +4,7 @@
 
     <groupId>cz.cvut.kbss</groupId>
     <artifactId>owl2query</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
 
     <name>owl2query</name>
@@ -88,13 +88,14 @@
                 <directory>resources</directory>
             </resource>
         </resources>
-        <sourceDirectory>src-api</sourceDirectory>
+        <sourceDirectory>.</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <includes>
+                        <include>src-api/**/*.java</include>
                         <include>src-engine/**/*.java</include>
                         <include>src-owlapi/**/*.java</include>
                     </includes>
