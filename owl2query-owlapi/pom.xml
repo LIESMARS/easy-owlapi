@@ -8,6 +8,10 @@
 	</parent>
 	<artifactId>owl2query-owlapi</artifactId>
 
+	<properties>
+		<pellet.version>2.3.0</pellet.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>cz.cvut.kbss</groupId>
@@ -39,56 +43,56 @@
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-core</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-datatypes</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-el</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-explanation</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-modularity</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-owlapiv3</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-query</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mindswap.pellet</groupId>
 			<artifactId>pellet-rules</artifactId>
-			<version>2.2.2</version>
+			<version>${pellet.version}</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
