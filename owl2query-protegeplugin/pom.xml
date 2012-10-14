@@ -1,0 +1,342 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cz.cvut.kbss</groupId>
+    <artifactId>owl2queryprotege</artifactId>
+    <version>0.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Protege OWL2QueryGraph plugin</name>
+    <url>http://maven.apache.org</url>
+
+	<developers>
+		<developer>
+			<name>Petr Křemen</name>
+			<email>petr.kremen@fel.cvut.cz</email>
+			<url>http://cyber.felk.cvut.cz/people</url>
+			<organization>Czech Technical University in Prague, Knowledge Based and Software Systems Group</organization>
+			<organizationUrl>http://krizik.felk.cvut.cz</organizationUrl>
+			<roles>
+			</roles>
+		</developer>
+		<developer>
+			<name>Bogdan Kostov</name>
+			<email>kostobog@fel.cvut.cz</email>
+			<url>http://cyber.felk.cvut.cz/people</url>
+			<organization>Czech Technical University in Prague, Knowledge Based and Software Systems Group</organization>
+			<organizationUrl>http://krizik.felk.cvut.cz</organizationUrl>
+			<roles>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:https://krizik.felk.cvut.cz/km/owl2query/svn/owl2queryprotege/trunk</connection>
+		<developerConnection>scm:http://krizik.felk.cvut.cz/km/owl2query/svn/owl2queryprotege/trunk</developerConnection>
+		<url>https://krizik.felk.cvut.cz/km/owl2query/svn/owl2query/trunk</url>
+	</scm>
+
+	<profiles>
+	</profiles>
+	<repositories>
+		<repository>
+			<releases>
+			</releases>
+			<id>krizik</id>
+			<name>KBSS Maven 2 Repository</name>
+			<url>http://krizik.felk.cvut.cz/m2repo</url>
+		</repository>
+		<!-- repository>
+			<releases>
+			</releases>
+			<id>protege_repo</id>
+			<name>Protege Maven2 Repository</name>
+			<url>http://bmir-hudson1.stanford.edu/nexus/content/groups/public/</url>
+		</repository-->
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>krizik</id>
+			<name>KBSS Maven 2 Repository</name>
+			<url>http://krizik.felk.cvut.cz/m2repo</url>
+		</repository>
+		<site>
+			<id>owl2queryprotege</id>
+			<name>OWL2QueryProtege</name>
+			<url>http://owl2query.sourceforge.net</url>
+		</site>
+		<downloadUrl>http://sourceforge.net/projects/owl2query/files/</downloadUrl>
+	</distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <manifest.template>${project.basedir}/META-INF/TEMPLATE_MANIFEST.MF</manifest.template>
+        <manifest.generated>META-INF/MANIFEST.MF</manifest.generated>
+        <properties.tmp>${project.build.directory}/properties.tmp</properties.tmp>
+        <repoclasspath>${project.build.directory}/repoclasspath</repoclasspath>
+        <bundlecp_name>Bundle-ClassPath</bundlecp_name>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>cz.cvut.kbss</groupId>
+            <artifactId>owl2querygraph</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.cvut.kbss</groupId>
+            <artifactId>owl2query-owlapi</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>protege4</groupId>
+            <artifactId>org.protege.editor.core.application</artifactId>
+            <version>4.1.0.213_SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>protege4</groupId>
+            <artifactId>org.protege.editor.owl</artifactId>
+            <version>4.1.0.213_SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/cz/cvut/kbss/owl2query/protege</directory>
+				<includes>
+					<include>*.properties</include>
+				</includes>
+				<targetPath>cz/cvut/kbss/owl2query/protege</targetPath>
+			</resource>
+			<resource>
+				<directory>src/cz/cvut/kbss/owl2query/protege/icons</directory>
+				<excludes>
+					<exclude>.svn</exclude>
+				</excludes>
+				<targetPath>cz/cvut/kbss/owl2query/protege/icons</targetPath>
+			</resource>
+			<!-- <resource> -->
+			<!-- <directory>bundlelib</directory> -->
+			<!-- <targetPath>bundlelib</targetPath> -->
+			<!-- </resource> -->
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>plugin.xml</include>
+					<include>viewconfig-owl2queryTab.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin><!-- clean bundlelib so that new versions of libraries replaced by new ones -->
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.basedir}/lib</directory>
+							<includes>
+								<include>*.*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<compilerArgument>-g</compilerArgument>
+				</configuration>
+			</plugin>
+			<!-- Create jar file -->
+			<!-- Copy the dependency libs from repository into the build ${project.basedir}/bundlelib -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<excludeArtifactIds>
+								log4j,junit,org.protege.common,org.protege.editor.core.application,org.protege.editor.owl,protege-owlapi-extensions,owlapi,mdock,swing-worker,xmlcatalog,xml-resolver,commons-lang,commons-logging,looks
+                            </excludeArtifactIds>
+							<outputDirectory>${project.basedir}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Use antrun to generate the classpath based on the copied dependencies 
+				for the bundle -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- create the path variable -->
+								<pathconvert property="bundlecp">
+									<path id="tools.class.path">
+										<fileset dir="lib" includes="*.jar" />
+									</path>
+									<!-- make paths relative -->
+									<chainedmapper>
+										<flattenmapper />
+										<globmapper from="*" to="lib/*" />
+									</chainedmapper>
+								</pathconvert>
+								<!-- change path separtor from ; to , to be compatible with manifest 
+									syntax -->
+								<script language="javascript">
+                                	s=project.getProperty("bundlecp").replace(':',',');
+                                    project.setProperty("bundlecp", s);
+                                </script>
+								<!-- save the property to a file so that it can be read and used 
+									in the pom -->
+								<echo file="${properties.tmp}" message="${bundlecp_name}=${bundlecp}" />
+								<copy todir="target/classes/lib">
+									<fileset dir="lib" includes="*.jar" />
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+
+					<!-- This execution extracts the generated manifest to the root directory 
+						and prepends to the Bundle-ClassPath entry target/classes path. This is done 
+						to be able to debug the plugin in eclipse -->
+					<execution>
+						<id>configure.debug.manifest</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<unzip dest=".">
+									<patternset>
+										<include name="${manifest.generated}" />
+									</patternset>
+									<fileset dir="target">
+										<include name="*.jar" />
+									</fileset>
+								</unzip>
+								<replace file="${manifest.generated}" token="${bundlecp_name}: ."
+									value="${bundlecp_name}: .,target/classes" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Read the property Bundle-ClassPath generated in the antrun plugin 
+				so that it can be used in the package phase to fill the Bundle-ClassPath 
+				Manifest entry. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-1</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${properties.tmp}</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generate the manifest(for osgi bundle) for the protege plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<!-- <manifest> -->
+						<!-- <addClasspath>true</addClasspath> -->
+						<!-- <classpathPrefix>lib</classpathPrefix> -->
+						<!-- </manifest> -->
+						<manifestEntries>
+							<Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+							<Bundle-Name>OWL2Query Protege Plug-in</Bundle-Name>
+							<Bundle-Category>protege</Bundle-Category>
+							<Bundle-Description>A Query Tab for SPARQL-DL</Bundle-Description>
+							<Bundle-SymbolicName>cz.cvut.kbss.OWL2Query;singleton:=true</Bundle-SymbolicName>
+							<Bundle-ClassPath>.,${Bundle-ClassPath}</Bundle-ClassPath>
+							<Import-Package>
+								org.osgi.framework,
+								javax.swing,
+								javax.swing.border,
+								javax.swing.colorchooser,
+								javax.swing.event,
+								javax.swing.filechooser,
+								javax.swing.plaf,
+								javax.swing.plaf.basic,
+								javax.swing.plaf.metal,
+								javax.swing.plaf.multi,
+								javax.swing.plaf.synth,
+								javax.swing.table,
+								javax.swing.text,
+								javax.swing.text.html,
+								javax.swing.text.html.parser,
+								javax.swing.text.rtf,
+								javax.swing.tree,
+								javax.swing.undo,
+								javax.accessibility,
+								javax.annotation,
+								org.w3c.dom,
+								org.w3c.dom.bootstrap,
+								org.w3c.dom.events,
+								org.w3c.dom.ls,
+								org.xml.sax,
+								org.xml.sax.ext,
+								org.xml.sax.helpers,
+								javax.xml.parsers,
+								javax.xml.datatype,
+								javax.management,
+								org.protege.common.log,
+								org.protege.editor.owl.ui.prefix,
+								org.apache.log4j
+</Import-Package>
+							<Bundle-Version>1.0.0</Bundle-Version>
+							<Bundle-Activator>org.protege.editor.core.plugin.DefaultPluginActivator</Bundle-Activator>
+							<Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
+							<Require-Bundle>
+								org.eclipse.equinox.registry,
+								org.eclipse.equinox.common,
+								org.protege.editor.core.application,
+								org.protege.editor.owl,
+								org.semanticweb.owl.owlapi
+</Require-Bundle>
+							<Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
+							<Bundle-Vendor>CVUT</Bundle-Vendor>
+							<Bundle-DocURL>http://krizik.felk.cvut.cz/km/owl2query</Bundle-DocURL>
+							<Update-Url>http://krizik.felk.cvut.cz/km/owl2query/update.properties</Update-Url>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
