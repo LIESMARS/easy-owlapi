@@ -1,18 +1,22 @@
 Manifest-Version: 1.0
 Archiver-Version: Plexus Archiver
 Created-By: Apache Maven
-Built-By: user
-Build-Jdk: 1.6.0_33
+Built-By: kremep1
+Build-Jdk: 1.7.0_04
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.protege.editor.core.plugin.DefaultPluginActivator
 Bundle-Category: protege
-Bundle-ClassPath: .,target/classes,lib/arq-2.8.2.jar;lib/icu4j-3.4.4.jar;lib/iri-0.8.
- jar;lib/jena-2.6.2.jar;lib/jgraph-5.13.0.4.jar;lib/jgraphaddons-1.0.7
- .jar;lib/lucene-core-2.3.1.jar;lib/owl2query-api-0.0.1-SNAPSHOT.jar;l
- ib/owl2query-engine-0.0.1-SNAPSHOT.jar;lib/owl2query-owlapi-0.0.1-SNA
- PSHOT.jar;lib/owl2querygraph-0.1-SNAPSHOT.jar;lib/slf4j-api-1.5.6.jar
- ;lib/slf4j-log4j12-1.5.6.jar;lib/stax-api-1.0.1.jar;lib/wstx-asl-3.2.
- 9.jar;lib/xercesImpl-2.7.1.jar
+Bundle-ClassPath: .,target/classes,lib/arq-2.8.2.jar,lib/icu4j-3.4.4.jar,lib/iri-0.8.
+ jar,lib/jena-2.6.2.jar,lib/jgraph-5.13.0.4.jar,lib/jgraphaddons-1.0.7
+ .jar,lib/jgrapht-jdk1.5-0.7.3.jar,lib/lucene-core-2.3.1.jar,lib/owl2q
+ uery-0.3-SNAPSHOT.jar,lib/owl2query-api-0.3.1-SNAPSHOT.jar,lib/owl2qu
+ ery-engine-0.3.1-SNAPSHOT.jar,lib/owl2query-owlapi-0.3.1-SNAPSHOT.jar
+ ,lib/owl2querygraph-0.1-SNAPSHOT.jar,lib/owlapi-api-3.4.jar,lib/owlap
+ i-apibinding-3.4.jar,lib/owlapi-contract-3.4.jar,lib/owlapi-distribut
+ ion-3.4.jar,lib/owlapi-impl-3.4.jar,lib/owlapi-parsers-3.4.jar,lib/ow
+ lapi-tools-3.4.jar,lib/slf4j-api-1.5.6.jar,lib/slf4j-log4j12-1.5.6.ja
+ r,lib/stax-api-1.0.1.jar,lib/wstx-asl-3.2.9.jar,lib/xercesImpl-2.7.1.
+ jar
 Bundle-Description: A Query Tab for SPARQL-DL
 Bundle-DocURL: http://krizik.felk.cvut.cz/km/owl2query
 Bundle-ManifestVersion: 2
