@@ -771,41 +771,41 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 		public Set<OWLProperty> getSubs(OWLObject superCE, boolean direct) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);
-			if (cex.equals(f.getOWLBottomObjectProperty())) {
-				return Collections.singleton((OWLProperty) f.getOWLBottomObjectProperty());
-			} else if (cex.equals(f.getOWLTopObjectProperty())) {
-				final Set<OWLProperty> set = new HashSet<OWLProperty>();
-				set.addAll(getObjectProperties());
-
-				if (direct) {
-					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
-						if (!getSupers(op, true).contains(
-								f.getOWLTopObjectProperty())) {
-							set.remove(op);
-						}
-					}
-				}
-
-				set.add(f.getOWLBottomObjectProperty());
-
-				return set;
-			} else if (cex.equals(f.getOWLTopDataProperty())) {
-				final Set<OWLProperty> set = new HashSet<OWLProperty>();
-				set.addAll(getDataProperties());
-
-				if (direct) {
-					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
-						if (!getSupers(op, true).contains(
-								f.getOWLTopDataProperty())) {
-							set.remove(op);
-						}
-					}
-				}
-
-				set.add(f.getOWLBottomObjectProperty());
-
-				return set;
-			}
+//			if (cex.equals(f.getOWLBottomObjectProperty())) {
+//				return Collections.singleton((OWLProperty) f.getOWLBottomObjectProperty());
+//			} else if (cex.equals(f.getOWLTopObjectProperty())) {
+//				final Set<OWLProperty> set = new HashSet<OWLProperty>();
+//				set.addAll(getObjectProperties());
+//
+//				if (direct) {
+//					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
+//						if (!getSupers(op, true).contains(
+//								f.getOWLTopObjectProperty())) {
+//							set.remove(op);
+//						}
+//					}
+//				}
+//
+//				set.add(f.getOWLBottomObjectProperty());
+//
+//				return set;
+//			} else if (cex.equals(f.getOWLTopDataProperty())) {
+//				final Set<OWLProperty> set = new HashSet<OWLProperty>();
+//				set.addAll(getDataProperties());
+//
+//				if (direct) {
+//					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
+//						if (!getSupers(op, true).contains(
+//								f.getOWLTopDataProperty())) {
+//							set.remove(op);
+//						}
+//					}
+//				}
+//
+//				set.add(f.getOWLBottomObjectProperty());
+//
+//				return set;
+//			}
 
 			final Set<OWLProperty> set = new HashSet<OWLProperty>();
 
@@ -964,18 +964,6 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<OWLObjectProperty> getAsymmetricProperties() {
-		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
-
-		for (final OWLObjectProperty p : getObjectProperties()) {
-			if (r.isEntailed(f.getOWLAsymmetricObjectPropertyAxiom(p))) {
-				set.add(p);
-			}
-		}
-
-		return set;
-	}
-
 	public Set<? extends OWLObject> getInverseFunctionalProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
@@ -1024,7 +1012,20 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getTransitiveProperties() {
+
+    public Set<OWLObjectProperty> getAsymmetricProperties() {
+        final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
+
+        for (final OWLObjectProperty p : getObjectProperties()) {
+            if (r.isEntailed(f.getOWLAsymmetricObjectPropertyAxiom(p))) {
+                set.add(p);
+            }
+        }
+
+        return set;
+    }
+
+    public Set<? extends OWLObject> getTransitiveProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1034,11 +1035,6 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		}
 
 		return set;
-	}
-
-	public boolean isAsymmetricProperty(OWLObject Term) {
-		return r.isEntailed(f
-				.getOWLAsymmetricObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}
 
 	public boolean isFunctionalProperty(OWLObject Term) {
@@ -1076,7 +1072,12 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	}
 
-	public boolean isTransitiveProperty(OWLObject Term) {
+    public boolean isAsymmetricProperty(OWLObject Term) {
+        return r.isEntailed(f
+                .getOWLAsymmetricObjectPropertyAxiom(asOWLObjectProperty(Term)));
+    }
+
+    public boolean isTransitiveProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLTransitiveObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}

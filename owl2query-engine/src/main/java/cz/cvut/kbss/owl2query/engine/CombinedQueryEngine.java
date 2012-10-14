@@ -1053,12 +1053,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 										dependent, binding);
 							}
 						}
-					}
-					// not break here - if there is an atom InverseOf(?X,?X)
-					// we
-					// can
-					// just
-					// retrieve all symmetric properties.
+                        break;
+                    }
 				case Symmetric:
 					runAllPropertyChecks(arguments.get(0).asVariable(),
 							kb.getSymmetricProperties(), binding);

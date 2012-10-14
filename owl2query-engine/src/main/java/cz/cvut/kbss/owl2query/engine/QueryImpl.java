@@ -228,12 +228,12 @@ class QueryImpl<G> implements InternalQuery<G> {
 	 * {@inheritDoc}
 	 */
 	public InternalQuery<G> addDistVar(Variable<G> a, boolean result) {
-		if (!getDistVars().contains(a)) {
+		if (!distVars.contains(a)) {
 			distVars.add(a);
 		}
 		
-		if (result) {		
-			addResultVar(a);
+		if (result && !resultVars.contains(a)) {
+			resultVars.add(a);
 		}
 		return this;
 	}
@@ -242,10 +242,8 @@ class QueryImpl<G> implements InternalQuery<G> {
 	 * {@inheritDoc}
 	 */
 	public InternalQuery<G> addResultVar(Variable<G> a) {
-		if (!getResultVars().contains(a)) {
-			resultVars.add(a);
-		}
-		return this;
+		addDistVar(a,true);
+        return this;
 	}
 
 	/**
