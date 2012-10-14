@@ -3,8 +3,6 @@ package cz.cvut.kbss.owl2query;
 import java.util.Arrays;
 import java.util.Collection;
 
-import cz.cvut.kbss.owl2query.QueryTester.ReasonerPlugin;
-
 public class UTAM {
 	public static void main(String[] args) {
 		final QueryTester q = new QueryTester();
@@ -21,7 +19,7 @@ public class UTAM {
 		// q
 		// .getGenericOWLAPIv3(new PelletReasonerFactory())
 
-		final Collection<ReasonerPlugin> rs = Arrays.asList((ReasonerPlugin) q
+		final Collection<GenericOWLAPITester.ReasonerPlugin> rs = Arrays.asList((GenericOWLAPITester.ReasonerPlugin) q
 				.getGenericOWLAPIv3(TestConfiguration.FACTORY));
 
 		// ,q
@@ -32,14 +30,14 @@ public class UTAM {
 				.println("==============================================================================");
 
 		// for (int i : queries) {
-		for (final ReasonerPlugin<?> rp : rs) {
+		for (final GenericOWLAPITester.ReasonerPlugin rp : rs) {
 
 			System.out.print("\n" + 1 + "-" + rp.getAbbr() + "\t|\t");
 			System.out
 					.println(q
 							.run(rp,
 									"file:///home/kremen/fel/projects/utam/internal-svn/utam-failures/impl/runtime-queries/Xquery-defects-of-objects-and-parts.sparql",
-									"/home/kremen/fel/projects/utam/internal-svn/utam-failures/impl/runtime/mapping",
+									"/home/kremen/fel/projects/utam/internal-svn/utam-failures/impl/runtime/mapping",1,
 									"file:///home/kremen/fel/projects/utam/internal-svn/utam-failures/impl/runtime/utam-failures.owl"
 							// "file:///home/kremen/work/java/datasets/lubm/university0-0.owl",
 							// "file:///home/kremen/work/java/datasets/lubm/university0-1.owl",

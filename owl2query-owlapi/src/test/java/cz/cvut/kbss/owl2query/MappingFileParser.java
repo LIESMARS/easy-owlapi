@@ -17,6 +17,11 @@ public class MappingFileParser {
 	public static Map<URI, URI> getMappings(final File mf) {
 		final Map<URI, URI> map = new HashMap<URI, URI>();
 		String line = null;
+		
+		if ( mf == null ) {
+			return map;
+		}
+		
 		final File defaultDir = mf.getParentFile();
 		BufferedReader r;
 		try {

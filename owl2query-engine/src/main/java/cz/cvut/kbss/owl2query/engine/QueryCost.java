@@ -373,33 +373,36 @@ class QueryCost<G> {
 						* estimate.avgDisjointClasses();
 			}
 			break;
-		// case ComplementOf:
-		// Term<G> coLHS = arguments.get(0);
-		// Term<G> coRHS = arguments.get(1);
-		//
-		// if (bound.containsAll(arguments)) {
-		// staticCost = estimate.getCost(KBOperation.IS_COMPLEMENT_OF);
-		// branchCount = 1;
-		// } else if (bound.contains(coLHS) || bound.contains(coRHS)) {
-		// staticCost = estimate
-		// .getCost(KBOperation.GET_COMPLEMENT_CLASSES);
-		//
-		// if (bound.contains(coLHS)) {
-		// branchCount = (!coLHS.getTermType().equals(
-		// TermType.Variable)) ? estimate.complements(coLHS
-		// .asGroundTerm()) : estimate.avgComplementClasses();
-		// } else {
-		// branchCount = (!coRHS.getTermType().equals(
-		// TermType.Variable)) ? estimate.complements(coRHS
-		// .asGroundTerm()) : estimate.avgComplementClasses();
-		// }
-		// } else {
-		// staticCost = estimate.getClassCount()
-		// * estimate.getCost(KBOperation.GET_COMPLEMENT_CLASSES);
-		// branchCount = estimate.getClassCount()
-		// * estimate.avgComplementClasses();
-		// }
-		// break;
+		case ComplementOf:
+			Term<G> coLHS = arguments.get(0);
+			Term<G> coRHS = arguments.get(1);
+
+			if (bound.containsAll(arguments)) {
+				staticCost = estimate
+						.getCost(KBOperation.IS_COMPLEMENTCLASS_OF);
+				branchCount = 1;
+			} else if (bound.contains(coLHS) || bound.contains(coRHS)) {
+				staticCost = estimate
+						.getCost(KBOperation.GET_COMPLEMENT_CLASSES);
+
+				if (bound.contains(coLHS)) {
+					branchCount = (!coLHS.isVariable()) ? estimate
+							.complements(coLHS.asGroundTerm()
+									.getWrappedObject()) : estimate
+							.avgComplementClasses();
+				} else {
+					branchCount = (!coRHS.isVariable()) ? estimate
+							.complements(coRHS.asGroundTerm()
+									.getWrappedObject()) : estimate
+							.avgComplementClasses();
+				}
+			} else {
+				staticCost = estimate.getClassCount()
+						* estimate.getCost(KBOperation.GET_COMPLEMENT_CLASSES);
+				branchCount = estimate.getClassCount()
+						* estimate.avgComplementClasses();
+			}
+			break;
 
 		case DirectSubPropertyOf:
 			direct = true;
@@ -528,32 +531,32 @@ class QueryCost<G> {
 						* estimate.avgEquivProperties();
 			}
 			break;
-		// case InverseOf:
-		// Term<G> ioLHS = arguments.get(0);
-		// Term<G> ioRHS = arguments.get(1);
-		//
-		// if (bound.containsAll(arguments)) {
-		// staticCost = estimate.getCost(KBOperation.IS_INVERSE_OF);
-		// branchCount = 1;
-		// } else if (bound.contains(ioLHS) || bound.contains(ioRHS)) {
-		// staticCost = estimate.getCost(KBOperation.GET_INVERSES);
-		//
-		// if (bound.contains(ioLHS)) {
-		// branchCount = (!ioLHS.getTermType().equals(
-		// TermType.Variable)) ? estimate.inverses(ioLHS.asGroundTerm())
-		// : estimate.avgInverseProperties();
-		// } else {
-		// branchCount = (!ioRHS.getTermType().equals(
-		// TermType.Variable)) ? estimate.inverses(ioRHS.asGroundTerm())
-		// : estimate.avgInverseProperties();
-		// }
-		// } else {
-		// staticCost = estimate.getPropertyCount()
-		// * estimate.getCost(KBOperation.GET_INVERSES);
-		// branchCount = estimate.getPropertyCount()
-		// * estimate.avgInverseProperties();
-		// }
-		// break;
+		case InverseOf:
+			Term<G> ioLHS = arguments.get(0);
+			Term<G> ioRHS = arguments.get(1);
+
+			if (bound.containsAll(arguments)) {
+				staticCost = estimate.getCost(KBOperation.IS_INVERSE_OF);
+				branchCount = 1;
+			} else if (bound.contains(ioLHS) || bound.contains(ioRHS)) {
+				staticCost = estimate.getCost(KBOperation.GET_INVERSES);
+
+				if (bound.contains(ioLHS)) {
+					branchCount = (!ioLHS.isVariable()) ? estimate
+							.inverses(ioLHS.asGroundTerm().getWrappedObject())
+							: estimate.avgInverseProperties();
+				} else {
+					branchCount = (!ioRHS.isVariable()) ? estimate
+							.inverses(ioRHS.asGroundTerm().getWrappedObject())
+							: estimate.avgInverseProperties();
+				}
+			} else {
+				staticCost = estimate.getObjectPropertyCount()
+						* estimate.getCost(KBOperation.GET_INVERSES);
+				branchCount = estimate.getObjectPropertyCount()
+						* estimate.avgInverseProperties();
+			}
+			break;
 		case ObjectProperty:
 			if (bound.containsAll(arguments)) {
 				staticCost = 0;// estimate.getCost(KBOperation.IS_OBJECT_PROPERTY);
@@ -596,17 +599,17 @@ class QueryCost<G> {
 		// branchCount = estimate.getInverseFunctionalPropertyCount();
 		// }
 		// break;
-		// case Transitive:
-		// if (bound.containsAll(arguments)) {
-		// staticCost = estimate
-		// .getCost(KBOperation.IS_TRANSITIVE_PROPERTY);
-		// branchCount = 1;
-		// } else {
-		// staticCost = estimate
-		// .getCost(KBOperation.GET_TRANSITIVE_PROPERTIES);
-		// branchCount = estimate.getTransitivePropertyCount();
-		// }
-		// break;
+		case Transitive:
+			if (bound.containsAll(arguments)) {
+				staticCost = estimate
+						.getCost(KBOperation.IS_TRANSITIVE_PROPERTY);
+				branchCount = 1;
+			} else {
+				staticCost = estimate
+						.getCost(KBOperation.GET_TRANSITIVE_PROPERTIES);
+				branchCount = estimate.getTransitivePropertyCount();
+			}
+			break;
 		case Symmetric:
 			if (bound.containsAll(arguments)) {
 				staticCost = estimate

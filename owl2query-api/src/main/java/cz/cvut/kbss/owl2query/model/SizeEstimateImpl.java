@@ -50,14 +50,13 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 	private int opCount;
 	private int dpCount;
 
-	// private int fpCount;
-
-	// private int ifpCount;
-	//
-	// private int tpCount;
-	//
+	private int fpCount;
+	private int ifpCount;
 	private int spCount;
+	private int tpCount;
 	private int aspCount;
+	private int rpCount;
+	private int irpCount;
 
 	private int cCount;
 	private int iCount;
@@ -76,14 +75,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 	private final Map<G, Integer> superClasses = new HashMap<G, Integer>();
 	private final Map<G, Integer> directSuperClasses = new HashMap<G, Integer>();
 	private Map<G, Integer> disjointClasses = new HashMap<G, Integer>();
-	// private Map<G, Integer> complements = new HashMap<G, Integer>();;
+	private Map<G, Integer> complementClasses = new HashMap<G, Integer>();;
 	private final Map<G, Integer> equivProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> subProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> directSubProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> superProperties = new HashMap<G, Integer>();
 	private final Map<G, Integer> directSuperProperties = new HashMap<G, Integer>();
 	private Map<G, Integer> disjointProperties = new HashMap<G, Integer>();
-	// private Map<G, Integer> inverses;
+	private Map<G, Integer> inverses;
 
 	private double avgClassesPI;
 	private double avgDirectClassesPI;
@@ -95,14 +94,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 	private double avgDirectSuperClasses;
 	private double avgEquivClasses;
 	private double avgDisjointClasses;
-	// private double avgComplements;
+	private double avgComplements;
 	private double avgSubProperties;
 	private double avgDirectSubProperties;
 	private double avgSuperProperties;
 	private double avgDirectSuperProperties;
 	private double avgEquivProperties;
 	private double avgDisjointProperties;
-	// private double avgInversesPP;
+	private double avgInversesPP;
 	private double avgPairsPP;
 	private double avgSubjectsPerProperty;
 	private double avgInstancesPC;
@@ -117,13 +116,16 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		opCount = ontology.getObjectProperties().size();
 		dpCount = ontology.getDataProperties().size();
 		pCount = opCount + dpCount;
-		// fpCount = kb.getFunctionalProperties().size();
-		// ifpCount = kb.getInverseFunctionalProperties().size();
-		// tpCount = kb.getTransitiveProperties().size();
-		 spCount = kb.getSymmetricProperties().size();
-		 aspCount = kb.getAsymmetricProperties().size();
 
-		// inverses = new HashMap<G, Integer>();
+		fpCount = kb.getFunctionalProperties().size();
+		ifpCount = kb.getInverseFunctionalProperties().size();
+		tpCount = kb.getTransitiveProperties().size();
+		spCount = kb.getSymmetricProperties().size();
+		aspCount = kb.getAsymmetricProperties().size();
+		rpCount = kb.getReflexiveProperties().size();
+		irpCount = kb.getIrreflexiveProperties().size();
+
+		inverses = new HashMap<G, Integer>();
 
 		instancesPC.put(ontology.getFactory().getThing(), iCount);
 		instancesPC.put(ontology.getFactory().getNothing(), 0);
@@ -148,8 +150,8 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		disjointProperties.put(kb.getFactory().getThing(), 1);
 		disjointProperties.put(kb.getFactory().getNothing(), pCount);
 
-		// complements.put(ATermUtils.TOP, 1);
-		// complements.put(ATermUtils.BOTTOM, 1);
+		complementClasses.put(kb.getFactory().getThing(), 1);
+		complementClasses.put(kb.getFactory().getNothing(), cCount);
 
 		computed = false;
 
@@ -282,6 +284,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 			directSuperClasses.put(c, taxonomy.getSupers(c, true).size());
 			equivClasses.put(c, taxonomy.getEquivs(c).size() + 1);
 			disjointClasses.put(c, taxonomy.getDisjoints(c).size() + 1);
+			complementClasses.put(c, taxonomy.getDisjoints(c).size() + 1);
 			// } else {
 			// subClasses.put(c, 1);
 			// directSubClasses.put(c, 1);
@@ -344,8 +347,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 					.size() + 1);
 			disjointProperties.put(p, ontology.getPropertyHierarchy()
 					.getEquivs(p).size() + 1);
-
-			// inverses.put(p, kb.getInverses(p).size());
+			inverses.put(p, ontology.getInverses(p).size());
 		}
 
 		for (final G ind : ontology.getIndividuals()) {
@@ -542,14 +544,14 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		avgDirectSuperClasses = average(directSuperClasses.values());
 		avgEquivClasses = average(equivClasses.values());
 		avgDisjointClasses = average(disjointClasses.values());
-		// avgComplements = average(complements.values());
+		avgComplements = average(complementClasses.values());
 		avgSubProperties = average(subProperties.values());
 		avgDirectSubProperties = average(directSubProperties.values());
 		avgSuperProperties = average(superProperties.values());
 		avgDirectSuperProperties = average(directSuperProperties.values());
 		avgEquivProperties = average(equivProperties.values());
 		avgDisjointProperties = average(disjointProperties.values());
-		// avgInversesPP = average(inverses.values());
+		avgInversesPP = average(inverses.values());
 
 		// timer.stop();
 
@@ -593,8 +595,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		System.out.println("Avg superclasses:" + avgSuperClasses(false));
 		System.out.println("Avg direct superclasses:" + avgSuperClasses(true));
 		System.out.println("Avg equivalent classes:" + avgEquivClasses());
-		// System.out.println("Avg complement classes:" +
-		// avgComplementClasses());
+		System.out.println("Avg complement classes:" + avgComplementClasses());
 		System.out.println("Avg disjoint classes:" + avgDisjointClasses());
 
 		// TODO
@@ -617,6 +618,7 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		System.out.println("Avg superproperties:" + avgSuperProperties(false));
 		System.out.println("Avg equivalent properties:" + avgEquivProperties());
 		System.out.println("Avg disjoint property:" + avgDisjointProperties());
+		System.out.println("Avg inverse properties:" + avgInverseProperties());
 
 		System.out.println("NoSatCost: " + noSatCost);
 		System.out.println("OneSatCost: " + oneSatCost);
@@ -665,7 +667,6 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		} else {
 			return 0;
 		}
-
 	}
 
 	public int getClassCount() {
@@ -688,21 +689,33 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		return dpCount;
 	}
 
-	// public int getFunctionalPropertyCount() {
-	// return fpCount;
-	// }
-	//
-	// public int getInverseFunctionalPropertyCount() {
-	// return ifpCount;
-	// }
-	//
-	// public int getTransitivePropertyCount() {
-	// return tpCount;
-	// }
-	//
-	// public int getSymmetricPropertyCount() {
-	// return spCount;
-	// }
+	public int getFunctionalPropertyCount() {
+		return fpCount;
+	}
+
+	public int getInverseFunctionalPropertyCount() {
+		return ifpCount;
+	}
+
+	public int getTransitivePropertyCount() {
+		return tpCount;
+	}
+
+	public int getSymmetricPropertyCount() {
+		return spCount;
+	}
+
+	public int getAsymmetricPropertyCount() {
+		return aspCount;
+	}
+
+	public int getReflexivePropertyCount() {
+		return rpCount;
+	}
+
+	public int getIrreflexivePropertyCount() {
+		return irpCount;
+	}
 
 	public double avgInstancesPerClass(boolean direct) {
 		return direct ? avgDirectInstances : avgInstancesPC;
@@ -736,11 +749,10 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		return avgDisjointClasses;
 	}
 
-	//
-	// public double avgComplementClasses() {
-	// return avgComplements;
-	// }
-	//
+	public double avgComplementClasses() {
+		return avgComplements;
+	}
+
 	public double avgSubProperties(boolean direct) {
 		return direct ? avgDirectSubProperties : avgSubProperties;
 	}
@@ -824,8 +836,6 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		final Map<G, Integer> map = (direct ? directSuperProperties
 				: superProperties);
 
-		System.out.println("sup=" + sup + ", map=" + map);
-
 		if (!map.containsKey(sup)) {
 			compute(EMPTY_SET, Collections.singleton(sup));
 			if (log.isLoggable(Level.FINE)) {
@@ -906,28 +916,30 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		return disjointClasses.get(sup);
 	}
 
-	//
-	// public double complements(G sup) {
-	// if (!complements.containsKey(sup)) {
-	// compute(Collections.singleton(sup), EMPTY_SET);
-	// if (log.isLoggable(Level.FINE)) {
-	// log.fine("Computing additionally " + sup);
-	// }
-	// }
-	// return complements.get(sup);
-	// }
-	//
-	// public double inverses(G sup) {
-	// if (!inverses.containsKey(sup)) {
-	// compute(EMPTY_SET, Collections.singleton(sup));
-	// if (log.isLoggable(Level.FINE)) {
-	// log.fine("Computing additionally " + sup);
-	// }
-	// }
-	// return inverses.get(sup);
-	// }
 
-	// kb.getClasses().size();
+	public double avgInverseProperties() {
+		return avgInverseProperties();
+	}
+
+	public double complements(G sup) {
+		if (!complementClasses.containsKey(sup)) {
+			compute(Collections.singleton(sup), EMPTY_SET);
+			if (log.isLoggable(Level.FINE)) {
+				log.fine("Computing additionally " + sup);
+			}
+		}
+		return complementClasses.get(sup);
+	}
+
+	public double inverses(G sup) {
+		if (!inverses.containsKey(sup)) {
+			compute(EMPTY_SET, Collections.singleton(sup));
+			if (log.isLoggable(Level.FINE)) {
+				log.fine("Computing additionally " + sup);
+			}
+		}
+		return inverses.get(sup);
+	}
 
 	public long getCost(KBOperation operation) {
 		long cost;
@@ -977,23 +989,24 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		// break;
 		//
 		// // one sat. check if any
-		// case IS_FUNCTIONAL_PROPERTY:
-		// case IS_INVERSE_FUNCTIONAL_PROPERTY:
-		// case IS_TRANSITIVE_PROPERTY:
-		// cost = oneSatCost;
-		// break;
+		case IS_REFLEXIVE_PROPERTY:
+		case IS_IRREFLEXIVE_PROPERTY:
+		case IS_SYMMETRIC_PROPERTY:
+		case IS_ASYMMETRIC_PROPERTY:
+		case IS_FUNCTIONAL_PROPERTY:
+		case IS_INVERSE_FUNCTIONAL_PROPERTY:
+		case IS_TRANSITIVE_PROPERTY:
+			cost = oneSatCost;
+			break;
 
 		// // triv.
-		// case IS_INVERSE_OF:
-		// cost = noSatCost;
-		// break;
-		case IS_ASYMMETRIC_PROPERTY:
-		case IS_SYMMETRIC_PROPERTY:
+		case IS_INVERSE_OF:
 			cost = noSatCost;
 			break;
-		// case GET_INVERSES:
-		// cost = noSatCost;
-		// break;
+
+		case GET_INVERSES:
+			cost = noSatCost;
+			break;
 
 		case GET_INSTANCES:
 			cost = instanceRetrievalCost;
@@ -1006,14 +1019,10 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 
 		// if realized triv, otherwise TODO
 		// binary class retrieval. Currently, realization
+		// case GET_DIRECT_TYPES:
 		case GET_TYPES:
 			cost = classRetrievalCost;
 			break;
-
-		// TODO
-		// case GET_DIRECT_TYPES:
-		// cost = getCost(KBOperation.GET_TYPES);
-		// break;
 
 		// instance retrieval for a small set of instances, meanwhile as
 		// instance retrieval.
@@ -1046,11 +1055,13 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		// break;
 
 		// // currently trivial - not complete impl.
-		// case GET_FUNCTIONAL_PROPERTIES:
-		// case GET_INVERSE_FUNCTIONAL_PROPERTIES:
-		// case GET_TRANSITIVE_PROPERTIES:
+		case GET_FUNCTIONAL_PROPERTIES:
+		case GET_INVERSE_FUNCTIONAL_PROPERTIES:
+		case GET_TRANSITIVE_PROPERTIES:
 		case GET_SYMMETRIC_PROPERTIES:
 		case GET_ASYMMETRIC_PROPERTIES:
+		case GET_REFLEXIVE_PROPERTIES:
+		case GET_IRREFLEXIVE_PROPERTIES:
 			cost = noSatCost;
 			break;
 
@@ -1081,13 +1092,5 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 		}
 
 		return cost;
-	}
-
-	public int getSymmetricPropertyCount() {
-		return spCount;
-	}
-
-	public int getAsymmetricPropertyCount() {
-		return aspCount;
 	}
 }

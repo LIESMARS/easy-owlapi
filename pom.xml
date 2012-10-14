@@ -4,12 +4,18 @@
 
     <groupId>cz.cvut.kbss</groupId>
     <artifactId>owl2query</artifactId>
-    <version>0.3</version>
+    <version>0.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>owl2query</name>
     <description>SPARQL-DL^NOT query engine for OWL 2</description>
     <url>http://owl2query.sourceforge.net</url>
+
+    <modules>
+        <module>owl2query-api</module>
+        <module>owl2query-engine</module>
+        <module>owl2query-owlapi</module>
+    </modules>
 
     <profiles>
     </profiles>
@@ -24,6 +30,10 @@
         <repository>
             <id>jena</id>
             <url>http://repo1.maven.org/maven2/com/hp/hpl/</url>
+        </repository>
+        <repository>
+            <id>stlab</id>
+            <url>http://stlab.istc.cnr.it/software/maven/repo/</url>
         </repository>
     </repositories>
 

@@ -19,18 +19,21 @@ public interface OWL2Query<G> {
 	/**
 	 * Adds a distinguished variable to the query with its type - there can be
 	 * more variable types to support punning.
-	 * 
-	 * @param atom
 	 */
-	void addDistVar(final Variable<G> a);
+	OWL2Query<G> addDistVar(final Variable<G> a, boolean result);
+
+	/**
+	 * @deprecated
+	 */
+	OWL2Query<G> addDistVar(final Variable<G> a);
 
 	/**
 	 * Adds a distinguished variable that appears in the result projection to
 	 * the query;
 	 * 
-	 * @param atom
+	 * @deprecated
 	 */
-	void addResultVar(final Variable<G> a);
+	OWL2Query<G> addResultVar(final Variable<G> a);
 
 	// ABOX atoms
 	OWL2Query<G> Type(final Term<G> c, final Term<G> i);

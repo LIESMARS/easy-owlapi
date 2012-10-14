@@ -891,29 +891,26 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 					}
 					break;
 
-				// case ComplementOf: // TODO implementation of
-				// downMonotonic
-				// vars
-				// final Term<G> coLHS = arguments.get(0);
-				// final Term<G> coRHS = arguments.get(1);
-				//
-				// if (!coLHS.equals(coRHS)) {
-				// // TODO optimizeTBox
-				// for (final Term<G> known : getSymmetricCandidates(
-				// VarType.CLASS, coLHS, coRHS)) {
-				// for (final Term<G> dependent : kb
-				// .getComplements(known)) {
-				// runSymetricCheck(current, coLHS, known, coRHS,
-				// dependent, binding);
-				// }
-				// }
-				// } else {
-				// log
-				// .finer("Atom "
-				// + current
-				// + "cannot be satisfied in any consistent ontology.");
-				// }
-				// break;
+				case ComplementOf:
+					final Term<G> coLHS = arguments.get(0);
+					final Term<G> coRHS = arguments.get(1);
+
+					if (!coLHS.equals(coRHS)) {
+						// TODO optimizeTBox
+						for (final G known : getSymmetricCandidates(
+								VarType.CLASS, coLHS, coRHS)) {
+							for (final G dependent : kb
+									.getClassHierarchy().getEquivs(f.objectComplementOf(known))) {
+								runSymetricCheck(current, coLHS, known, coRHS,
+										dependent, binding);
+							}
+						}
+					} else {
+						log.finer("Atom "
+								+ current
+								+ "cannot be satisfied in any consistent ontology.");
+					}
+					break;
 
 				// RBOX ATOMS
 				case DirectSubPropertyOf:
@@ -975,7 +972,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 								} else {
 									spLhsCandidates.add(spRHSGT);
 								}
-								
+
 							} else {
 								spLhsCandidates = getObjectAndDataProperties();
 							}
@@ -1171,7 +1168,8 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 							.getQuery().getResultVars());
 					List<QueryResult<G>> candidates = new ArrayList<QueryResult<G>>();
 
-					for (final Variable<G> v : notAtom.getQuery().getResultVars()) {
+					for (final Variable<G> v : notAtom.getQuery()
+							.getResultVars()) {
 						final List<G> cands = new ArrayList<G>();
 						cands.addAll(kb.getIndividuals());
 						cands.addAll(kb.getClasses());
@@ -1231,13 +1229,12 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 					List<ResultBinding<G>> list = new ArrayList<ResultBinding<G>>();
 
 					InternalQuery<G> qX = notAtom.getQuery();
-					
+
 					for (Iterator<ResultBinding<G>> bIt = OWL2QueryEngine.exec(
 							qX.distinct(true)).iterator(); bIt.hasNext();) {
 						ResultBinding<G> bI = bIt.next();
 						list.add(bI);
 					}
-
 
 					for (Iterator<ResultBinding<G>> bIt = results.iterator(); bIt
 							.hasNext();) {

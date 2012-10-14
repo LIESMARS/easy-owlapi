@@ -40,7 +40,7 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.sparql.core.BasicPattern;
+import com.hp.hpl.jena.sparql.core.TriplePath;
 import com.hp.hpl.jena.sparql.core.Var;
 import com.hp.hpl.jena.sparql.lang.MyParserSPARQL10;
 import com.hp.hpl.jena.sparql.lang.Parser;
@@ -49,6 +49,8 @@ import com.hp.hpl.jena.sparql.lang.ParserRegistry;
 import com.hp.hpl.jena.sparql.serializer.MySerializer;
 import com.hp.hpl.jena.sparql.syntax.Element;
 import com.hp.hpl.jena.sparql.syntax.ElementGroup;
+import com.hp.hpl.jena.sparql.syntax.ElementNotExists;
+import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 import com.hp.hpl.jena.sparql.syntax.ElementTriplesBlock;
 import com.hp.hpl.jena.sparql.util.IndentedLineBuffer;
 import com.hp.hpl.jena.vocabulary.OWL;
@@ -131,7 +133,7 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 			}
 		});
 
-		return parse(QueryFactory.create(queryStr, Syntax.syntaxSPARQL), kb);
+		return parse(QueryFactory.create(queryStr, Syntax.syntaxSPARQL_11), kb);
 	}
 
 	private OWL2Query<G> parse(final com.hp.hpl.jena.query.Query sparqlQuery,
@@ -152,39 +154,72 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 					"ElementGroup was expected, but found '"
 							+ pattern.getClass() + "'.");
 
-		final ElementGroup elementGroup = (ElementGroup) pattern;
-		final List<Element> elements = elementGroup.getElements();
-
-		if (elements.size() != 1
-				|| !(elements.get(0) instanceof ElementTriplesBlock)) {
-			System.out.println("elements = " + elements);
-			throw new UnsupportedQueryException(
-					"Complex query patterns are not supported yet.");
-		}
-		final Element first = elements.get(0);
+		OWL2Query<G> query = this.f.createQuery(ont).distinct(
+				sparqlQuery.isDistinct());
 
 		// very important to call this function so that getResultVars() will
 		// work fine for SELECT * queries
 		sparqlQuery.setResultVars();
 
-		final OWL2Query<G> query = this.f.createQuery(ont).distinct(
-				sparqlQuery.isDistinct());
-
-		for (final Iterator<String> i = sparqlQuery.getResultVars().iterator(); i
-				.hasNext();) {
-			query.addResultVar(f.variable(i.next()));
-		}
-
-		parse(((ElementTriplesBlock) first).getPattern(), query);
-
+		parseQuery(pattern, query, sparqlQuery.getResultVars());
+		
 		return query;
 	}
 
-	private void parse(final BasicPattern basicPattern, final OWL2Query<G> query)
+	private void parseQuery(final Element e, OWL2Query current,
+			List<String> allDistVars) {
+		if (e instanceof ElementTriplesBlock) {
+			for (final String i : allDistVars) {
+				current.addResultVar(f.variable(i));
+			}
+			parse(((ElementTriplesBlock) e).getPattern().getList(), current);
+		} else if (e instanceof ElementPathBlock) {
+			for (final String i : allDistVars) {
+				current.addResultVar(f.variable(i));
+			}
+			parseTriplePath(((ElementPathBlock) e).getPattern().getList(),
+					current);
+		} else if (e instanceof ElementNotExists) {
+			final OWL2Query<G> query2 = this.f.createQuery(ont).distinct(true);
+			List<String> vars = new ArrayList<String>();
+			for (final Iterator<Var> i = ((ElementNotExists) e).getElement().varsMentioned().iterator(); i
+					.hasNext();) {
+				Var v = i.next();
+				if (v.isBlankNodeVar()) {
+					continue;
+				}
+				query2.addResultVar(f.variable(v.getVarName()));
+			}			
+			parseQuery(((ElementNotExists) e).getElement(), query2, vars);
+			current = current.Not(query2);
+		} else if (e instanceof ElementGroup) {
+			for (final Element el : ((ElementGroup) e).getElements()) {
+				parseQuery(el, current, allDistVars);
+			}
+		} else {
+			throw new UnsupportedQueryException(
+					"Complex query patterns are not supported yet." + e);
+		}
+	}
+
+	private void parseTriplePath(Collection<TriplePath> trip,
+			final OWL2Query<G> query) {
+		List<Triple> t = new ArrayList<Triple>();
+		for (TriplePath p : trip) {
+			if (!p.isTriple()) {
+				log.warning("NOT A TRIPLE - ignoring:" + p);
+			}
+			t.add(p.asTriple());
+		}
+
+		parse(t, query);
+	}
+
+	private void parse(Collection<Triple> trip, final OWL2Query<G> query)
 			throws UnsupportedQueryException {
 		terms = new HashMap<Node, Term<G>>();
 		lists = new HashMap<Node, List<Term<G>>>();
-		triples = new LinkedHashSet<Triple>(basicPattern.getList());
+		triples = new LinkedHashSet<Triple>(trip);
 
 		for (final Triple t : new ArrayList<Triple>(triples)) {
 			final Node subj = t.getSubject();
@@ -1506,14 +1541,15 @@ public class SparqlARQParser<G> implements QueryParser<G>, QueryWriter<G> {
 				if (ont.is(i.asGroundTerm().getWrappedObject(),
 						OWLObjectType.OWLLiteral)) {// literal
 					int ti = s.lastIndexOf("^^");
-					String type = ont.getDatatypeOfLiteral(i.asGroundTerm().getWrappedObject());
+					String type = ont.getDatatypeOfLiteral(i.asGroundTerm()
+							.getWrappedObject());
 					String lit = s;
-						// if(sx != null){
-						// type = sx;
-						// }else {
-						// type = s.substring(ti + 2);
-						// }
-						// lit = s.substring(0, ti);
+					// if(sx != null){
+					// type = sx;
+					// }else {
+					// type = s.substring(ti + 2);
+					// }
+					// lit = s.substring(0, ti);
 					if (lit.charAt(0) == '"')
 						lit = lit.substring(1, lit.length() - 1);
 					if (type != null)

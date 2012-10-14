@@ -16,7 +16,6 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChangeException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
 import cz.cvut.kbss.owl2query.model.OWL2Ontology;
@@ -27,11 +26,12 @@ import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
 
 public class GenericOWLAPIv3Simple extends TestCase {
 
-	private static final Logger LOG = Logger.getLogger(TestCase.class.getName());
+	private static final Logger LOG = Logger
+			.getLogger(TestCase.class.getName());
 
 	final String BASE_URI = "http://krizik.felk.cvut.cz/";
 
-	private final OWLReasonerFactory f = TestConfiguration.FACTORY;
+	private final TestConfiguration f = TestConfiguration.FACTORY;
 
 	public void test2() {
 		final OWLOntologyManager m = OWLManager.createOWLOntologyManager();
@@ -48,8 +48,8 @@ public class GenericOWLAPIv3Simple extends TestCase {
 			m.applyChange(new AddAxiom(o, m.getOWLDataFactory()
 					.getOWLClassAssertionAxiom(c1, i1)));
 
-			final OWLAPIv3OWL2Ontology ont = new OWLAPIv3OWL2Ontology(m,
-					o, f.createReasoner(o));
+			final OWLAPIv3OWL2Ontology ont = new OWLAPIv3OWL2Ontology(m, o, f
+					.getFactory().createReasoner(o, f.getConfiguration()));
 
 			// query
 			final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
@@ -86,8 +86,8 @@ public class GenericOWLAPIv3Simple extends TestCase {
 			m.applyChange(new AddAxiom(o, m.getOWLDataFactory()
 					.getOWLClassAssertionAxiom(c1, i1)));
 
-			final OWL2Ontology<OWLObject> ont = new OWLAPIv3OWL2Ontology(m,
-					o, f.createReasoner(o));
+			final OWL2Ontology<OWLObject> ont = new OWLAPIv3OWL2Ontology(m, o,
+					f.getFactory().createReasoner(o, f.getConfiguration()));
 
 			// evaluation
 			final QueryResult<OWLObject> qr = OWL2QueryEngine.exec(

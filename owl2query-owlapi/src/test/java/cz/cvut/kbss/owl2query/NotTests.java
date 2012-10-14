@@ -29,7 +29,7 @@ public class NotTests extends TestCase {
 
 	final String BASE_URI = "http://krizik.felk.cvut.cz/";
 
-	private final OWLReasonerFactory f = TestConfiguration.FACTORY;
+	private final TestConfiguration f = TestConfiguration.FACTORY;
 
 	/**
 	 * SPO(?x,isMemberOf),NOT(SPO(?x,?y),SPO(?y,isMemberOf))
@@ -59,26 +59,21 @@ public class NotTests extends TestCase {
 					.getOWLSubObjectPropertyOfAxiom(pIsStudentOf, pIsMemberOf)));
 
 			final OWLAPIv3OWL2Ontology ont = new OWLAPIv3OWL2Ontology(m, o,
-					f.createReasoner(o));
+					f.getFactory().createReasoner(o,f.getConfiguration()));
 
 			// query
 			final OWL2QueryFactory<OWLObject> f = ont.getFactory();
 
 			final Variable<OWLObject> vX = f.variable("x");
 			final Variable<OWLObject> vY = f.variable("y");
+			
 			final OWL2Query<OWLObject> queryNot = f.createQuery(ont)
-					.SubPropertyOf(vX, vY)
-					.SubPropertyOf(vY, f.wrap(pIsMemberOf));
-			queryNot.addDistVar(vX);
-			queryNot.addDistVar(vY);
-			queryNot.addResultVar(vX);
-			queryNot.addResultVar(vY);
+					.SubPropertyOf(vX, vY).SubPropertyOf(vY, f.wrap(pIsMemberOf))
+					.addDistVar(vX,true).addDistVar(vY,true);
+			
 			final OWL2Query<OWLObject> q = f.createQuery(ont)
-					.SubPropertyOf(vX, f.wrap(pIsMemberOf)).Not(queryNot);
-			q.addDistVar(vX);
-			q.addDistVar(vY);
-			q.addResultVar(vX);
-			q.addResultVar(vY);
+					.SubPropertyOf(vX, f.wrap(pIsMemberOf)).Not(queryNot)
+					.addDistVar(vX,true).addDistVar(vY,true);
 
 			// evaluation
 			final QueryResult<OWLObject> qr = OWL2QueryEngine.exec(q);
@@ -126,7 +121,7 @@ public class NotTests extends TestCase {
 					.getOWLSubObjectPropertyOfAxiom(pIsStudentOf, pIsMemberOf)));
 
 			final OWLAPIv3OWL2Ontology ont = new OWLAPIv3OWL2Ontology(m, o,
-					f.createReasoner(o));
+					f.getFactory().createReasoner(o,f.getConfiguration()));
 
 			// query
 			final OWL2QueryFactory<OWLObject> f = ont.getFactory();
@@ -145,8 +140,8 @@ public class NotTests extends TestCase {
 			// evaluation
 			final QueryResult<OWLObject> qr = OWL2QueryEngine.exec(q);
 
-			LOG.info(qr);
-			assertEquals(3, qr.size());
+			LOG.info("RESULT: " + qr);
+			assertEquals(2, qr.size());
 		} catch (OWLOntologyCreationException e) {
 			e.printStackTrace();
 			fail();

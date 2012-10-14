@@ -96,7 +96,7 @@ public class OWL2QueryEngine {
 			throw new InternalReasonerException(
 					"Splitting query returned no results!");
 		} else if (queries.size() == 1) {
-			System.out.println(queries.get(0));
+//			System.out.println(queries.get(0));
 			return execSingleQuery(queries.get(0));
 		} else {
 			final List<QueryResult<G>> results = new ArrayList<QueryResult<G>>(
@@ -296,19 +296,19 @@ public class OWL2QueryEngine {
 		// SAMEAS
 		// get rid of SameAs atoms that contain at least one undistinguished
 		// variable.
-		System.out.println("Preprocessing ...");
+//		System.out.println("Preprocessing ...");
 		for (final QueryAtom<G> atom : q.findAtoms(QueryPredicate.SameAs, null,
 				null)) {
-			System.out.println("> atom=" + atom);
+//			System.out.println("> atom=" + atom);
 
 			final Term<G> a1 = atom.getArguments().get(0);
 			final Term<G> a2 = atom.getArguments().get(1);
 
 			if (!a1.isVariable() || q.getUndistVars().contains(a1)) {
-				System.out.println(">> SameAs a1 : a1=" + a1 + ", a2=" + a2);
+//				System.out.println(">> SameAs a1 : a1=" + a1 + ", a2=" + a2);
 				q = q.apply(Collections.singletonMap(a1, a2));
 			} else if (!a2.isVariable() || q.getUndistVars().contains(a2)) {
-				System.out.println(">> SameAs a2 : a1=" + a1 + ", a2=" + a2);
+//				System.out.println(">> SameAs a2 : a1=" + a1 + ", a2=" + a2);
 				q = q.apply(Collections.singletonMap(a2, a1));
 			}
 		}
@@ -614,13 +614,13 @@ public class OWL2QueryEngine {
 			// case Transitive:
 			// return kb.isTransitiveProperty(arguments.get(0).asGroundTerm());
 		case Not:
-			System.out.println("CHECKING "
-					+ ((NotQueryAtom<G>) atom).getQuery().getAtoms());
+//			System.out.println("CHECKING "
+//					+ ((NotQueryAtom<G>) atom).getQuery().getAtoms());
 			for (final QueryAtom<G> a : ((NotQueryAtom<G>) atom).getQuery()
 					.getAtoms()) {
-				System.out.println("Checking " + a);
+//				System.out.println("Checking " + a);
 				if (checkGround(a, kb)) {
-					System.out.println("    --> " + false);
+//					System.out.println("    --> " + false);
 					return false;
 				}
 			}

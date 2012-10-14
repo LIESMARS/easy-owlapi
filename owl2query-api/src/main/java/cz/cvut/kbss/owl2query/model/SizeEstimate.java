@@ -65,12 +65,11 @@ public interface SizeEstimate<G> {
 	double disjointClasses(G dwLHS);
 	
 	double avgDisjointClasses();
-
-	//
-	// int complements(G coLHS);
-	//
-	// double avgComplementClasses();
-	//
+	
+    double complements(G coLHS);
+	
+    double avgComplementClasses();
+	
 	double avgSuperProperties(boolean direct);
 
 	double superProperties(G spLHS, boolean direct);
@@ -85,21 +84,19 @@ public interface SizeEstimate<G> {
 
 	double avgSubProperties(boolean direct);
 
-	// int inverses(G ioLHS);
-	//
-	// double avgInverseProperties();
-	//
+	double inverses(G ioLHS);
+	
+    double avgInverseProperties();
+	
 	int getObjectPropertyCount();
-
 	int getDataPropertyCount();
-	//
-	// int getFunctionalPropertyCount();
-	//
-	// int getInverseFunctionalPropertyCount();
-	//
-	// int getTransitivePropertyCount();
-	//
-	 int getSymmetricPropertyCount();
-	 int getAsymmetricPropertyCount();
+	
+	int getFunctionalPropertyCount();	
+	int getInverseFunctionalPropertyCount();	
+	int getTransitivePropertyCount();
+	int getSymmetricPropertyCount();
+	int getAsymmetricPropertyCount();
+	int getReflexivePropertyCount();
+	int getIrreflexivePropertyCount();
 
 }
