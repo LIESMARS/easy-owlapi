@@ -7,7 +7,7 @@
     <version>0.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>owl2query</name>
+    <name>OWL2Query</name>
     <description>SPARQL-DL^NOT query engine for OWL 2</description>
     <url>http://owl2query.sourceforge.net</url>
 

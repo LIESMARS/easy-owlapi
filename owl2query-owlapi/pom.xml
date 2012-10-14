@@ -8,6 +8,7 @@
         <relativePath>../owl2query-parent/pom.xml</relativePath>
     </parent>
 	<artifactId>owl2query-owlapi</artifactId>
+    <name>OWL2Query OWLAPI Adapter</name>
 
 	<properties>
 		<pellet.version>2.3.0</pellet.version>
@@ -33,7 +34,6 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>aterm</groupId>
 			<artifactId>aterm</artifactId>
@@ -103,7 +103,6 @@
 <!-- 			<version>1.3.5</version> -->
 <!-- 			<type>jar</type> -->
 <!-- 		</dependency> -->
-
 		<dependency>
 			<groupId>jgrapht</groupId>
 			<artifactId>jgrapht</artifactId>

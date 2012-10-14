@@ -11,7 +11,8 @@
 
     <artifactId>owl2query-protegeprotege</artifactId>
     <packaging>jar</packaging>
-    <name>Protege OWL2QueryGraph plugin</name>
+    <name>OWL2Query Protege plugin</name>
+    <description>OWL2Query Protege plugin making use of the OWL2QueryGraph project.</description>
     <url>http://maven.apache.org</url>
 
 	<developers>

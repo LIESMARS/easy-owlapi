@@ -21,7 +21,6 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.util.OWLOntologyMerger;
 
-import cz.cvut.kbss.owl2query.GenericOWLAPITester.ReasonerPlugin;
 import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
 import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import cz.cvut.kbss.owl2query.model.OWL2Query;

@@ -8,6 +8,7 @@
         <relativePath>../owl2query-parent/pom.xml</relativePath>
     </parent>
 	<artifactId>owl2query-engine</artifactId>
+    <name>OWL2Query Engine</name>
 	<dependencies>
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
