@@ -148,22 +148,22 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	public Set<OWLClass> getClasses() {
         Set<OWLClass> set = new HashSet<OWLClass>(o.getClassesInSignature(true));
-//        set.add(f.getOWLThing());
-//        set.add(f.getOWLNothing());
+        set.add(f.getOWLThing());
+        set.add(f.getOWLNothing());
         return set;
 	}
 
 	public Set<OWLObjectProperty> getObjectProperties() {
         final Set<OWLObjectProperty> set = o.getObjectPropertiesInSignature(true);
-//        set.add(f.getOWLBottomObjectProperty());
-//        set.add(f.getOWLTopObjectProperty());
+        set.add(f.getOWLBottomObjectProperty());
+        set.add(f.getOWLTopObjectProperty());
         return set;
 	}
 
 	public Set<OWLDataProperty> getDataProperties() {
 		final Set<OWLDataProperty> set = o.getDataPropertiesInSignature(true);
-//        set.add(f.getOWLBottomDataProperty());
-//        set.add(f.getOWLTopDataProperty());
+        set.add(f.getOWLBottomDataProperty());
+        set.add(f.getOWLTopDataProperty());
         return set;
 	}
 
@@ -623,7 +623,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
             Set<OWLClass> set = r.getSubClasses(cex, direct).getFlattened();
             if (!direct){
-//                set.add(f.getOWLNothing());
+                set.add(f.getOWLNothing());
             }
             return set;
         }
@@ -632,7 +632,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
             Set<OWLClass> set = r.getSuperClasses(cex, direct).getFlattened();
             if (!direct){
-//                set.add(f.getOWLThing());
+                set.add(f.getOWLThing());
             }
             return set;
 		}
@@ -772,7 +772,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		public Set<OWLProperty> getSubs(OWLObject superCE, boolean direct) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);
 			if (cex.equals(f.getOWLBottomObjectProperty())) {
-				return Collections.emptySet();
+				return Collections.singleton((OWLProperty) f.getOWLBottomObjectProperty());
 			} else if (cex.equals(f.getOWLTopObjectProperty())) {
 				final Set<OWLProperty> set = new HashSet<OWLProperty>();
 				set.addAll(getObjectProperties());
@@ -813,7 +813,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 				set.addAll(r
 						.getSubDataProperties((OWLDataProperty) cex, direct)
 						.getFlattened());
-				if (!direct || set.isEmpty()) {
+				if (!direct ) {
 					set.add(f.getOWLBottomDataProperty());
 				}
 			} else if (cex.isObjectPropertyExpression()) {
@@ -829,7 +829,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 				}
 				
 				if (!direct) {
-//					set.add(f.getOWLBottomObjectProperty());
+					set.add(f.getOWLBottomObjectProperty());
 				}
 			} else {
 				throw new InternalReasonerException();
@@ -840,41 +840,41 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 		public Set<OWLProperty> getSupers(OWLObject superCE, boolean direct) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);
-
-			if (cex.equals(f.getOWLTopObjectProperty())) {
-				return Collections.emptySet();
-			} else if (cex.equals(f.getOWLBottomObjectProperty())) {
-				final Set<OWLProperty> set = new HashSet<OWLProperty>();
-				set.addAll(getObjectProperties());
-
-				if (direct) {
-					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
-						if (!getSubs(op, true).contains(
-								f.getOWLBottomObjectProperty())) {
-							set.remove(op);
-						}
-					}
-				} else {
+//
+//			if (cex.equals(f.getOWLTopObjectProperty())) {
+//				return Collections.emptySet();
+//			} else if (cex.equals(f.getOWLBottomObjectProperty())) {
+//				final Set<OWLProperty> set = new HashSet<OWLProperty>();
+//				set.addAll(getObjectProperties());
+//
+//				if (direct) {
+//					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
+//						if (!getSubs(op, true).contains(
+//								f.getOWLBottomObjectProperty())) {
+//							set.remove(op);
+//						}
+//					}
+//				} else {
 //				    set.add(f.getOWLTopObjectProperty());
-                }
-
-				return set;
-			} else if (cex.equals(f.getOWLBottomDataProperty())) {
-				final Set<OWLProperty> set = new HashSet<OWLProperty>();
-				set.addAll(getDataProperties());
-
-				if (direct) {
-					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
-						if (!getSubs(op, true).contains(
-								f.getOWLBottomDataProperty())) {
-							set.remove(op);
-						}
-					}
-				} else {
-				    set.add(f.getOWLTopDataProperty());
-                }
-				return set;
-			}
+//                }
+//
+//				return set;
+//			} else if (cex.equals(f.getOWLBottomDataProperty())) {
+//				final Set<OWLProperty> set = new HashSet<OWLProperty>();
+//				set.addAll(getDataProperties());
+//
+//				if (direct) {
+//					for (OWLProperty op : new HashSet<OWLProperty>(set)) {
+//						if (!getSubs(op, true).contains(
+//								f.getOWLBottomDataProperty())) {
+//							set.remove(op);
+//						}
+//					}
+//				} else {
+//				    set.add(f.getOWLTopDataProperty());
+//                }
+//				return set;
+//			}
 			final Set<OWLProperty> set = new HashSet<OWLProperty>();
 
 			if (cex.isDataPropertyExpression()) {
@@ -885,7 +885,6 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					set.add(f.getOWLTopDataProperty());
 				}
 			} else if (cex.isObjectPropertyExpression()) {
-				final Set<OWLProperty> props = new HashSet<OWLProperty>();
 				for (final OWLObjectPropertyExpression ex : r
 						.getSuperObjectProperties(
 								(OWLObjectPropertyExpression) cex, direct)
