@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.cvut.kbss</groupId>
-    <artifactId>owl2queryprotege</artifactId>
+    <artifactId>owl2query-protegeprotege</artifactId>
     <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Protege OWL2QueryGraph plugin</name>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>cz.cvut.kbss</groupId>
             <artifactId>owl2query-owlapi</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>protege4</groupId>

@@ -15,28 +15,8 @@
         <module>owl2query-api</module>
         <module>owl2query-engine</module>
         <module>owl2query-owlapi</module>
+        <module>owl2query-protegeplugin</module>
     </modules>
-
-    <profiles>
-    </profiles>
-    <repositories>
-        <repository>
-            <releases>
-            </releases>
-            <id>krizik</id>
-            <name>KBSS Maven 2 Repository</name>
-            <url>http://krizik.felk.cvut.cz/m2repo</url>
-        </repository>
-        <repository>
-            <id>jena</id>
-            <url>http://repo1.maven.org/maven2/com/hp/hpl/</url>
-        </repository>
-        <repository>
-            <id>stlab</id>
-            <url>http://stlab.istc.cnr.it/software/maven/repo/</url>
-        </repository>
-    </repositories>
-
    
     <distributionManagement>
         <repository>
@@ -54,19 +34,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <developers>
-        <developer>
-            <name>Petr Křemen</name>
-            <email>petr.kremen@fel.cvut.cz</email>
-            <url>http://cyber.felk.cvut.cz/people</url>
-            <organization>Czech Technical University in Prague, Knowledge Based and Software Systems Group</organization>
-            <organizationUrl>http://krizik.felk.cvut.cz</organizationUrl>
-            <roles>
-            </roles>
-        </developer>
-    </developers>
-    
     <scm>
         <connection>scm:https://krizik.felk.cvut.cz/km/owl2query/svn/owl2query/trunk</connection>
         <developerConnection>scm:http://krizik.felk.cvut.cz/km/owl2query/svn/owl2query/trunk</developerConnection>

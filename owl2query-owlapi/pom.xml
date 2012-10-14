@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>owl2query</artifactId>
+		<artifactId>owl2query-parent</artifactId>
 		<groupId>cz.cvut.kbss</groupId>
 		<version>0.3.1-SNAPSHOT</version>
 	</parent>
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>cz.cvut.kbss</groupId>
 			<artifactId>owl2query-engine</artifactId>
-			<version>0.3.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.owlapi</groupId>
@@ -110,7 +110,4 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-	<build>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
-	</build>
 </project>
