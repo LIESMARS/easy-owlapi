@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 import java.net.URI;
 
-public class QuerySupport {
+public class TestQuerySupport {
 
 	final String BASE_URI = "http://krizik.felk.cvut.cz/";
     private OWLReasonerFactory factory;
@@ -89,7 +89,7 @@ public class QuerySupport {
 	public void testQueryPV() {
         final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
         q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).PropertyValue(varX, varY, varZ);
-        runQuery(q,1);
+        runQuery(q,5);
     }
 
     @Test

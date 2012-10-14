@@ -37,7 +37,15 @@ public interface Hierarchy<G, T extends G> {
 	 */
 	public Set<T> getTops();
 
-	/**
+    /**
+     * Returns true if subG1 is a subelement of subG2.
+     *
+     * @return a set of named elements that are (direct) subelements of the
+     *         general element superG
+     */
+    public boolean isSub(final G subG1, final G superG2, boolean direct);
+
+    /**
 	 * Returns a set of direct/all subs, NOT including getEquivs.
 	 * 
 	 * The set might include elements from getBottoms() if applicable.
@@ -57,7 +65,15 @@ public interface Hierarchy<G, T extends G> {
 	 */
 	public Set<T> getSupers(final G subG, boolean direct);
 
-	/**
+    /**
+     * Returns true if equivG1 is equivalent to equivG2.
+     *
+     * @return a set of named elements that are equivalent to the general
+     *         element superG
+     */
+    public boolean isEquiv(final G equivG1,final G equivG2);
+
+    /**
 	 * Returns a set of all equivalents subs, NOT including equivG.
 	 * 
 	 * @return a set of named elements that are equivalent to the general
@@ -72,7 +88,28 @@ public interface Hierarchy<G, T extends G> {
 	 */
 	public Set<T> getDisjoints(final G disjointG);
 
-	/**
+    /**
+     * Returns true if disjointG1 is disjoint with disjointG2.
+     *
+     * @return a set of named elements that are disjoint with disjointG
+     */
+    public boolean isDisjointWith(final G disjointG1,final G disjointG2);
+
+    /**
+     * Returns a set of all complements.
+     *
+     * @return a set of named elements that are complement to complementG
+     */
+    public Set<T> getComplements(final G complementG);
+
+    /**
+     * Returns true if complementG1 is disjoint with complementG2.
+     *
+     * @return a set of named elements that are disjoint with disjointG
+     */
+    public boolean isComplementWith(final G complementG1,final G complementG2);
+
+    /**
 	 * Returns a set of all bottom elements (in case no common sink is defined).
 	 * E.g. OWL property hierarchy can have two sinks - owl:bottomObjectProperty
 	 * and owl:bottomDataProperty.
