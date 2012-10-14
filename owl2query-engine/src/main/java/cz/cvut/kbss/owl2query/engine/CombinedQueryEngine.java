@@ -32,7 +32,6 @@ import cz.cvut.kbss.owl2query.model.Configuration;
 import cz.cvut.kbss.owl2query.model.GroundTerm;
 import cz.cvut.kbss.owl2query.model.Hierarchy;
 import cz.cvut.kbss.owl2query.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.model.OWL2Query;
 import cz.cvut.kbss.owl2query.model.OWL2QueryFactory;
 import cz.cvut.kbss.owl2query.model.QueryResult;
 import cz.cvut.kbss.owl2query.model.ResultBinding;

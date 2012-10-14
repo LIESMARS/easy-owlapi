@@ -147,15 +147,24 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 	}
 
 	public Set<OWLClass> getClasses() {
-		return o.getClassesInSignature(true);
+        Set<OWLClass> set = new HashSet<OWLClass>(o.getClassesInSignature(true));
+//        set.add(f.getOWLThing());
+//        set.add(f.getOWLNothing());
+        return set;
 	}
 
 	public Set<OWLObjectProperty> getObjectProperties() {
-		return o.getObjectPropertiesInSignature(true);
+        final Set<OWLObjectProperty> set = o.getObjectPropertiesInSignature(true);
+//        set.add(f.getOWLBottomObjectProperty());
+//        set.add(f.getOWLTopObjectProperty());
+        return set;
 	}
 
 	public Set<OWLDataProperty> getDataProperties() {
-		return o.getDataPropertiesInSignature(true);
+		final Set<OWLDataProperty> set = o.getDataPropertiesInSignature(true);
+//        set.add(f.getOWLBottomDataProperty());
+//        set.add(f.getOWLTopDataProperty());
+        return set;
 	}
 
 	public Set<OWLNamedIndividual> getIndividuals() {
@@ -606,20 +615,26 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 		public Set<OWLClass> getEquivs(OWLObject ce) {
 			final OWLClassExpression cex = asOWLClassExpression(ce);
-
-			return r.getEquivalentClasses(cex).getEntities();
-		}
+			Set<OWLClass> set = r.getEquivalentClasses(cex).getEntities();
+            return set;
+        }
 
 		public Set<OWLClass> getSubs(OWLObject superCE, boolean direct) {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
-
-			return r.getSubClasses(cex, direct).getFlattened();
-		}
+            Set<OWLClass> set = r.getSubClasses(cex, direct).getFlattened();
+            if (!direct){
+//                set.add(f.getOWLNothing());
+            }
+            return set;
+        }
 
 		public Set<OWLClass> getSupers(OWLObject superCE, boolean direct) {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
-
-			return r.getSuperClasses(cex, direct).getFlattened();
+            Set<OWLClass> set = r.getSuperClasses(cex, direct).getFlattened();
+            if (!direct){
+//                set.add(f.getOWLThing());
+            }
+            return set;
 		}
 
 		public Set<OWLClass> getTops() {
@@ -771,9 +786,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					}
 				}
 
-				if (set.isEmpty()) {
-					set.add(f.getOWLBottomObjectProperty());
-				}
+				set.add(f.getOWLBottomObjectProperty());
 
 				return set;
 			} else if (cex.equals(f.getOWLTopDataProperty())) {
@@ -789,9 +802,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					}
 				}
 
-				if (set.isEmpty()) {
-					set.add(f.getOWLBottomObjectProperty());
-				}
+				set.add(f.getOWLBottomObjectProperty());
 
 				return set;
 			}
@@ -817,8 +828,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					}
 				}
 				
-				if (!direct || set.isEmpty()) {
-					set.add(f.getOWLBottomObjectProperty());
+				if (!direct) {
+//					set.add(f.getOWLBottomObjectProperty());
 				}
 			} else {
 				throw new InternalReasonerException();
@@ -843,11 +854,9 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 							set.remove(op);
 						}
 					}
-				}
-
-				if (set.isEmpty()) {
-					set.add(f.getOWLTopObjectProperty());
-				}
+				} else {
+//				    set.add(f.getOWLTopObjectProperty());
+                }
 
 				return set;
 			} else if (cex.equals(f.getOWLBottomDataProperty())) {
@@ -861,12 +870,9 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 							set.remove(op);
 						}
 					}
-				}
-
-				if (set.isEmpty()) {
-					set.add(f.getOWLTopDataProperty());
-				}
-
+				} else {
+				    set.add(f.getOWLTopDataProperty());
+                }
 				return set;
 			}
 			final Set<OWLProperty> set = new HashSet<OWLProperty>();
@@ -875,7 +881,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 				set.addAll(r.getSuperDataProperties((OWLDataProperty) cex,
 						direct).getFlattened());
 
-				if (!direct || set.isEmpty()) {
+				if (!direct) {
 					set.add(f.getOWLTopDataProperty());
 				}
 			} else if (cex.isObjectPropertyExpression()) {
@@ -890,7 +896,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 						set.add(ex.asOWLObjectProperty());
 					}
 				}
-				if (!direct || set.isEmpty()) {
+				if (!direct) {
 					set.add(f.getOWLTopObjectProperty());
 				}
 			} else {
