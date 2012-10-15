@@ -16,7 +16,7 @@ import java.net.URI;
 
 public class TestQueryABox {
 
-	final String BASE_URI = "http://krizik.felk.cvut.cz/";
+    final String BASE_URI = "http://krizik.felk.cvut.cz/";
     private OWLReasonerFactory factory;
 
     private OWLClass c1;
@@ -91,37 +91,53 @@ public class TestQueryABox {
     }
 
     @Test
-	public void testQueryTyPV() {
+    public void testQueryTyPV() {
         final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
-        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ,varX,varY);
-        runQuery(q,5);    // <i1,i2,topObject>
+        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ, varX, varY);
+        runQuery(q, 5);    // <i1,i2,topObject>
     }
 
     @Test
     public void testQueryTyPVOP() {
         final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
-        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ,varX,varY).Not(ont.getFactory().createQuery(ont).addResultVar(varZ).EquivalentProperty(varZ,ont.getFactory().wrap(ont.getFactory().getTopObjectProperty()))).Not(ont.getFactory().createQuery(ont).addResultVar(varZ).EquivalentProperty(varZ,ont.getFactory().wrap(ont.getFactory().getTopDataProperty())));
-        runQuery(q,2);   // <i1,i2,op1>  ;  <i1,i2,topObject>
+        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ, varX, varY).Not(ont.getFactory().createQuery(ont).addResultVar(varZ).EquivalentProperty(varZ, ont.getFactory().wrap(ont.getFactory().getTopObjectProperty()))).Not(ont.getFactory().createQuery(ont).addResultVar(varZ).EquivalentProperty(varZ, ont.getFactory().wrap(ont.getFactory().getTopDataProperty())));
+        runQuery(q, 2);   // <i1,i2,op1>  ;  <i1,i2,topObject>
     }
 
     @Test
     public void testQueryTyPVOPStrict() {
         final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
-        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ,varX,varY).StrictSubPropertyOf(varZ,ont.getFactory().wrap(ont.getFactory().getTopObjectProperty()));
-        runQuery(q,1);    // <i1,i2,op1>
+        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ, varX, varY).StrictSubPropertyOf(varZ, ont.getFactory().wrap(ont.getFactory().getTopObjectProperty()));
+        runQuery(q, 1);    // <i1,i2,op1>
     }
 
     @Test
     public void testQueryTyPVOPGiven() {
         final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
-        q.addResultVar(varX).addResultVar(varY).Type(ont.getFactory().wrap(c1), varX).PropertyValue(ont.getFactory().wrap(op1),varX,varY);
-        runQuery(q,1);
+        q.addResultVar(varX).addResultVar(varY).Type(ont.getFactory().wrap(c1), varX).PropertyValue(ont.getFactory().wrap(op1), varX, varY);
+        runQuery(q, 1);
+    }
+
+    @Test
+    public void testQueryTyPVWithTypeOfObject() {
+        final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
+        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).PropertyValue(varZ, varX, varY).Type(ont.getFactory().wrap(c1), varY);
+        runQuery(q, 3);    // <i2,i1,topObject> ; <i1,i1,topObject>
+    }
+
+    @Test
+    public void testQueryTyPVWithTypeOfObject2() {
+        final OWL2Query<OWLObject> q = ont.getFactory().createQuery(ont);
+        final OWL2Query<OWLObject> q2 = ont.getFactory().createQuery(ont).addResultVar(varY).Type(ont.getFactory().wrap(c1), varY);
+        q.addResultVar(varX).addResultVar(varY).addResultVar(varZ).Type(ont.getFactory().wrap(c1), varX).PropertyValue(varZ, varX, varY).Not(q2);
+        runQuery(q, 4);
     }
 
     private void runQuery(final OWL2Query q, int size) {
+        System.out.println("QUERY:  " + q);
         final QueryResult<OWLObject> qr = OWL2QueryEngine.exec(q);
-        System.out.println(qr);
+        System.out.println("RESULT: " + qr);
 
-        Assert.assertEquals(size,qr.size());
+        Assert.assertEquals(size, qr.size());
     }
 }
