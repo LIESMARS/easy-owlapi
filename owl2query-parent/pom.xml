@@ -67,7 +67,7 @@
             </snapshots>
         </repository>
         <repository>
-            <!-- protege -->
+            <!-- cz.cvut.kbss.owl2query.protege -->
             <id>oss - central sync</id>
             <name>OSS Maven 2 Repository</name>
             <url>https://oss.sonatype.org/content/repositories/central-sync</url>
@@ -77,7 +77,7 @@
             </releases>
         </repository>
         <repository>
-            <!-- protege -->
+            <!-- cz.cvut.kbss.owl2query.protege -->
             <id>eclipse - testing</id>
             <name>Eclipse Testing Repository</name>
             <url>http://maven.eclipse.org/nexus/content/repositories/testing</url>
