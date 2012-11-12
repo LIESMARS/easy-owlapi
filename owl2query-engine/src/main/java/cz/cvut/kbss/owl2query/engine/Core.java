@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import cz.cvut.kbss.owl2query.model.GroundTerm;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import cz.cvut.kbss.owl2query.model.Term;
 
 class Core<G> implements QueryAtom<G> {
@@ -36,7 +37,7 @@ class Core<G> implements QueryAtom<G> {
 	}
 
 	public QueryAtom<G> apply(
-			final Map<? extends Term<G>, ? extends Term<G>> binding) {
+			final Map<? extends Term<G>, ? extends Term<G>> binding, OWL2Ontology<G> ont) {
 		if (binding.containsKey(term)) {
 			return new Core<G>(binding.get(term), rollUp, query.apply(binding));
 		} else {

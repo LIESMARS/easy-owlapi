@@ -14,6 +14,7 @@
  *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -64,7 +65,7 @@ class IncrementalQueryPlan<G> extends QueryPlan<G> {
 				if (atom.isGround()) {
 					atom2 = atom;
 				} else {
-					atom2 = atom.apply(binding);
+					atom2 = atom.apply(binding, query.getOntology());
 
 					// if( atom2.getPredicate().equals( QueryPredicate.Not ) &&
 					// !atom2.isGround() ) {

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import cz.cvut.kbss.owl2query.model.GroundTerm;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.Variable;
 
@@ -89,12 +90,12 @@ class QueryAtomImpl<G> implements QueryAtom<G> {
 	 * {@inheritDoc}
 	 */
 	public QueryAtom<G> apply(
-			final Map<? extends Term<G>, ? extends Term<G>> binding) {
+			final Map<? extends Term<G>, ? extends Term<G>> binding, OWL2Ontology<G> ont) {
 		final List<Term<G>> newArguments = new ArrayList<Term<G>>();
 
 		for (final Term<G> a : arguments) {
 			newArguments
-					.add(a.apply((Map<Variable<G>, GroundTerm<G>>) binding));
+					.add(a.apply((Map<Variable<G>, GroundTerm<G>>) binding, ont));
 		}
 
 		return new QueryAtomImpl<G>(predicate, newArguments);

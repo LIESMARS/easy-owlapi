@@ -14,6 +14,7 @@
  *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import java.util.ListIterator;
 
 import cz.cvut.kbss.owl2query.model.ResultBinding;
@@ -35,7 +36,7 @@ class NoReorderingQueryPlan<G> extends QueryPlan<G> {
 		if (a.isGround()) {
 			return a;
 		} else {
-			return a.apply(binding);
+			return a.apply(binding, query.getOntology());
 		}
 	}
 

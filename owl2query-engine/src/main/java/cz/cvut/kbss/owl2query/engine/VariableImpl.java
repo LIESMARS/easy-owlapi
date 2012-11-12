@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cz.cvut.kbss.owl2query.model.GroundTerm;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
@@ -94,7 +95,7 @@ class VariableImpl<T> implements Variable<T> {
 	
 	
 	
-	public Term<T> apply(Map<Variable<T>, GroundTerm<T>> binding) {
+	public Term<T> apply(Map<Variable<T>, GroundTerm<T>> binding, OWL2Ontology<T> ont) {
 		if (binding.containsKey(this)) {
 			return binding.get(this);
 		} else {

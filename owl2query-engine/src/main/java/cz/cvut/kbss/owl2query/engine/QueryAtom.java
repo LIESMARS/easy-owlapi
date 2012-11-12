@@ -14,6 +14,7 @@
  *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import java.util.List;
 import java.util.Map;
 
@@ -50,5 +51,5 @@ public interface QueryAtom<G> {
 	 *            QueryBinding to apply
 	 * @return a query atom with applied query binding
 	 */
-	public QueryAtom<G> apply(final Map<? extends Term<G>, ? extends Term<G>> binding);
+	public QueryAtom<G> apply(final Map<? extends Term<G>, ? extends Term<G>> binding, OWL2Ontology<G> ont);
 }

@@ -14,6 +14,7 @@
  *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import cz.cvut.kbss.owl2query.model.ResultBinding;
 
 abstract class QueryPlan<G> {

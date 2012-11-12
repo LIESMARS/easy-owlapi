@@ -329,7 +329,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 			// current = atom3.apply(binding);
 			// }
 
-			current = atom3.apply(binding);
+			current = atom3.apply(binding, kb);
 
 			if (log.isLoggable(Level.FINER)) {
 				log.finer("Evaluating " + current);

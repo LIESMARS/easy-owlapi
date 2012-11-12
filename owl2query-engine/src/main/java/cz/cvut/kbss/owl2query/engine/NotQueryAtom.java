@@ -14,6 +14,7 @@
  *******************************************************************************/
 package cz.cvut.kbss.owl2query.engine;
 
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ class NotQueryAtom<G> implements QueryAtom<G> {
 		this.query = atom;
 	}
 
-	public QueryAtom<G> apply(final Map<? extends Term<G>, ? extends Term<G>> binding) {
+	public QueryAtom<G> apply(final Map<? extends Term<G>, ? extends Term<G>> binding, OWL2Ontology<G> ont) {
 		return new NotQueryAtom<G>(query.apply(binding));
 	}
 

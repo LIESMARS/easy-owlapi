@@ -315,7 +315,7 @@ class QueryImpl<G> implements InternalQuery<G> {
 		final QueryImpl<G> query = new QueryImpl<G>(this);
 
 		for (final QueryAtom<G> atom : getAtoms()) {
-			query.add(atom.apply(binding));
+			query.add(atom.apply(binding, ontology));
 		}
 
 		query.resultVars.addAll(this.resultVars);
