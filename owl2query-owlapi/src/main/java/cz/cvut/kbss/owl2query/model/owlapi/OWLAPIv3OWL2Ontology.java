@@ -639,7 +639,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
         @Override
         public boolean isSub(OWLObject subG1, OWLObject superG2, boolean direct) {
-            return getSubs(superG2,direct).contains(subG1);
+            return r.isEntailed(f.getOWLSubClassOfAxiom(asOWLClassExpression(subG1),asOWLClassExpression(superG2)));
+//            return getSubs(superG2,direct).contains(subG1);
         }
 
 
