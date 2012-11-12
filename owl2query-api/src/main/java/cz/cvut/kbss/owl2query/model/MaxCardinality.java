@@ -15,7 +15,7 @@
 package cz.cvut.kbss.owl2query.model;
 
 public abstract class MaxCardinality<T> extends QueryExpression<T> {
-	int card;
+	protected int card;
 
 	public MaxCardinality(final int card, final Term<T> ope) {
 		super(ope);
@@ -33,4 +33,12 @@ public abstract class MaxCardinality<T> extends QueryExpression<T> {
 		return "MaxCardinality("+card+", " + terms+")";
 	}
 
+    public int getCard() {
+        return card;
+    }
+
+    public void setCard(int card) {
+        this.card = card;
+    }
+        
 }

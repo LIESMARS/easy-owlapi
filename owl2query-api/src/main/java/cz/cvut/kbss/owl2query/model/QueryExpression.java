@@ -28,7 +28,7 @@ public abstract class QueryExpression<T> implements Term<T> {
 		this.terms = Arrays.asList(terms);
 	}
 
-	public abstract Term<T> apply(final Map<Variable<T>, GroundTerm<T>> binding);
+	public abstract Term<T> apply(final Map<Variable<T>, GroundTerm<T>> binding, OWL2Ontology<T> ont);
 
 	public GroundTerm<T> asGroundTerm() {
 		throw new UnsupportedOperationException();

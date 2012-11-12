@@ -38,7 +38,7 @@ public interface Term<T> {
 
 	public VarType getVariableType(final Variable<T> var);
 
-	public Term<T> apply(Map<Variable<T>, GroundTerm<T>> binding);
+	public Term<T> apply(Map<Variable<T>, GroundTerm<T>> binding, OWL2Ontology<T> ont);
 	
 	public String shortForm();
 }

@@ -15,7 +15,7 @@
 package cz.cvut.kbss.owl2query.model;
 
 public abstract class ExactCardinality<T> extends QueryExpression<T> {
-	int card;
+	protected int card;
 
 	public ExactCardinality(final int card, final Term<T> ope) {
 		super(ope);
@@ -32,5 +32,15 @@ public abstract class ExactCardinality<T> extends QueryExpression<T> {
 	public String toString() {
 		return "ExactCardinality("+card+", " + terms+")";
 	}
+
+    public int getCard() {
+        return card;
+    }
+
+    public void setCard(int card) {
+        this.card = card;
+    }
+        
+        
 
 }
