@@ -1,20 +1,44 @@
-/*******************************************************************************                                                                                                                                  
- * Copyright (C) 2010 Czech Technical University in Prague                                                                                                                                                        
- *                                                                                                                                                                                                                
- * This program is free software: you can redistribute it and/or modify it under 
- * the terms of the GNU General Public License as published by the Free Software 
- * Foundation, either version 3 of the License, or (at your option) any 
- * later version. 
- *                                                                                                                                                                                                                
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more 
- * details. You should have received a copy of the GNU General Public License 
- * along with this program. If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
-
+/*******************************************************************************
+ * Copyright (C) 2010 Czech Technical University in Prague
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details. You should have received a copy of the GNU General Public License
+ * along with this program. If notSPA, see <http://www.gnu.org/licenses/>. 
+ *****************************************************************************
+ */
 package cz.cvut.kbss.owl2query.protege;
 
+import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
+import cz.cvut.kbss.owl2query.engine.QueryGraphFactory;
+import cz.cvut.kbss.owl2query.graph.gui.QueryGraphPanel;
+import cz.cvut.kbss.owl2query.graph.gui.components.OWL2QueryResultTableModel;
+import cz.cvut.kbss.owl2query.graph.gui.components.ResultPanel;
+import cz.cvut.kbss.owl2query.graph.gui.components.StatusHandler;
+import cz.cvut.kbss.owl2query.graph.gui.jgraph.SDLJGraph;
+import cz.cvut.kbss.owl2query.graph.model.GroundTerm;
+import cz.cvut.kbss.owl2query.graph.model.IQueryGraph;
+import cz.cvut.kbss.owl2query.graph.model.QueryGraph;
+import cz.cvut.kbss.owl2query.graph.model.QueryGraphToOWL2QueryConverter;
+import cz.cvut.kbss.owl2query.graph.model.QuerySymbolDomain;
+import cz.cvut.kbss.owl2query.graph.model.SymbolDomain;
+import cz.cvut.kbss.owl2query.graph.model.Term;
+import cz.cvut.kbss.owl2query.graph.resources.ResourceLoader;
+import cz.cvut.kbss.owl2query.graph.util.GUIUtil;
+import cz.cvut.kbss.owl2query.graph.util.SDLSystem;
+import cz.cvut.kbss.owl2query.graph.util.TermSelection;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2Query;
+import cz.cvut.kbss.owl2query.model.QueryResult;
+import cz.cvut.kbss.owl2query.model.ResultBinding;
+import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
+import cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -42,7 +66,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -67,17 +90,6 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-
-import cz.cvut.kbss.owl2query.engine.QueryGraphFactory;
-import cz.cvut.kbss.owl2query.graph.gui.QueryGraphPanel;
-import cz.cvut.kbss.owl2query.graph.gui.components.ResultPanel;
-import cz.cvut.kbss.owl2query.graph.gui.components.StatusHandler;
-import cz.cvut.kbss.owl2query.graph.gui.jgraph.SDLJGraph;
-import cz.cvut.kbss.owl2query.graph.model.*;
-import cz.cvut.kbss.owl2query.graph.resources.ResourceLoader;
-import cz.cvut.kbss.owl2query.graph.util.GUIUtil;
-import cz.cvut.kbss.owl2query.graph.util.SDLSystem;
-import cz.cvut.kbss.owl2query.graph.util.TermSelection;
 import org.protege.editor.core.ui.util.Icons;
 import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.classexpression.OWLExpressionParserException;
@@ -101,132 +113,121 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.vocab.PrefixOWLOntologyFormat;
 
-import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
-import cz.cvut.kbss.owl2query.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.model.OWL2Query;
-import cz.cvut.kbss.owl2query.model.QueryResult;
-import cz.cvut.kbss.owl2query.model.ResultBinding;
-import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
-import cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser;
-
 /**
- * @author  kostob1
+ * @author kostob1
  */
 public class OWL2QueryView extends AbstractOWLViewComponent {
 
     //register the resourcebundle of this class to the
-    static{
-    	Locale.setDefault(Locale.ENGLISH);
+    static {
+        Locale.setDefault(Locale.ENGLISH);
         ResourceLoader.registerBundle("cz.cvut.kbss.owl2query.protege", "cz.cvut.kbss.owl2query.protege.resources");
     }
-
     private static final Logger log = Logger.getLogger(OWL2QueryView.class.getName());
     private static final long serialVersionUID = -4515710047558710080L;
 //    Exception: UnsupportedQueryException: Complex query patterns are not supported yet.
 //    private static final String demoQuery = "PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX  owl:  <http://www.w3.org/2002/07/owl#>\n\n SELECT * WHERE {?x ?y ?z}";
     private static final String demoQuery = "SELECT * WHERE {?x ?y ?z}";
-
     private JTextPane txpQuery;
     private JTextArea txaSparqlDL;
     private IQueryGraph graph;
     private OWL2Ontology<OWLObject> owl2Ontology;
     private SymbolDomain domain;
     private QueryGraphPanel qgp;
-    
     // must unregister in OWLModelManager in the dispose method
     private OWLModelManagerListener modelListener;
     private OWLOntologyChangeListener ontologyChangeListener;
-    private OWLSelectionModelListener selectionListener; 
+    private OWLSelectionModelListener selectionListener;
     /**
-	 * @uml.property  name="fileChooser"
-	 */
+     * @uml.property name="fileChooser"
+     */
     private JFileChooser fileChooser = null;
     private File currentFile;
     private boolean queryChanged = false;
     private String serializedLayouts = "";
-
     private ExecutorService s = Executors.newCachedThreadPool();
-	private Action saveAction;
-	private JButton btnRunQuery;
-	
-	private ResultPanel pnlResult;
-	
-	private boolean acceptEdits = false;
-	private SDLSystem sys;
-	
-	private JSplitPane sppPrefix;
-	//this counter shows how many threads executing a query are running at the moment
-	protected Runnable currentQueryExecutionThread;
+    private Action saveAction;
+    private JButton btnRunQuery;
+    private ResultPanel pnlResult;
+    private boolean acceptEdits = false;
+    private SDLSystem sys;
+    private JSplitPane sppPrefix;
+    //this counter shows how many threads executing a query are running at the moment
+    protected Runnable currentQueryExecutionThread;
 //	protected Object mutex = new Object();
-	
 
     protected void initialiseOWLView() throws Exception {
-    	sys = new SDLSystem();
+        sys = new SDLSystem<OWL2Ontology>(new QuerySymbolDomain());
         owl2Ontology = createOWLOntology();
         setCurrentFile(null);
         initComponents();
         modelListener = new OWLModelManagerListener() {
             public void handleChange(OWLModelManagerChangeEvent event) {
                 switch (event.getType()) {
-                case ACTIVE_ONTOLOGY_CHANGED:
-                    owl2Ontology = createOWLOntology();
-                    sys.updateDomain(owl2Ontology);
-                    handleNewActiveOntology();
-                    
+                    case ONTOLOGY_LOADED:
+                    case ONTOLOGY_RELOADED:
+                    case ONTOLOGY_CREATED:
+                    case ACTIVE_ONTOLOGY_CHANGED:
+                        owl2Ontology = createOWLOntology();
+                        sys.updateDomain(owl2Ontology);
+                        handleNewActiveOntology();
+
 //                    sys.getPrefixStore().init(getPrefixes(getOWLModelManager()));
-                    break;
-                case REASONER_CHANGED:
-                case ONTOLOGY_CLASSIFIED:
-                	btnRunQuery.setEnabled(!isNullReasoner());
-                    log.log(Level.SEVERE, "The ontology has been clasified or the reasoner has changed.");
-                    owl2Ontology = createOWLOntology();
-                    sys.updateDomain(owl2Ontology);
+                        break;
+                    case REASONER_CHANGED:
+                    case ONTOLOGY_CLASSIFIED:
+                        btnRunQuery.setEnabled(!isNullReasoner());
+                        log.log(Level.SEVERE, "The ontology has been clasified or the reasoner has changed.");
+                        owl2Ontology = createOWLOntology();
+                        sys.updateDomain(owl2Ontology);
 //                    sys.fireReasonerChanged();
-                    break;
+                        break;
                 }
             }
         };
         getOWLModelManager().addListener(modelListener);
         ontologyChangeListener = new OWLOntologyChangeListener() {
-
-        	public void ontologiesChanged(List<? extends OWLOntologyChange> arg0)
-					throws OWLException {
-				owl2Ontology = createOWLOntology();
+            public void ontologiesChanged(List<? extends OWLOntologyChange> arg0)
+                    throws OWLException {
+                owl2Ontology = createOWLOntology();
                 sys.updateDomain(owl2Ontology);
                 SDLJGraph g = qgp.getGraph();
-    			g.getQuery().importIntoDomain(sys.getDomain());
-    			GUIUtil.refreshGraphView(g);
-			}
-		};
-		getOWLModelManager().addOntologyChangeListener(ontologyChangeListener);
-		
-		final TermSelection.SelectionPartner partner = new TermSelection.StringSelectionPartner(sys.getSelection()) {
+                g.getQuery().importIntoDomain(sys.getDomain());
+                GUIUtil.refreshGraphView(g);
+            }
+        };
+        getOWLModelManager().addOntologyChangeListener(ontologyChangeListener);
 
-			public void selectionChanged(Object[] sel) {
-				
-				for(Object obj : sel){
-					if(obj instanceof GroundTerm){
-						OWLSelectionModel model = getOWLWorkspace().getOWLSelectionModel();
-						OWLDataFactory factory = getOWLDataFactory(); 
-						SymbolDomain domain = sys.getDomain();
-						Object wrappedobj = (GroundTerm)obj;
-						IRI iri = IRI.create(wrappedobj.toString());
-						if(domain.isClass(wrappedobj))
-							model.setSelectedObject(factory.getOWLClass(iri));
-						
-						if(domain.isIndividual(wrappedobj))
-							model.setSelectedObject(factory.getOWLNamedIndividual(iri));
-						
-						if(domain.isObjectProperty(wrappedobj))
-							model.setSelectedObject(factory.getOWLObjectProperty(iri));
-						
-						if(domain.isDataProperty(wrappedobj))
-							model.setSelectedObject(factory.getOWLDataProperty(iri));
-					}
-				}
-				
-				
-				
+        final TermSelection.SelectionPartner partner = new TermSelection.StringSelectionPartner(sys.getSelection()) {
+            public void selectionChanged(Object[] sel) {
+
+                for (Object obj : sel) {
+                    if (obj instanceof GroundTerm) {
+                        OWLSelectionModel model = getOWLWorkspace().getOWLSelectionModel();
+                        OWLDataFactory factory = getOWLDataFactory();
+                        SymbolDomain domain = sys.getDomain();
+                        Object wrappedobj = (GroundTerm) obj;
+                        IRI iri = IRI.create(wrappedobj.toString());
+                        if (domain.isClass(wrappedobj)) {
+                            model.setSelectedObject(factory.getOWLClass(iri));
+                        }
+
+                        if (domain.isIndividual(wrappedobj)) {
+                            model.setSelectedObject(factory.getOWLNamedIndividual(iri));
+                        }
+
+                        if (domain.isObjectProperty(wrappedobj)) {
+                            model.setSelectedObject(factory.getOWLObjectProperty(iri));
+                        }
+
+                        if (domain.isDataProperty(wrappedobj)) {
+                            model.setSelectedObject(factory.getOWLDataProperty(iri));
+                        }
+                    }
+                }
+
+
+
 //				Object[] cells= qgp.getGraph().getSelectionCells();
 //				for(Object obj : cells){
 //					DefaultGraphCell cell = (DefaultGraphCell)obj;
@@ -269,73 +270,77 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
 //						}
 //					}
 //				}
-			}
-		};
-		
-		selectionListener = new OWLSelectionModelListener() {
-			public void selectionChanged() throws Exception {
-				if(!partner.isAdjusting()){
-					List l = new ArrayList(4);
-					OWLSelectionModel model = getOWLWorkspace().getOWLSelectionModel();
-					Object obj = model.getSelectedObject();
-					if(obj != null){
-						if(obj.equals(model.getLastSelectedClass()))
-							l.add(new GroundTerm(model.getLastSelectedClass().getIRI().toString(),Term.CLASS));
-						else if(obj.equals(model.getLastSelectedDataProperty()))
-							l.add(new GroundTerm(model.getLastSelectedDataProperty().getIRI().toString(),Term.DATAPROPERTY));
-						else if(obj.equals(model.getLastSelectedObjectProperty()))
-							l.add(new GroundTerm(model.getLastSelectedObjectProperty().getIRI().toString(),Term.OBJPROPERTY));
-						else if(obj.equals(model.getLastSelectedIndividual()))
-							l.add(new GroundTerm(model.getLastSelectedIndividual().getIRI().toString(),Term.INDIVIDUAL));
+            }
+        };
+
+        selectionListener = new OWLSelectionModelListener() {
+            public void selectionChanged() throws Exception {
+                if (!partner.isAdjusting()) {
+                    List l = new ArrayList(4);
+                    OWLSelectionModel model = getOWLWorkspace().getOWLSelectionModel();
+                    Object obj = model.getSelectedObject();
+                    if (obj != null) {
+                        if (obj.equals(model.getLastSelectedClass())) {
+                            l.add(new GroundTerm(model.getLastSelectedClass().getIRI().toString(), Term.CLASS));
+                        } else if (obj.equals(model.getLastSelectedDataProperty())) {
+                            l.add(new GroundTerm(model.getLastSelectedDataProperty().getIRI().toString(), Term.DATAPROPERTY));
+                        } else if (obj.equals(model.getLastSelectedObjectProperty())) {
+                            l.add(new GroundTerm(model.getLastSelectedObjectProperty().getIRI().toString(), Term.OBJPROPERTY));
+                        } else if (obj.equals(model.getLastSelectedIndividual())) {
+                            l.add(new GroundTerm(model.getLastSelectedIndividual().getIRI().toString(), Term.INDIVIDUAL));
+                        }
 //						System.out.println(l.size());
 //						if(l.size() > 0)
 //							System.out.println(l.get(0).toString());
-					}
-					partner.setSelection(l.toArray());
-				}
-			}
-		};
-		
-		getOWLWorkspace().getOWLSelectionModel().addListener(selectionListener);
-		
+                    }
+                    partner.setSelection(l.toArray());
+                }
+            }
+        };
+
+        getOWLWorkspace().getOWLSelectionModel().addListener(selectionListener);
+
     }
-    
-    public void handleNewActiveOntology(){
-    	qgp.stopEditing();
-    	int ret = JOptionPane.showOptionDialog(this, ResourceLoader.getResource("new_ontology_prompt", this),
-                ResourceLoader.getResource("save", this), JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null);
-    	
-    	
-    	switch(ret){
-    		case JOptionPane.YES_OPTION: saveAction.actionPerformed(null); 
-    		case JOptionPane.NO_OPTION: createNewQuery();break;
-    		case JOptionPane.CANCEL_OPTION: 
-    			SDLJGraph g = qgp.getGraph();
-    			g.getQuery().importIntoDomain(sys.getDomain());
-    			GUIUtil.refreshGraphView(g);
-    			break;
-    	}
-    	
+
+    public void handleNewActiveOntology() {
+        qgp.stopEditing();
+        int ret = JOptionPane.showOptionDialog(this, ResourceLoader.getResource("new_ontology_prompt", this),
+                ResourceLoader.getResource("save", this), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+
+        switch (ret) {
+            case JOptionPane.YES_OPTION:
+                saveAction.actionPerformed(null);
+            case JOptionPane.NO_OPTION:
+                createNewQuery();
+                break;
+            case JOptionPane.CANCEL_OPTION:
+                SDLJGraph g = qgp.getGraph();
+                g.getQuery().importIntoDomain(sys.getDomain());
+                GUIUtil.refreshGraphView(g);
+                break;
+        }
+
     }
-    
+
     public static Map<String, String> getPrefixes(OWLModelManager modelManager) {
-		OWLOntologyManager owlManager = modelManager.getOWLOntologyManager();
-		Map<String, String> prefixes = new HashMap<String, String>();
-		List<OWLOntology> ontologies = new ArrayList<OWLOntology>(modelManager.getActiveOntologies());
-		for (OWLOntology ontology : ontologies) {
-			OWLOntologyFormat format = owlManager.getOntologyFormat(ontology);
-			if (format instanceof PrefixOWLOntologyFormat) {
-				PrefixOWLOntologyFormat newPrefixes = (PrefixOWLOntologyFormat) format;
-				for (Map.Entry<String, String> entry : newPrefixes.getPrefixName2PrefixMap().entrySet()) {
-					String prefixName = entry.getKey();
-					String prefix     = entry.getValue();
-					prefixes.put(prefixName, prefix);
-				}
-			}
-		}
-		return prefixes;
-	}
-    
+        OWLOntologyManager owlManager = modelManager.getOWLOntologyManager();
+        Map<String, String> prefixes = new HashMap<String, String>();
+        List<OWLOntology> ontologies = new ArrayList<OWLOntology>(modelManager.getActiveOntologies());
+        for (OWLOntology ontology : ontologies) {
+            OWLOntologyFormat format = owlManager.getOntologyFormat(ontology);
+            if (format instanceof PrefixOWLOntologyFormat) {
+                PrefixOWLOntologyFormat newPrefixes = (PrefixOWLOntologyFormat) format;
+                for (Map.Entry<String, String> entry : newPrefixes.getPrefixName2PrefixMap().entrySet()) {
+                    String prefixName = entry.getKey();
+                    String prefix = entry.getValue();
+                    prefixes.put(prefixName, prefix);
+                }
+            }
+        }
+        return prefixes;
+    }
+
 //    protected void dumpPrefixes(){
 //    	PrefixManager pm = getPrefixOWLOntologyFormat(getOWLModelManager());
 //    	Map<String, String> map = pm.getPrefixName2PrefixMap();
@@ -344,7 +349,6 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
 ////    		log.log(Level.SEVERE,"(key,map) : (" + e.getKey() + " , " + e.getValue() + ")");  
 //    	}
 //    }
-
     protected void disposeOWLView() {
         getOWLModelManager().removeListener(modelListener);
         getOWLModelManager().removeOntologyChangeListener(ontologyChangeListener);
@@ -352,9 +356,8 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
     }
 
     /**
-	 * @return
-	 * @uml.property  name="fileChooser"
-	 */
+     * @return @uml.property name="fileChooser"
+     */
     private JFileChooser getFileChooser() {
         if (fileChooser == null) {
             final File fd = new File("examples/data");
@@ -399,31 +402,33 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
     }
 
     private IQueryGraph toQueryGraph(String query) {
-        IQueryGraphFactory f = QueryGraphFactory.getFactory();
+        QueryGraphFactory f = QueryGraphFactory.getFactory();
         OWL2Query<OWLObject> q = null;
         try {
             q = f.parseFile(query, owl2Ontology);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, ResourceLoader.getResource("parse_query_warning", this),
-                    ResourceLoader.getResource("parsing", this) + ": " +
-                    e.getMessage(), JOptionPane.WARNING_MESSAGE);
+                    ResourceLoader.getResource("parsing", this) + ": "
+                    + e.getMessage(), JOptionPane.WARNING_MESSAGE);
         }
         return f.createQuery(q);
     }
 
-    private boolean isNullReasoner(){
-    	OWLModelManager modelmanager = getOWLModelManager();
-    	OWLReasoner reasoner = modelmanager.getReasoner();
-    	if(reasoner == null)return true;
-    	return reasoner instanceof NoOpReasoner;
+    private boolean isNullReasoner() {
+        OWLModelManager modelmanager = getOWLModelManager();
+        OWLReasoner reasoner = modelmanager.getReasoner();
+        if (reasoner == null) {
+            return true;
+        }
+        return reasoner instanceof NoOpReasoner;
     }
-    
-    protected void interruptQueryExecution(){
-    	OWLModelManager modelmanager = getOWLModelManager();
+
+    protected void interruptQueryExecution() {
+        OWLModelManager modelmanager = getOWLModelManager();
         OWLReasoner reasoner = modelmanager.getReasoner();
         reasoner.interrupt();
     }
-    
+
     private OWL2Ontology<OWLObject> createOWLOntology() {
         final OWLModelManager modelmanager = getOWLModelManager();
         // PrefixManager pm = new PrefixMapperImpl();
@@ -436,8 +441,9 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
 //	        log.log(Level.SEVERE,"Problem occured while merging the active ontology, returning ",e);
 //		}
         final OWLReasoner reasoner = modelmanager.getReasoner();
-        if(currentQueryExecutionThread != null)
-        	reasoner.interrupt();
+        if (currentQueryExecutionThread != null) {
+            reasoner.interrupt();
+        }
         log.info("reasoner : " + reasoner);
         return new OWLAPIv3OWL2Ontology(manager, ontology, reasoner);
     }
@@ -447,59 +453,58 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         final JScrollPane scpQuery = new JScrollPane();
         txpQuery = new ExpressionEditor<OWL2Query<OWLObject>>(getOWLWorkspace()
                 .getOWLEditorKit(), new OWLExpressionChecker<OWL2Query<OWLObject>>() {
-					public void check(String arg0)
-							throws OWLExpressionParserException {
-					}
+            public void check(String arg0)
+                    throws OWLExpressionParserException {
+            }
 
-					public OWL2Query<OWLObject> createObject(String arg0)
-							throws OWLExpressionParserException {
-						return null;
-					}
-        			
-				});
-        ((AbstractDocument)txpQuery.getDocument()).setDocumentFilter(new DocumentFilter(){
-
-			@Override
-			public void remove(FilterBypass fb, int offset, int length)
-					throws BadLocationException {
-				// TODO Auto-generated method stub
-				handleChange(fb.getDocument().getText(offset, length));
-				super.remove(fb, offset, length);
-			}
-
-			@Override
-			public void insertString(FilterBypass fb, int offset,
-					String string, AttributeSet attr)
-					throws BadLocationException {
-				handleChange(string);
-				super.insertString(fb, offset, string, attr);
-			}
-
-			@Override
-			public void replace(FilterBypass fb, int offset, int length,
-					String text, AttributeSet attrs)
-					throws BadLocationException {
-				handleReplace(fb.getDocument().getText(offset, length), text);
-				super.replace(fb, offset, length, text, attrs);
-			}
-			
-			public void handleChange(String str){
-				if(isSignificantChange(str))
-					pnlResult.setValidResults(false);
-			}
-			
-			public void handleReplace(String str, String with){
-				if(isSignificantChange(str) && isSignificantChange(with))
-					pnlResult.setValidResults(false);
-			}
-			
-			public boolean isSignificantChange(String str){
-//				return pnlResult != null && acceptEdits && !str.matches("^\\s*$");
-				return pnlResult != null && acceptEdits;
-			}
-        	
+            public OWL2Query<OWLObject> createObject(String arg0)
+                    throws OWLExpressionParserException {
+                return null;
+            }
         });
-        
+        ((AbstractDocument) txpQuery.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void remove(FilterBypass fb, int offset, int length)
+                    throws BadLocationException {
+                // TODO Auto-generated method stub
+                handleChange(fb.getDocument().getText(offset, length));
+                super.remove(fb, offset, length);
+            }
+
+            @Override
+            public void insertString(FilterBypass fb, int offset,
+                    String string, AttributeSet attr)
+                    throws BadLocationException {
+                handleChange(string);
+                super.insertString(fb, offset, string, attr);
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length,
+                    String text, AttributeSet attrs)
+                    throws BadLocationException {
+                handleReplace(fb.getDocument().getText(offset, length), text);
+                super.replace(fb, offset, length, text, attrs);
+            }
+
+            public void handleChange(String str) {
+                if (isSignificantChange(str)) {
+                    pnlResult.setValidResults(false);
+                }
+            }
+
+            public void handleReplace(String str, String with) {
+                if (isSignificantChange(str) && isSignificantChange(with)) {
+                    pnlResult.setValidResults(false);
+                }
+            }
+
+            public boolean isSignificantChange(String str) {
+//				return pnlResult != null && acceptEdits && !str.matches("^\\s*$");
+                return pnlResult != null && acceptEdits;
+            }
+        });
+
 //        txpQuery.getDocument().addDocumentListener(new DocumentListener(){
 //			@Override
 //			public void insertUpdate(DocumentEvent e) {
@@ -560,33 +565,34 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         return pnl;
     }
 
-    private void createNewQuery(){
-    	setQuery(true, "");
-    	setQuery(false, "");
-    	pnlResult.clearResults();
-    	setCurrentFile(null);
+    private void createNewQuery() {
+        setQuery(true, "");
+        setQuery(false, "");
+        pnlResult.clearResults();
+        setCurrentFile(null);
     }
-    
+
     private void setQuery(boolean isGraphSelected, String query) {
         if (isGraphSelected) {
-        	if(query == null || query.length() == 0)
-        		graph = new QueryGraph();
-        	else
-        		graph = toQueryGraph(query);
+            if (query == null || query.length() == 0) {
+                graph = new QueryGraph();
+            } else {
+                graph = toQueryGraph(query);
+            }
             qgp.setQuery(graph);
             handleNewGraph();
         } else {
-        	acceptEdits = false;
+            acceptEdits = false;
             txpQuery.setText(query);
             acceptEdits = true;
         }
-        queryChanged=false;
+        queryChanged = false;
     }
-    
-    private void handleNewGraph(){
-    	graph.addChangeListener(new ChangeListener() {
+
+    private void handleNewGraph() {
+        graph.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-            	pnlResult.setValidResults(false);
+                pnlResult.setValidResults(false);
                 txaSparqlDL.setText(QueryGraphToOWL2QueryConverter
                         .convertQueryGraph(graph, domain).toString());
                 queryChanged = true;
@@ -597,9 +603,9 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
     }
 
     /**
-	 * @param file
-	 * @uml.property  name="currentFile"
-	 */
+     * @param file
+     * @uml.property name="currentFile"
+     */
     private void setCurrentFile(final File file) {
         currentFile = file;
 
@@ -609,18 +615,21 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
             setHeaderText(ResourceLoader.getResource("file_status", this));
         }
     }
+
     /**
-     * 
-     * @return true if the user has selected yes or no, 
-     * false if the user has selected cancel.
+     *
+     * @return true if the user has selected yes or no, false if the user has
+     * selected cancel.
      */
-    private boolean promptToSaveAQuery(){
-    	int ret = JOptionPane.showConfirmDialog(this, ResourceLoader.getResource("overide_query_message", this));
-    	switch(ret){
-    		case JOptionPane.YES_OPTION: saveAction.actionPerformed(null); 
-			case JOptionPane.NO_OPTION: return true;
-    	}
-    	return false;
+    private boolean promptToSaveAQuery() {
+        int ret = JOptionPane.showConfirmDialog(this, ResourceLoader.getResource("overide_query_message", this));
+        switch (ret) {
+            case JOptionPane.YES_OPTION:
+                saveAction.actionPerformed(null);
+            case JOptionPane.NO_OPTION:
+                return true;
+        }
+        return false;
     }
 
     private void initComponents() {
@@ -635,7 +644,7 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         final JButton btnOpenQuery = new JButton(ResourceLoader.getResource("open", this));
         final JButton btnSaveQuery = new JButton(ResourceLoader.getResource("save", this));
         // final JButton btnSaveAsQuery = new JButton("save as ...");
-        
+
         pnlChoice.add(btnDemoQuery);
         pnlChoice.add(btnNewQuery);
         pnlChoice.add(btnOpenQuery);
@@ -656,7 +665,7 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         grpChoice.add(rbtGraph);
         grpChoice.add(rbtQuery);
         rbtGraph.setSelected(true);
-        
+
 
         final CardLayout cardLayout = new CardLayout();
         final JPanel pnlQuery = new JPanel(cardLayout);
@@ -671,19 +680,18 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         txaSparqlDL.setLineWrap(true);
 //        final Dimension d = new Dimension(0, 40);
 //         txaSparqlDL.setPreferredSize(d);
-        
+
         final JScrollPane scpSPARQLDL = new JScrollPane(txaSparqlDL);
         scpSPARQLDL
                 .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scpSPARQLDL
-        		.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         txaSparqlDL.setToolTipText(ResourceLoader.getResource("sparqldltxt_tooltip", this));
 //        scpSPARQLDL.getViewport().setPreferredSize(d);
 
         pnlMain.add(scpSPARQLDL, BorderLayout.SOUTH);
 
         rbtGraph.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 if (rbtGraph.isSelected()) {
                     try {
@@ -691,25 +699,25 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
                         qgp.getLayoutStoreEditor().loadStoreFromString(serializedLayouts);
                         //layout the genereal tab
                         JSplitPane gen = qgp.getGeneralPanel();
-                        if(sppPrefix != null){
-                        	Component pref = sppPrefix.getTopComponent();
-                        	if(pref != null && pref != gen){
-                        		int p = sppPrefix.getDividerLocation();
-                        		sppPrefix.remove(pref);
-                        		gen.setTopComponent(pref);
-                        		sppPrefix.setTopComponent(gen);
-                        		sppPrefix.setDividerLocation(p);
-                        	}
+                        if (sppPrefix != null) {
+                            Component pref = sppPrefix.getTopComponent();
+                            if (pref != null && pref != gen) {
+                                int p = sppPrefix.getDividerLocation();
+                                sppPrefix.remove(pref);
+                                gen.setTopComponent(pref);
+                                sppPrefix.setTopComponent(gen);
+                                sppPrefix.setDividerLocation(p);
+                            }
                         }
                     } catch (Exception ex) {
-                    	ex.printStackTrace();
+                        ex.printStackTrace();
 //                    	String s = Arrays.toString(ex.getStackTrace());
 //                    	log.log(Level.INFO, s);
 //                    	System.out.println(s);
                         JOptionPane.showMessageDialog(
                                 OWL2QueryView.this,
                                 ResourceLoader.getResource("parse_query_warning", OWL2QueryView.this)
-                                        + ex.getMessage() , 
+                                + ex.getMessage(),
                                 ResourceLoader.getResource("error", OWL2QueryView.this),
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -719,7 +727,6 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         });
 
         rbtQuery.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 if (rbtQuery.isSelected()) {
                     try {
@@ -734,19 +741,19 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
                         //layout the genereal tab
                         JSplitPane gen = qgp.getGeneralPanel();
                         Component pref = gen.getLeftComponent();
-                        if(pref != null){
-                        	gen.remove(pref);
-                        	int p = sppPrefix.getDividerLocation();
-                        	sppPrefix.remove(gen);
-                        	sppPrefix.setTopComponent(pref);
-                        	sppPrefix.setDividerLocation(p);
+                        if (pref != null) {
+                            gen.remove(pref);
+                            int p = sppPrefix.getDividerLocation();
+                            sppPrefix.remove(gen);
+                            sppPrefix.setTopComponent(pref);
+                            sppPrefix.setDividerLocation(p);
                         }
                     } catch (Exception ex) {
-                    	ex.printStackTrace();
+                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(
                                 OWL2QueryView.this,
                                 ResourceLoader.getResource("serialize_query_warning", OWL2QueryView.this) + " : "
-                                        + ex.getMessage(),
+                                + ex.getMessage(),
                                 ResourceLoader.getResource("error", OWL2QueryView.this),
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -796,10 +803,10 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.LINE_START;
-        final Icon play_icon =  new ImageIcon(getClass().getResource("icons/run.png"));
-        final Icon stop_icon =  new ImageIcon(getClass().getResource("icons/stop.png"));
-        final Icon stoping_icon =  new ImageIcon(getClass().getResource("icons/stoping.png"));
-        btnRunQuery = new JButton(ResourceLoader.getResource("run", this),play_icon);
+        final Icon play_icon = new ImageIcon(getClass().getResource("icons/run.png"));
+        final Icon stop_icon = new ImageIcon(getClass().getResource("icons/stop.png"));
+        final Icon stoping_icon = new ImageIcon(getClass().getResource("icons/stoping.png"));
+        btnRunQuery = new JButton(ResourceLoader.getResource("run", this), play_icon);
         btnRunQuery.setToolTipText(ResourceLoader.getResource("run_tooltip", this));
         pnlEvaluation.add(btnRunQuery, gbc);
 
@@ -823,15 +830,15 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
 //                owl2Ontology = createOWLOntology();
                 boolean isRunning = true;
                 synchronized (btnRunQuery) {
-                	isRunning = currentQueryExecutionThread != null;
+                    isRunning = currentQueryExecutionThread != null;
                 }
-                if(isRunning){
-                	interruptQueryExecution();
+                if (isRunning) {
+                    interruptQueryExecution();
 //                	btnRunQuery.setEnabled(false);
-                	btnRunQuery.setIcon(stoping_icon);
-                	return;
+                    btnRunQuery.setIcon(stoping_icon);
+                    return;
                 }
-                
+
                 if (rbtGraph.isSelected()) {
                     query = QueryGraphToOWL2QueryConverter.convertQueryGraph(
                             graph, domain);
@@ -844,46 +851,45 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
                 }
 
 //                currentQueryExecutionThread = 
-                
+
                 s.submit(new Runnable() {
                     public void run() {
-                    	
+
 //                    	synchronized (mutex) {
-                    		try{
-                    			currentQueryExecutionThread = this;
-                    			btnRunQuery.setText(ResourceLoader.getResource("stop", OWL2QueryView.this));
-                        		btnRunQuery.setIcon(stop_icon);
-                    			log.log(Level.INFO, "Executing query: " + query);
-                    			final QueryResult<OWLObject> r = OWL2QueryEngine
-                    			.exec(query);
-                    			log.log(Level.INFO, "Result: " + r.size());
-                    			final List<ResultBinding<OWLObject>> b = new ArrayList<ResultBinding<OWLObject>>();
-                    			for (final Iterator<ResultBinding<OWLObject>> i = r
-                    					.iterator(); i.hasNext();) {
-                    				b.add(i.next());
-                    			}
+                        try {
+                            currentQueryExecutionThread = this;
+                            btnRunQuery.setText(ResourceLoader.getResource("stop", OWL2QueryView.this));
+                            btnRunQuery.setIcon(stop_icon);
+                            log.log(Level.INFO, "Executing query: " + query);
+                            final QueryResult<OWLObject> r = OWL2QueryEngine
+                                    .exec(query);
+                            log.log(Level.INFO, "Result: " + r.size());
+                            final List<ResultBinding<OWLObject>> b = new ArrayList<ResultBinding<OWLObject>>();
+                            for (final Iterator<ResultBinding<OWLObject>> i = r
+                                    .iterator(); i.hasNext();) {
+                                b.add(i.next());
+                            }
 //                        System.out.println(threadCount - 1);
 //                        btnRunQuery.setText(ResourceLoader.getResource("run", OWL2QueryView.this) + " ("+ (--threadCount) +")");
-                    			if(this == currentQueryExecutionThread){
-                    				SwingUtilities.invokeLater(new Runnable() {
-                    					public void run() {
-                    						pnlResult.setResult(r);
-                    					}
-                    				});
-                    			}
-                    			
-                    		}catch(Exception e){
-                    			log.log(Level.WARNING, "", e);
-                    		}finally{
-                    			synchronized (btnRunQuery) {
-                    				btnRunQuery.setText(ResourceLoader.getResource("run", OWL2QueryView.this));
-                    				btnRunQuery.setIcon(play_icon);
+                            if (this == currentQueryExecutionThread) {
+                                SwingUtilities.invokeLater(new Runnable() {
+                                    public void run() {
+                                        pnlResult.setResult(new OWL2QueryResultTableModel(r));
+                                    }
+                                });
+                            }
+
+                        } catch (Exception e) {
+                            log.log(Level.WARNING, "", e);
+                        } finally {
+                            synchronized (btnRunQuery) {
+                                btnRunQuery.setText(ResourceLoader.getResource("run", OWL2QueryView.this));
+                                btnRunQuery.setIcon(play_icon);
 //                        			btnRunQuery.setEnabled(true);
-                    				currentQueryExecutionThread = null;
-								}
-                    		}
-                    	}
-                    	
+                                currentQueryExecutionThread = null;
+                            }
+                        }
+                    }
 //                        SwingUtilities.invokeLater(new Runnable() {
 //                            public void run() {
 //                                tblResults.setModel(new AbstractTableModel() {
@@ -919,26 +925,28 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         Action demoAction = new AbstractAction(null, new ImageIcon(getClass()
                 .getResource("icons/sample.png"))) {
             public void actionPerformed(ActionEvent e) {
-            	if(queryChanged){
-            		if(!promptToSaveAQuery())
-            			return;//the user has canceled the action
-            	}
-            	setQuery(rbtGraph.isSelected(), demoQuery);
-            	pnlResult.clearResults();
+                if (queryChanged) {
+                    if (!promptToSaveAQuery()) {
+                        return;//the user has canceled the action
+                    }
+                }
+                setQuery(rbtGraph.isSelected(), demoQuery);
+                pnlResult.clearResults();
                 setCurrentFile(null);
             }
         };
         demoAction.putValue(Action.SHORT_DESCRIPTION, ResourceLoader.getResource("sample_query", this));
         btnDemoQuery.setAction(demoAction);
-        
+
         Action newAction = new AbstractAction(null, new ImageIcon(getClass()
                 .getResource("icons/new.png"))) {
             public void actionPerformed(ActionEvent e) {
-            	if(queryChanged){
-            		if(!promptToSaveAQuery())
-            			return;//the user has canceled the action
-            	}
-            	createNewQuery();
+                if (queryChanged) {
+                    if (!promptToSaveAQuery()) {
+                        return;//the user has canceled the action
+                    }
+                }
+                createNewQuery();
 //                if (rbtGraph.isSelected()) {
 //                    graph = new QueryGraph();
 //                    qgp.setQuery(graph);
@@ -950,15 +958,15 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
 //                setCurrentFile(null);
             }
         };
-        
+
         newAction.putValue(Action.SHORT_DESCRIPTION, ResourceLoader.getResource("new_query", this));
         btnNewQuery.setAction(newAction);
-        
+
         Action openAction = new AbstractAction(null, new ImageIcon(
                 getClass().getResource("icons/open.png"))) {
             public void actionPerformed(ActionEvent e) {
                 try {
-                	
+
 //                	if (currentFile != null) {
 //                        // JOptionPane.show
 //                        int retSave = fc.showSaveDialog(OWL2QueryView.this);
@@ -967,23 +975,24 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
 //                        	fc.setSelectedFile(null);
 //                        }
 //                    }
-                	if(queryChanged){
-                		if(!promptToSaveAQuery())
-                			return;//the user has canceled the action
-                	}
-                	final JFileChooser fc = getFileChooser();
-                	fc.setSelectedFile(new File(""));
+                    if (queryChanged) {
+                        if (!promptToSaveAQuery()) {
+                            return;//the user has canceled the action
+                        }
+                    }
+                    final JFileChooser fc = getFileChooser();
+                    fc.setSelectedFile(new File(""));
 //                    fc.setVisible(true);
-                    
+
                     int ret = fc.showOpenDialog(OWL2QueryView.this);
-                    
+
                     if (ret == JFileChooser.APPROVE_OPTION) {
-                        
+
 
                         setCurrentFile(fc.getSelectedFile());
                         final BufferedReader r = new BufferedReader(
                                 new InputStreamReader(new FileInputStream(
-                                        currentFile)));
+                                currentFile)));
                         String retstr = "";
                         String line;
                         while ((line = r.readLine()) != null) {
@@ -1004,6 +1013,7 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         btnOpenQuery.setAction(openAction);
 
         class SaveAction extends AbstractAction {
+
             boolean force;
 
             SaveAction(boolean force) {
@@ -1028,8 +1038,8 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
                 try {
                     w = new BufferedWriter(new FileWriter(currentFile));
                     OWL2Query<OWLObject> q = QueryGraphToOWL2QueryConverter
-                    .convertQueryGraph(graph, domain);
-                    new SparqlARQParser<OWLObject>().write(q, w,owl2Ontology);
+                            .convertQueryGraph(graph, domain);
+                    new SparqlARQParser<OWLObject>().write(q, w, owl2Ontology);
 //                    w.write(txpQuery.getText());
                     String layouts = qgp.getLayoutStoreEditor().storeToString();
                     w.write("\n" + layouts);
@@ -1042,7 +1052,7 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         }
         ;
 
-        
+
         saveAction = new SaveAction(false);
         saveAction.putValue(Action.SHORT_DESCRIPTION, ResourceLoader.getResource("save_query", this));
         btnSaveQuery.setAction(saveAction);
@@ -1061,8 +1071,8 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         sppResults.setDividerLocation(0.8);
         sppResults.setOneTouchExpandable(true);
         sppPrefix = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-        		qgp.getGeneralPanel(),//new PrefixEditor(sys),
-        		sppResults);
+                qgp.getGeneralPanel(),//new PrefixEditor(sys),
+                sppResults);
         sppPrefix.setDividerLocation(0.2);
         sppPrefix.setOneTouchExpandable(true);
         this.setLayout(new BorderLayout());
@@ -1073,8 +1083,7 @@ public class OWL2QueryView extends AbstractOWLViewComponent {
         statusContainer.setLayout(new FlowLayout(FlowLayout.RIGHT));
         sys.setStatusHandler(sh);
         statusContainer.add(sh);
-        this.add(statusContainer,BorderLayout.SOUTH);
+        this.add(statusContainer, BorderLayout.SOUTH);
 //        this.getWorkspace().getStatusArea().set
     }// </editor-fold>//GEN-END:initComponents
-    
 }
