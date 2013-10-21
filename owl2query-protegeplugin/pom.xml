@@ -96,6 +96,12 @@
             <groupId>cz.cvut.kbss</groupId>
             <artifactId>owl2query-owlapi</artifactId>
             <version>${project.version}</version>
+<!--            <exclusions>
+              <exclusion>   declare the exclusion here 
+                <groupId>net.sourceforge.owlapi</groupId>
+                <artifactId>owlapi-distribution</artifactId>
+              </exclusion>
+            </exclusions> -->
         </dependency>
         <!--<dependency>-->
             <!--<groupId>cz.cvut.kbss</groupId>-->
@@ -116,6 +122,12 @@
             <groupId>protege4</groupId>
             <artifactId>org.protege.editor.owl</artifactId>
             <version>4.1.0.213_SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>owlapi</artifactId>
+                    <groupId>owlapi</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -172,6 +184,7 @@
                         <Bundle-Activator>org.protege.editor.core.plugin.DefaultPluginActivator</Bundle-Activator>
                         <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
                         <Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+                        <Embed-Directory>lib</Embed-Directory>
                         <Embed-Dependency>owl2query-api,owl2query-engine,owl2query-owlapi,junit,arq,jena,iri,icu4j,stax-api,xml-resolver,commons-lang,commons-logging,looks,xmlbeans,slf4j-log4j12,xercesImpl,lucene-core,mdock,swing-worker,xmlcatalog,slf4j-api,wstx-asl,querygui-owl2query-adapter,querygui,jgraph,jgraphaddons</Embed-Dependency>
                         <Embed-Transitive>true</Embed-Transitive>
                         <Include-Resource>{maven-resources}</Include-Resource>
