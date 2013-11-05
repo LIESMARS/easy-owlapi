@@ -6,7 +6,7 @@
       <label value="OWL2Query"/>
       <class value="cz.cvut.kbss.owl2query.protege.OWL2QueryView"/>
       <headerColor value="@org.protege.ontologycolor"/>
-      <category value="@org.protege.misccategory"/>
+      <category value="@org.protege.querycategory"/>
    </extension>
 
    <extension

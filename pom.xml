@@ -4,7 +4,7 @@
 
     <groupId>cz.cvut.kbss</groupId>
     <artifactId>owl2query</artifactId>
-    <version>0.3.1-SNAPSHOT</version>
+    <version>0.3.1</version>
     <packaging>pom</packaging>
 
     <name>OWL2Query</name>
@@ -12,10 +12,11 @@
     <url>http://owl2query.sourceforge.net</url>
 
     <modules>
+        <module>owl2query-parent</module>
         <module>owl2query-api</module>
         <module>owl2query-engine</module>
         <module>owl2query-owlapi</module>
-        <module>owl2query-protegeplugin</module>
+        <module>owl2query-protege-plugin</module>
     </modules>
    
     <distributionManagement>

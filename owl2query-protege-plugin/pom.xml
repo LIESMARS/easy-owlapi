@@ -5,11 +5,11 @@
     <parent>
         <artifactId>owl2query-parent</artifactId>
         <groupId>cz.cvut.kbss</groupId>
-        <version>0.3.1-SNAPSHOT</version>
+        <version>0.3.1</version>
         <relativePath>../owl2query-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>owl2query-protegeplugin</artifactId>
+    <artifactId>owl2query-protege-plugin</artifactId>
     <name>OWL2Query Protege plugin</name>
     <description>OWL2Query Protege plugin making use of the OWL2QueryGraph project.</description>
     <url>http://maven.apache.org</url>
@@ -45,39 +45,9 @@
         <url>https://krizik.felk.cvut.cz/km/owl2query/svn/owl2query/trunk</url>
     </scm>
 
-    <repositories>
-        <repository>
-            <releases>
-            </releases>
-            <id>krizik</id>
-            <name>KBSS Maven 2 Repository</name>
-            <url>http://krizik.felk.cvut.cz/m2repo</url>
-        </repository>
-        <!-- repository>
-              <releases>
-              </releases>
-              <id>protege_repo</id>
-              <name>Protege Maven2 Repository</name>
-              <url>http://bmir-hudson1.stanford.edu/nexus/content/groups/public/</url>
-          </repository-->
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>krizik</id>
-            <name>KBSS Maven 2 Repository</name>
-            <url>http://krizik.felk.cvut.cz/m2repo</url>
-        </repository>
-        <site>
-            <id>owl2queryprotege</id>
-            <name>OWL2QueryProtege</name>
-            <url>http://owl2query.sourceforge.net</url>
-        </site>
-        <downloadUrl>http://sourceforge.net/projects/owl2query/files/</downloadUrl>
-    </distributionManagement>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <protege.version>4.3.0</protege.version>
         <!--<manifest.template>${project.basedir}/META-INF/TEMPLATE_MANIFEST.MF</manifest.template>-->
         <!--<manifest.generated>META-INF/MANIFEST.MF</manifest.generated>-->
         <!--<properties.tmp>${project.build.directory}/properties.tmp</properties.tmp>-->
@@ -96,39 +66,18 @@
             <groupId>cz.cvut.kbss</groupId>
             <artifactId>owl2query-owlapi</artifactId>
             <version>${project.version}</version>
-<!--            <exclusions>
-              <exclusion>   declare the exclusion here 
-                <groupId>net.sourceforge.owlapi</groupId>
-                <artifactId>owlapi-distribution</artifactId>
-              </exclusion>
-            </exclusions> -->
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>cz.cvut.kbss</groupId>-->
-            <!--<artifactId>owl2query-engine</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>cz.cvut.kbss</groupId>-->
-            <!--<artifactId>owl2query-api</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>protege4</groupId>
-            <artifactId>org.protege.editor.core.application</artifactId>
-            <version>4.1.0.213_SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>protege4</groupId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency> 
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
             <artifactId>org.protege.editor.owl</artifactId>
-            <version>4.1.0.213_SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>owlapi</artifactId>
-                    <groupId>owlapi</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+            <version>${protege.version}</version>
+            <scope>provided</scope>
+        </dependency>        
     </dependencies>
 
     <build>
@@ -160,7 +109,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>2.5.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -170,7 +119,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.7</version>
+                <version>2.4.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
