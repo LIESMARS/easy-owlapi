@@ -35,7 +35,7 @@
 		</HSNode>
 		<CNode>
 			<Component label="OWL2Query Query">
-				<Property id="pluginId" value="cz.cvut.kbss.OWL2Query.OWL2QueryView" />
+				<Property id="pluginId" value="cz.cvut.kbss.owl2query-protege-plugin.OWL2QueryView" />
 			</Component>
 		</CNode>
 	</VSNode>

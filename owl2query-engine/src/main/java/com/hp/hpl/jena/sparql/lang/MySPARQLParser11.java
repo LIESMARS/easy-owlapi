@@ -17,12 +17,12 @@ package com.hp.hpl.jena.sparql.lang;
 import java.io.InputStream;
 import java.io.Reader;
 
-import com.hp.hpl.jena.sparql.lang.sparql_10.SPARQLParser10;
-import com.hp.hpl.jena.sparql.lang.sparql_10.SPARQLParser10TokenManager;
+import com.hp.hpl.jena.sparql.lang.sparql_11.SPARQLParser11;
+import com.hp.hpl.jena.sparql.lang.sparql_11.SPARQLParser11TokenManager;
 import com.hp.hpl.jena.sparql.util.LabelToNodeMap;
 import com.hp.hpl.jena.sparql.util.MyLabelToNodeMap;
 
-public class MySPARQLParser10 extends SPARQLParser10 {
+public class MySPARQLParser11 extends SPARQLParser11 {
 	
 	
 	
@@ -36,25 +36,25 @@ public class MySPARQLParser10 extends SPARQLParser10 {
 	
     
     //contructor change
-	public MySPARQLParser10(SPARQLParser10TokenManager tm) {
+	public MySPARQLParser11(SPARQLParser11TokenManager tm) {
 		super(tm);
 		init();
 	}
 
 	//contructor change
-	public MySPARQLParser10(InputStream stream, java.lang.String encoding) {
+	public MySPARQLParser11(InputStream stream, java.lang.String encoding) {
 		super(stream, encoding);
 		init();
 	}
 
 	//contructor change
-	public MySPARQLParser10(InputStream stream) {
+	public MySPARQLParser11(InputStream stream) {
 		super(stream);
 		init();
 	}
 
 	//contructor change
-	public MySPARQLParser10(Reader stream) {
+	public MySPARQLParser11(Reader stream) {
 		super(stream);
 		init();
 	}

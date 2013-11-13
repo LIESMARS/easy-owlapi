@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 import cz.cvut.kbss.owl2query.model.OWL2Ontology;
 import cz.cvut.kbss.owl2query.model.OWL2Query;
+import cz.cvut.kbss.owl2query.model.OWL2Rule;
 
 public interface QueryParser<G> {
 	public static Logger log = Logger.getLogger(QueryParser.class.getName());
@@ -27,5 +28,11 @@ public interface QueryParser<G> {
 			throws QueryParseException;
 
 	public OWL2Query<G> parse(final InputStream stream, OWL2Ontology<G> o)
+			throws QueryParseException;
+
+	public OWL2Rule<G> parseConstruct(final String queryString, OWL2Ontology<G> o)
+			throws QueryParseException;
+
+	public OWL2Rule<G> parseConstruct(final InputStream stream, OWL2Ontology<G> o)
 			throws QueryParseException;
 }
