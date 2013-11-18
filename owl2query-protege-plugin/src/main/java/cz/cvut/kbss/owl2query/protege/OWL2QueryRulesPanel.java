@@ -20,6 +20,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -84,11 +86,15 @@ public class OWL2QueryRulesPanel extends JPanel {
 		this.o = o;
 	}
 	
-	private SPARQLDLNOTRule createRule(final String s) {
+	private void updateRule(SPARQLDLNOTRule rule, final String s) {
 		OWL2Rule<OWLObject> r = new SparqlARQParser().parseConstruct(s, o);
-		SPARQLDLNOTRule rr = new SPARQLDLNOTRule();
-		rr.setRule(r);
-		rr.setSparqlString(s);
+		rule.setRule(r);
+		rule.setSparqlString(s);
+	}
+	
+	private SPARQLDLNOTRule createRule(final String s) {
+		final SPARQLDLNOTRule rr = new SPARQLDLNOTRule();
+		updateRule(rr, s);
 		return rr;
 	}
 	
@@ -213,6 +219,16 @@ public class OWL2QueryRulesPanel extends JPanel {
 					txpQuery.setText(r.getSparqlString());
 				}
 			}
+		});
+		txpQuery.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				updateRule(selectedRule,txpQuery.getText());
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {}
 		});
 	}
 	
