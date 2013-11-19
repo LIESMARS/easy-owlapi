@@ -26,6 +26,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hp.hpl.jena.sparql.syntax.ElementBind;
+
 import cz.cvut.kbss.owl2query.model.GroundTerm;
 import cz.cvut.kbss.owl2query.model.InternalReasonerException;
 import cz.cvut.kbss.owl2query.model.OWL2Ontology;
@@ -679,6 +681,17 @@ class QueryImpl<G> implements InternalQuery<G> {
 
 	public OWL2Query<G> Core(Term<G> c, GroundTerm<G> rollUp, InternalQuery<G> q) {
 		return add(new Core<G>(c, rollUp, q));
+	}
+
+	@Override
+	public <T> OWL2Query<G> external( T t ) {
+		if (t instanceof ElementBind) {
+			ElementBind b = (ElementBind) t;
+			return add(new ARQBindExternal<G>(b.getVar(), b.getExpr()));			
+		} else {
+			LOG.config("Unsupported external atom: " + t + ", ignoring.");
+			return this;
+		}
 	}
 
 }

@@ -98,4 +98,6 @@ public interface OWL2Query<G> {
 	OWL2Query<G> Not(final OWL2Query<G> qb);
 
 	OWL2Query<G> distinct(boolean b);
+
+	<T> OWL2Query<G> external(T expression);
 }

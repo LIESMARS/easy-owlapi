@@ -16,15 +16,17 @@ package com.hp.hpl.jena.sparql.serializer;
 
 import java.io.OutputStream;
 
+import org.apache.jena.atlas.io.IndentedLineBuffer;
+import org.apache.jena.atlas.io.IndentedWriter;
+import org.apache.jena.atlas.logging.Log;
+
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.Syntax;
-import com.hp.hpl.jena.sparql.util.ALog;
-import com.hp.hpl.jena.sparql.util.IndentedLineBuffer;
-import com.hp.hpl.jena.sparql.util.IndentedWriter;
 import com.hp.hpl.jena.sparql.util.NodeToLabelMapBNode;
 
 public class MySerializer{
+		
 	static public void serializeARQ(Query query, IndentedWriter writer)
     {
 		//Serialization Context that preserves b node labels
@@ -41,7 +43,7 @@ public class MySerializer{
         
         serializeARQ(query, writer, 
                      new FormatterElement(writer, cxt1),
-                     new FmtExpr(writer, cxt1),
+                     new FmtExprSPARQL(writer, cxt1),
                      new FmtTemplate(writer, cxt2)) ;
     }	
 	static final int BLOCK_INDENT = 2 ;
@@ -92,7 +94,7 @@ public class MySerializer{
     
     static public void serialize(Query query, IndentedLineBuffer buff, Syntax outSyntax)
     {
-        serialize(query, buff.getIndentedWriter(), outSyntax) ;
+        serialize(query, buff, outSyntax) ;
     }
     
     /** Format the query
@@ -147,14 +149,14 @@ public class MySerializer{
 //            return ;
 //        }
         
-        ALog.warn(Serializer.class, "Unknown syntax: "+outSyntax) ;
+        Log.warn(Serializer.class,"Unknown syntax: "+outSyntax) ;
     }
      
     //changed to public
     static public void serializeARQ(Query query, 
                                      IndentedWriter writer, 
                                      FormatterElement eltFmt,
-                                     FmtExpr    exprFmt,
+                                     FmtExprSPARQL    exprFmt,
                                      FormatterTemplate templateFmt)
     {
         QuerySerializer serilizer = new QuerySerializer(writer, eltFmt, exprFmt, templateFmt) ;

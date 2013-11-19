@@ -18,5 +18,5 @@ public interface GroundTerm<T> extends Term<T> {
 
 //	String getID();
 
-	T getWrappedObject();
+	T getWrappedObject();	
 }

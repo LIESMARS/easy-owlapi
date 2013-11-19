@@ -213,7 +213,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 
 				if (s2 == null) {
 					map2.put(distVar, coreQuery.apply(Collections
-							.<Term<G>, Term<G>> emptyMap()));
+							.<Variable<G>, Term<G>> emptyMap()));
 				} else {
 					for (final QueryAtom<G> atom : coreQuery.getAtoms()) {
 						s2.add(atom);
@@ -423,6 +423,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 						if (pvI.isGround()) {
 							subjectCandidates = Collections.singleton(pvI
 									.asGroundTerm().getWrappedObject());
+							
 							objectCandidates = kb.getPropertyValues(pvP
 									.asGroundTerm().getWrappedObject(), pvI
 									.asGroundTerm().getWrappedObject());
@@ -472,15 +473,13 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 											property, property)) {
 										continue;
 									}
-									runNext(binding, arguments, property,
-											property, property);
+									runNext(binding, arguments, property,property,property);
 								} else {
 									for (final G i : kb.getIndividuals()) {
 										if (!kb.hasPropertyValue(property, i, i)) {
 											continue;
 										}
-										runNext(binding, arguments, property,
-												i, i);
+										runNext(binding, arguments, property,i,i);
 									}
 								}
 							} else {
@@ -490,8 +489,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 												property, i)) {
 											continue;
 										}
-										runNext(binding, arguments, property,
-												property, i);
+										runNext(binding, arguments, property,property,i);
 									}
 								} else if (pvIL.equals(pvP)) {
 									for (final G i : kb.getIndividuals()) {
@@ -499,16 +497,14 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 												property)) {
 											continue;
 										}
-										runNext(binding, arguments, property,
-												i, property);
+										runNext(binding, arguments, property,i,property);
 									}
 								} else {
 									for (final G subject : kb.getIndividuals()) {
 										for (final G object : kb
 												.getPropertyValues(property,
 														subject)) {
-											runNext(binding, arguments,
-													property, subject, object);
+											runNext(binding, arguments, property,subject,object);
 										}
 									}
 								}
@@ -1099,7 +1095,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 					runAllPropertyChecks(arguments.get(0).asVariable(),
 							kb.getIrreflexiveProperties(), binding);
 					break;
-
+					
 				case Core:
 					final Core<G> c = (Core<G>) current;
 					final Variable<G> var = c.getTerm().asVariable();
@@ -1258,8 +1254,18 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 					//
 					break;
 				default:
-					throw new UnsupportedQueryException("Unknown atom type '"
+					if ( current instanceof External ) {
+						final External<G> cur = (External<G>) current;
+						final ResultBinding<G> candidateBinding = binding.clone();
+						final Iterator<ResultBinding<G>> i = cur.eval(candidateBinding, kb);
+						while (i.hasNext()) {
+							ResultBinding<G> r = i.next(); 
+							exec(r);
+						}						
+					} else {					
+						throw new UnsupportedQueryException("Unknown atom type '"
 							+ current.getPredicate() + "'.");
+					}
 				}
 			}
 		}
@@ -1516,8 +1522,7 @@ class CombinedQueryEngine<G> implements QueryEvaluator<G> {
 
 		if (!strict) {
 			toDo.remove(rootCandidate);
-			runNext(binding, Collections.singletonList(downMonotonic),
-					rootCandidate);
+			runNext(binding, Collections.singletonList(downMonotonic), rootCandidate);
 		}
 
 		if (strict || result.size() > size) {

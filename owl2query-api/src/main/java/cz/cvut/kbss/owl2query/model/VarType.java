@@ -31,7 +31,12 @@ public enum VarType {
 	LITERAL(new OWLObjectType[] { OWLObjectType.OWLLiteral }),
 
 	INDIVIDUAL_OR_LITERAL(new OWLObjectType[] {
-			OWLObjectType.OWLNamedIndividual, OWLObjectType.OWLLiteral });
+			OWLObjectType.OWLNamedIndividual, OWLObjectType.OWLLiteral }),
+
+	ANY(new OWLObjectType[] { OWLObjectType.OWLAnnotationProperty,
+			OWLObjectType.OWLDataProperty, OWLObjectType.OWLObjectProperty,
+			OWLObjectType.OWLClass, OWLObjectType.OWLNamedIndividual,
+			OWLObjectType.OWLLiteral });
 
 	private OWLObjectType[] allowed;
 

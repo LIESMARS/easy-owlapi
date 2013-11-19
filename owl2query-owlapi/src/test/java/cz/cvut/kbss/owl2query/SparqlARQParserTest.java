@@ -41,7 +41,9 @@ public class SparqlARQParserTest {
     }
 
     @Test
-    public void testWrite() throws Exception {
-
+    public void testBindKeyword() throws Exception {
+    	System.out.println(parser.parse(p + "SELECT * WHERE { ?x a ?z . BIND(?z as ?q). }", o));
+    	
     }
+
 }

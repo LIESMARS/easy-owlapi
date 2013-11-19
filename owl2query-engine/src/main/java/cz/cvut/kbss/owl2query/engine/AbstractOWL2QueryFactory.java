@@ -32,6 +32,7 @@ import cz.cvut.kbss.owl2query.model.Term;
 import cz.cvut.kbss.owl2query.model.UnionOf;
 import cz.cvut.kbss.owl2query.model.VarType;
 import cz.cvut.kbss.owl2query.model.Variable;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -49,8 +50,7 @@ public abstract class AbstractOWL2QueryFactory<G> implements OWL2QueryFactory<G>
 	public GroundTerm<G> wrap(final G gt) {
 		return new GroundTermImpl<G>(gt);
 	}
-  
-
+	
 //    protected abstract OWL2Ontology getOntology();
     
     @Override
@@ -125,8 +125,7 @@ public abstract class AbstractOWL2QueryFactory<G> implements OWL2QueryFactory<G>
     public UnionOf<G> unionOf(Set<Term<G>> c) {
         return new UnionOfImpl(c);
     }
-    
-    
+
     /***************************************************/
     /****************** Inner classes ******************/
     /***************************************************/

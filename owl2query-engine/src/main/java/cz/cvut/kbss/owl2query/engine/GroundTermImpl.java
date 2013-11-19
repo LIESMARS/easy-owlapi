@@ -27,7 +27,7 @@ import cz.cvut.kbss.owl2query.model.Variable;
 class GroundTermImpl<T> implements GroundTerm<T> {
 
 	private T groundTerm;
-
+	
 	/**
 	 * Constructs a URI
 	 */

@@ -23,22 +23,25 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.hp.hpl.jena.graph.Triple;
+import com.hp.hpl.jena.query.ARQ;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.sparql.core.Var;
-import com.hp.hpl.jena.sparql.lang.MyParserSPARQL11;
-import com.hp.hpl.jena.sparql.lang.Parser;
-import com.hp.hpl.jena.sparql.lang.ParserFactory;
-import com.hp.hpl.jena.sparql.lang.ParserRegistry;
+import com.hp.hpl.jena.sparql.engine.ExecutionContext;
+import com.hp.hpl.jena.sparql.engine.binding.Binding;
+import com.hp.hpl.jena.sparql.expr.Expr;
+import com.hp.hpl.jena.sparql.function.FunctionEnv;
+import com.hp.hpl.jena.sparql.lang.SPARQLParser;
+import com.hp.hpl.jena.sparql.lang.SPARQLParserFactory;
+import com.hp.hpl.jena.sparql.lang.SPARQLParserRegistry;
 import com.hp.hpl.jena.sparql.syntax.Element;
+import com.hp.hpl.jena.sparql.syntax.ElementBind;
 import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementNotExists;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 import com.hp.hpl.jena.sparql.syntax.ElementTriplesBlock;
+import com.hp.hpl.jena.sparql.syntax.PatternVars;
 import com.hp.hpl.jena.sparql.syntax.Template;
-import com.hp.hpl.jena.sparql.syntax.TemplateGroup;
-import com.hp.hpl.jena.sparql.syntax.TemplateTriple;
-import com.hp.hpl.jena.sparql.syntax.TemplateVisitor;
 
 import cz.cvut.kbss.owl2query.UnsupportedQueryException;
 import cz.cvut.kbss.owl2query.model.OWL2Ontology;
@@ -62,7 +65,6 @@ public class SparqlARQParser<G> implements QueryParser<G> {
 	 */
 	public OWL2Query<G> parse(final String queryStr, final OWL2Ontology<G> o)
 			throws QueryParseException {
-		registerFactory();
 		return parseAskOrSelect(QueryFactory.create(queryStr, Syntax.syntaxSPARQL_11), o);
 	}
 	
@@ -75,23 +77,9 @@ public class SparqlARQParser<G> implements QueryParser<G> {
 	@Override
 	public OWL2Rule<G> parseConstruct(String queryStr, OWL2Ontology<G> o)
 			throws QueryParseException {
-		registerFactory();
 		return parseConstruct(QueryFactory.create(queryStr, Syntax.syntaxSPARQL_11), o);
 	}
-	
-	private void registerFactory() {
-		// Register parser factory that preserves bnode labels
-		ParserRegistry.addFactory(Syntax.syntaxSPARQL, new ParserFactory() {
-			public boolean accept(Syntax syntax) {
-				return Syntax.syntaxSPARQL.equals(syntax);
-			}
-
-			public Parser create(Syntax syntax) {
-				return new MyParserSPARQL11();
-			}
-		});
-	}
-	
+		
 	private String parse(final InputStream stream) {
 		try {
 			final BufferedReader r = new BufferedReader(new InputStreamReader(
@@ -162,30 +150,12 @@ public class SparqlARQParser<G> implements QueryParser<G> {
 	
 	public void parseQuery(final OWL2Ontology<G> o, final Template t, OWL2Query<G> current, List<String> allDistVars) {
 		final SPARQLDLNotQueryPatternARQParser<G> parser = new SPARQLDLNotQueryPatternARQParser<G>(o);
-		final MyTemplateVisitor v = new MyTemplateVisitor();
-		t.visit(v);
-    	final List<Triple> triples = v.getTriples();
+    	final List<Triple> triples = t.getTriples();
     	for (final String i : allDistVars) {
 			current.addResultVar(o.getFactory().variable(i));
 		}
     	parser.parse(triples, current);
 	}	
-
-    private class MyTemplateVisitor implements TemplateVisitor {    	
-    	private List<Triple> triples = new ArrayList<Triple>();
-    	
-		@Override
-		public void visit(TemplateGroup template) {
-			for(Template t : template.getTemplates()) {
-				t.visit(this);
-			}
-		}
-		
-		@Override
-		public void visit(TemplateTriple template) { triples.add(template.getTriple());	}
-		
-		public List<Triple> getTriples() {	return triples;	}
-    }
     
 	private void parseQuery(final OWL2Ontology<G> o, final Element e, OWL2Query<G> current,
 			List<String> allDistVars) {
@@ -203,7 +173,8 @@ public class SparqlARQParser<G> implements QueryParser<G> {
 		} else if (e instanceof ElementNotExists) {
 			final OWL2Query<G> query2 = o.getFactory().createQuery(o).distinct(true);
 			List<String> vars = new ArrayList<String>();
-			for (final Iterator<Var> i = ((ElementNotExists) e).getElement().varsMentioned().iterator(); i
+			
+			for (final Iterator<Var> i = PatternVars.vars(((ElementNotExists) e).getElement()).iterator(); i
 					.hasNext();) {
 				Var v = i.next();
 				if (v.isBlankNodeVar()) {
@@ -217,6 +188,8 @@ public class SparqlARQParser<G> implements QueryParser<G> {
 			for (final Element el : ((ElementGroup) e).getElements()) {
 				parseQuery(o, el, current, allDistVars);
 			}
+		} else if (e instanceof ElementBind) {
+            current = current.external(e);
 		} else {
 			throw new UnsupportedQueryException(
 					"Complex query patterns are not supported yet." + e);

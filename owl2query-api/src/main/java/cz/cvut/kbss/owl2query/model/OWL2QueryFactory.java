@@ -97,37 +97,34 @@ public interface OWL2QueryFactory<G> {
 
 	G dataSomeValuesFrom(final G ope, final G ce);
 
-	G inverseObjectProperty(final G op);
-        
-        
+	G inverseObjectProperty(final G op);    
                 
-        // Expression factory methods
-        AllValuesFrom<G> allValuesFrom(final Term<G> ope, final Term<G> ce);
+    // Expression factory methods
+    AllValuesFrom<G> allValuesFrom(final Term<G> ope, final Term<G> ce);
 
-        ObjectComplementOf<G> objectComplementOf(final Term<G> c);
+    ObjectComplementOf<G> objectComplementOf(final Term<G> c);
 
-        ObjectHasSelf<G> objectHasSelf(final Term<G> ope);
+    ObjectHasSelf<G> objectHasSelf(final Term<G> ope);
 
-        HasValue<G> hasValue(final Term<G> ope, final Term<G> ni);
+    HasValue<G> hasValue(final Term<G> ope, final Term<G> ni);
 
-        IntersectionOf<G> intersectionOf(final Set<Term<G>> c);
+    IntersectionOf<G> intersectionOf(final Set<Term<G>> c);
         
-        MinCardinality<G> minCardinality(final int card, final Term<G> ope);
+    MinCardinality<G> minCardinality(final int card, final Term<G> ope);
 
-        MinCardinality<G> minCardinality(final int card, final Term<G> ope, final Term<G> ce);
+    MinCardinality<G> minCardinality(final int card, final Term<G> ope, final Term<G> ce);
 
-        MaxCardinality<G> maxCardinality(final int card, final Term<G> ope);
+    MaxCardinality<G> maxCardinality(final int card, final Term<G> ope);
         
 	MaxCardinality<G> maxCardinality(final int card, final Term<G> ope, final Term<G> ce);
 
-        ExactCardinality<G> exactCardinality(final int card, final Term<G> ope);
+    ExactCardinality<G> exactCardinality(final int card, final Term<G> ope);
         
 	ExactCardinality<G> exactCardinality(final int card, final Term<G> ope, Term<G> ce);
 
 	Term<G> oneOf(final Set<Term<G>> nis);
 
-        SomeValuesFrom<G> someValuesFrom(final Term<G> ope, final Term<G> ce);
-
-        UnionOf<G> unionOf(final Set<Term<G>> set);
-        
+    SomeValuesFrom<G> someValuesFrom(final Term<G> ope, final Term<G> ce);
+ 
+    UnionOf<G> unionOf(final Set<Term<G>> set);
 }

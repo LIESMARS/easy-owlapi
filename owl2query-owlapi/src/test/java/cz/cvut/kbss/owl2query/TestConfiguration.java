@@ -50,7 +50,7 @@ public class TestConfiguration {
 
 	static {
 		add(PELLET, "com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory",
-				null);
+				"org.semanticweb.owlapi.reasoner.SimpleConfiguration");
 		add(HERMIT, "org.semanticweb.HermiT.Reasoner$ReasonerFactory",
 				"org.semanticweb.HermiT.Configuration");
 
@@ -59,7 +59,7 @@ public class TestConfiguration {
 //		add(FACT,
 //				"uk.ac.manchester.cs.factplusplus.owlapiv3.FaCTPlusPlusReasonerFactory",
 //				null);
-		add(JFACT, "uk.ac.manchester.cs.jfact.JFactFactory", null);
+		add(JFACT, "uk.ac.manchester.cs.jfact.JFactFactory", "uk.ac.manchester.cs.jfact.kernel.options.JFactReasonerConfiguration");
 	}
 
 	public static TestConfiguration FACTORY = map.get(PELLET);

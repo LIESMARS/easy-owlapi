@@ -26,7 +26,10 @@ public enum QueryPredicate {
 	Not("N"),
 
 	// Nested query support
-	Core("C");
+	Core("C"),
+	
+	// Bind keyword
+	Bind("B");
 
 	private QueryPredicate() {
 	}
