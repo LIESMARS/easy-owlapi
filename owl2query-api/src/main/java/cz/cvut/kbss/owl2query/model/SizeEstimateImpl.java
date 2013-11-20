@@ -347,7 +347,11 @@ public class SizeEstimateImpl<G> implements SizeEstimate<G> {
 					.size() + 1);
 			disjointProperties.put(p, ontology.getPropertyHierarchy()
 					.getEquivs(p).size() + 1);
-			inverses.put(p, ontology.getInverses(p).size());
+			if (ontology.is(p,OWLObjectType.OWLObjectProperty)) {			
+				inverses.put(p, ontology.getInverses(p).size());				
+			} else {
+				inverses.put(p, 0);
+			}
 		}
 
 		for (final G ind : ontology.getIndividuals()) {
