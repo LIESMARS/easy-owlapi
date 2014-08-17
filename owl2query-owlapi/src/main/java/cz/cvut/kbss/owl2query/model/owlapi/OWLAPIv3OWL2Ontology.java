@@ -24,10 +24,35 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.AddAxiom;
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectInverseOf;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChangeException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLProperty;
+import org.semanticweb.owlapi.model.OWLPropertyExpression;
+import org.semanticweb.owlapi.model.RemoveAxiom;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
+import org.semanticweb.owlapi.search.EntitySearcher;
 
 import cz.cvut.kbss.owl2query.model.Hierarchy;
 import cz.cvut.kbss.owl2query.model.InternalReasonerException;
@@ -56,13 +81,13 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			final OWLOntology o, final OWLReasoner r) {
 		this.o = o;
 		this.m = m;
-		this.f = m.getOWLDataFactory();
+		f = m.getOWLDataFactory();
 		this.r = r;
 		structuralReasoner = new StructuralReasonerFactory().createReasoner(o);
 		structuralReasoner.precomputeInferences(InferenceType.values());
-		this.factory = new OWLAPIv3QueryFactory(m, o);
+		factory = new OWLAPIv3QueryFactory(m, o);
 
-		this.sizeEstimate = new SizeEstimateImpl<OWLObject>(this);
+		sizeEstimate = new SizeEstimateImpl<OWLObject>(this);
 	}
 
 	private OWLNamedIndividual asOWLNamedIndividual(final OWLObject e) {
@@ -96,7 +121,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return null;
 	}
 
-	private OWLPropertyExpression<?, ?> asOWLPropertyExpression(
+    private OWLPropertyExpression asOWLPropertyExpression(
 			final OWLObject e) {
 		if (e instanceof OWLEntity) {
 			final OWLEntity ee = (OWLEntity) e;
@@ -105,8 +130,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			} else {
 				return f.getOWLObjectProperty(ee.getIRI());				
 			}
-		} else if (e instanceof OWLPropertyExpression<?, ?>) {
-			return (OWLPropertyExpression<?, ?>) e;
+        } else if (e instanceof OWLPropertyExpression) {
+            return (OWLPropertyExpression) e;
 		}
 		throw new IllegalArgumentException();
 	}
@@ -124,30 +149,36 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return null;
 	}
 
-	public Set<OWLClass> getClasses() {
-		Set<OWLClass> set = new HashSet<OWLClass>(o.getClassesInSignature(true));
+	@Override
+    public Set<OWLClass> getClasses() {
+        Set<OWLClass> set = new HashSet<OWLClass>(
+                o.getClassesInSignature(Imports.INCLUDED));
 		set.add(f.getOWLThing());
 		set.add(f.getOWLNothing());
 		return set;
 	}
 
-	public Set<OWLObjectProperty> getObjectProperties() {
+	@Override
+    public Set<OWLObjectProperty> getObjectProperties() {
 		final Set<OWLObjectProperty> set = o
-				.getObjectPropertiesInSignature(true);
+                .getObjectPropertiesInSignature(Imports.INCLUDED);
 		set.add(f.getOWLBottomObjectProperty());
 		set.add(f.getOWLTopObjectProperty());
 		return set;
 	}
 
-	public Set<OWLDataProperty> getDataProperties() {
-		final Set<OWLDataProperty> set = o.getDataPropertiesInSignature(true);
+	@Override
+    public Set<OWLDataProperty> getDataProperties() {
+        final Set<OWLDataProperty> set = o
+                .getDataPropertiesInSignature(Imports.INCLUDED);
 		set.add(f.getOWLBottomDataProperty());
 		set.add(f.getOWLTopDataProperty());
 		return set;
 	}
 
-	public Set<OWLNamedIndividual> getIndividuals() {
-		return o.getIndividualsInSignature(true);
+	@Override
+    public Set<OWLNamedIndividual> getIndividuals() {
+        return o.getIndividualsInSignature(Imports.INCLUDED);
 	}
 
 	public Set<OWLLiteral> getLiterals() {
@@ -161,17 +192,19 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getDifferents(OWLObject i) {
+	@Override
+    public Set<? extends OWLObject> getDifferents(OWLObject i) {
 		if (!(i instanceof OWLEntity)) {
 			throw new InternalReasonerException();
 		}
 
-		return r.getDifferentIndividuals(asOWLNamedIndividual((OWLEntity) i))
+		return r.getDifferentIndividuals(asOWLNamedIndividual(i))
 				.getFlattened();
 	}
 
-	public Set<? extends OWLObject> getDomains(OWLObject pred) {
-		final OWLPropertyExpression<?, ?> ope = asOWLPropertyExpression(pred);
+	@Override
+    public Set<? extends OWLObject> getDomains(OWLObject pred) {
+        final OWLPropertyExpression ope = asOWLPropertyExpression(pred);
 
 		if (ope != null) {
 			if (ope.isAnonymous()) {
@@ -194,7 +227,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return r.getEquivalentClasses(c).getEntities();
 	}
 
-	public Set<? extends OWLObject> getInverses(OWLObject ope) {
+	@Override
+    public Set<? extends OWLObject> getInverses(OWLObject ope) {
 		final OWLPropertyExpression opex = asOWLPropertyExpression(ope);
 
 		if (opex.isObjectPropertyExpression()) {
@@ -212,8 +246,9 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		throw new InternalReasonerException();
 	}
 
-	public Set<? extends OWLObject> getRanges(OWLObject pred) {
-		final OWLPropertyExpression<?, ?> ope = asOWLPropertyExpression(pred);
+	@Override
+    public Set<? extends OWLObject> getRanges(OWLObject pred) {
+        final OWLPropertyExpression ope = asOWLPropertyExpression(pred);
 
 		if (ope != null) {
 			if (ope.isAnonymous()) {
@@ -225,22 +260,26 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			} else if (ope.isDataPropertyExpression()) {
 				// return r.getDataPropertyRanges(((OWLEntity)
 				// ope).asOWLDataProperty());
-				return ((OWLEntity) ope).asOWLDataProperty().getRanges(o); // TODO
+                return new HashSet<>(EntitySearcher.getRanges(
+                        ((OWLEntity) ope).asOWLDataProperty(), o));
+                // TODO
 			}
 		}
 		throw new InternalReasonerException();
 	}
 
-	public Set<? extends OWLObject> getSames(OWLObject i) {
+	@Override
+    public Set<? extends OWLObject> getSames(OWLObject i) {
 		if (!(i instanceof OWLEntity)) {
 			throw new InternalReasonerException();
 		}
 
-		return r.getSameIndividuals(asOWLNamedIndividual((OWLEntity) i))
+		return r.getSameIndividuals(asOWLNamedIndividual(i))
 				.getEntities();
 	}
 
-	public Set<OWLClass> getTypes(OWLObject i, boolean direct) {
+	@Override
+    public Set<OWLClass> getTypes(OWLObject i, boolean direct) {
 		if (!(i instanceof OWLEntity)) {
 			throw new InternalReasonerException();
 		}
@@ -248,7 +287,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return r.getTypes(asOWLNamedIndividual(i), direct).getFlattened();
 	}
 
-	public boolean is(OWLObject e, final OWLObjectType... tt) {
+	@Override
+    public boolean is(OWLObject e, final OWLObjectType... tt) {
 		boolean result = false;
 
 		for (final OWLObjectType t : tt) {
@@ -259,13 +299,13 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			case OWLAnnotationProperty:
 				if (e instanceof OWLEntity) {
 					result = o.containsAnnotationPropertyInSignature(
-							((OWLEntity) e).getIRI(), true);
+                                ((OWLEntity) e).getIRI(), Imports.INCLUDED);
 				}
 				break;
 			case OWLDataProperty:
 				if (e instanceof OWLEntity) {
 					result = o.containsDataPropertyInSignature(
-							((OWLEntity) e).getIRI(), true)
+                                ((OWLEntity) e).getIRI(), Imports.INCLUDED)
 							|| e.equals(f.getOWLTopDataProperty())
 							|| e.equals(f.getOWLBottomDataProperty());
 				}
@@ -273,15 +313,15 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			case OWLObjectProperty:
 				if (e instanceof OWLEntity) {
 					result = o.containsObjectPropertyInSignature(
-							((OWLEntity) e).getIRI(), true)
-							|| (e.equals(f.getOWLTopObjectProperty()) || e
-									.equals(f.getOWLBottomObjectProperty()));
+                                ((OWLEntity) e).getIRI(), Imports.INCLUDED)
+							|| e.equals(f.getOWLTopObjectProperty()) || e
+									.equals(f.getOWLBottomObjectProperty());
 				}
 				break;
 			case OWLClass:
 				if (e instanceof OWLEntity) {
 					result = o.containsClassInSignature(
-							((OWLEntity) e).getIRI(), true)
+                                ((OWLEntity) e).getIRI(), Imports.INCLUDED)
 							|| e.equals(f.getOWLThing())
 							|| e.equals(f.getOWLNothing());
 				}
@@ -289,7 +329,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			case OWLNamedIndividual:
 				if (e instanceof OWLEntity) {
 					result = o.containsIndividualInSignature(
-							((OWLEntity) e).getIRI(), true);
+                                ((OWLEntity) e).getIRI(), Imports.INCLUDED);
 				}
 
 				break;
@@ -304,7 +344,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return result;
 	}
 
-	public boolean isSameAs(OWLObject i1, OWLObject i2) {
+	@Override
+    public boolean isSameAs(OWLObject i1, OWLObject i2) {
 		final OWLIndividual ii1 = asOWLNamedIndividual(i1);
 		final OWLIndividual ii2 = asOWLNamedIndividual(i2);
 
@@ -315,23 +356,25 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return r.isEntailed(f.getOWLSameIndividualAxiom(ii1, ii2));
 	}
 
-	public boolean isDifferentFrom(OWLObject i1, OWLObject i2) {
-		if ((!(i1 instanceof OWLEntity)) || (!(i2 instanceof OWLEntity))) {
+	@Override
+    public boolean isDifferentFrom(OWLObject i1, OWLObject i2) {
+		if (!(i1 instanceof OWLEntity) || !(i2 instanceof OWLEntity)) {
 			throw new InternalReasonerException();
 		}
 
 		return r.isEntailed(f.getOWLDifferentIndividualsAxiom(
-				asOWLNamedIndividual((OWLEntity) i1),
-				asOWLNamedIndividual((OWLEntity) i2)));
+				asOWLNamedIndividual(i1),
+				asOWLNamedIndividual(i2)));
 	}
 
-	public boolean isTypeOf(OWLObject ce, OWLObject i, boolean direct) {
+	@Override
+    public boolean isTypeOf(OWLObject ce, OWLObject i, boolean direct) {
 
 		if (is(i, OWLObjectType.OWLLiteral)) {
 			return false;
 		}
 
-		final OWLNamedIndividual ii = asOWLNamedIndividual((OWLEntity) i);
+		final OWLNamedIndividual ii = asOWLNamedIndividual(i);
 		final OWLClassExpression cce = asOWLClassExpression(ce);
 
 		if (direct) {
@@ -341,7 +384,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		}
 	}
 
-	public void ensureConsistency() {
+	@Override
+    public void ensureConsistency() {
 		if (LOG.isLoggable(Level.CONFIG)) {
 			LOG.config("Ensure consistency");
 		}
@@ -357,7 +401,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		}
 	}
 
-	public Set<? extends OWLObject> getIndividualsWithProperty(OWLObject pvP,
+	@Override
+    public Set<? extends OWLObject> getIndividualsWithProperty(OWLObject pvP,
 			OWLObject pvIL) {
 		final OWLPropertyExpression pex = asOWLPropertyExpression(pvP);
 
@@ -396,7 +441,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getPropertyValues(OWLObject pvP,
+	@Override
+    public Set<? extends OWLObject> getPropertyValues(OWLObject pvP,
 			OWLObject pvI) {
 		final OWLPropertyExpression pex = asOWLPropertyExpression(pvP);
 		final OWLNamedIndividual ni = asOWLNamedIndividual(pvI);
@@ -421,11 +467,13 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		throw new IllegalArgumentException();
 	}
 
-	public SizeEstimate<OWLObject> getSizeEstimate() {
+	@Override
+    public SizeEstimate<OWLObject> getSizeEstimate() {
 		return sizeEstimate;
 	}
 
-	public boolean hasPropertyValue(OWLObject p, OWLObject s, OWLObject o) {
+	@Override
+    public boolean hasPropertyValue(OWLObject p, OWLObject s, OWLObject o) {
 		final OWLPropertyExpression pex = asOWLPropertyExpression(p);
 
 		if (pex.isObjectPropertyExpression()) {
@@ -441,7 +489,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return false;
 	}
 
-	public boolean isClassAlwaysNonEmpty(OWLObject sc) {
+	@Override
+    public boolean isClassAlwaysNonEmpty(OWLObject sc) {
 		final OWLAxiom axiom = f.getOWLSubClassOfAxiom(
 				asOWLClassExpression(sc), f.getOWLNothing());
 
@@ -458,17 +507,20 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		}
 	}
 
-	public boolean isClassified() {
+	@Override
+    public boolean isClassified() {
 		// TODO
 		// return r.isClassified();
 		return false;
 	}
 
-	public boolean isSatisfiable(OWLObject arg) {
+	@Override
+    public boolean isSatisfiable(OWLObject arg) {
 		return r.isSatisfiable(asOWLClassExpression(arg));
 	}
 
-	public Set<? extends OWLObject> retrieveIndividualsWithProperty(
+	@Override
+    public Set<? extends OWLObject> retrieveIndividualsWithProperty(
 			OWLObject odpe) {
 		final OWLPropertyExpression ope = asOWLPropertyExpression(odpe);
 
@@ -495,7 +547,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Map<OWLObject, Boolean> getKnownInstances(final OWLObject ce) {
+	@Override
+    public Map<OWLObject, Boolean> getKnownInstances(final OWLObject ce) {
 		final Map<OWLObject, Boolean> m = new HashMap<OWLObject, Boolean>();
 		final OWLClassExpression cex = asOWLClassExpression(ce);
 
@@ -504,7 +557,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		}
 
 		if (!cex.isAnonymous()) {
-			for (final OWLObject x : cex.asOWLClass().getIndividuals(o)) {
+            for (final OWLObject x : EntitySearcher.getIndividuals(
+                    cex.asOWLClass(), o)) {
 				m.put(x, true);
 			}
 		}
@@ -512,17 +566,19 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return m;
 	}
 
-	public Boolean isKnownTypeOf(OWLObject ce, OWLObject i) {
+	@Override
+    public Boolean isKnownTypeOf(OWLObject ce, OWLObject i) {
 		final OWLIndividual ii = asOWLNamedIndividual(i);
 
-		if (ii.getTypes(o).contains(ce)) {
+        if (EntitySearcher.getTypes(ii, o).contains(ce)) {
 			return true;
 		}
 
 		return null;
 	}
 
-	public Boolean hasKnownPropertyValue(OWLObject p, OWLObject s, OWLObject ob) {
+	@Override
+    public Boolean hasKnownPropertyValue(OWLObject p, OWLObject s, OWLObject ob) {
 		final OWLIndividual is = asOWLNamedIndividual(s);
 		final OWLPropertyExpression pex = asOWLPropertyExpression(p);
 
@@ -545,28 +601,32 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					}
 					return false;
 				} else {
-					return is.getObjectPropertyValues(
+                    return EntitySearcher.getObjectPropertyValues(is,
 							(OWLObjectPropertyExpression) pex, o).contains(ob);
 				}
 			} else if (pex.isDataPropertyExpression()) {
-				return is.getDataPropertyValues(o).get(pex).contains(ob);
+                return EntitySearcher.getDataPropertyValues(is,
+                        (OWLDataPropertyExpression) pex, o).contains(ob);
 			}
 		}
 
 		return false;
 	}
 
-	public Set<? extends OWLObject> getInstances(OWLObject ic, boolean direct) {
+	@Override
+    public Set<? extends OWLObject> getInstances(OWLObject ic, boolean direct) {
 		final OWLClassExpression c = asOWLClassExpression(ic);
 
 		return r.getInstances(c, direct).getFlattened();
 	}
 
-	public OWL2QueryFactory<OWLObject> getFactory() {
+	@Override
+    public OWL2QueryFactory<OWLObject> getFactory() {
 		return factory;
 	}
 
-	public boolean isRealized() {
+	@Override
+    public boolean isRealized() {
 		// try {
 		// return r.isRealised();
 		// } catch (OWLReasonerException e) {
@@ -576,11 +636,13 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return false;
 	}
 
-	public boolean isComplexClass(OWLObject c) {
-		return (c instanceof OWLClassExpression);
+	@Override
+    public boolean isComplexClass(OWLObject c) {
+		return c instanceof OWLClassExpression;
 	}
 
-	public Collection<? extends OWLObject> getKnownPropertyValues(
+	@Override
+    public Collection<? extends OWLObject> getKnownPropertyValues(
 			OWLObject pvP, OWLObject pvI) {
 
 		final OWLPropertyExpression p = asOWLPropertyExpression(pvP);
@@ -607,13 +669,15 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	private final Hierarchy<OWLObject, OWLClass> classHierarchy = new Hierarchy<OWLObject, OWLClass>() {
 
-		public Set<OWLClass> getEquivs(OWLObject ce) {
+		@Override
+        public Set<OWLClass> getEquivs(OWLObject ce) {
 			final OWLClassExpression cex = asOWLClassExpression(ce);
 			Set<OWLClass> set = r.getEquivalentClasses(cex).getEntities();
 			return set;
 		}
 
-		public Set<OWLClass> getSubs(OWLObject superCE, boolean direct) {
+		@Override
+        public Set<OWLClass> getSubs(OWLObject superCE, boolean direct) {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
 			Set<OWLClass> set = r.getSubClasses(cex, direct).getFlattened();
 			if (!direct) {
@@ -622,7 +686,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			return set;
 		}
 
-		public Set<OWLClass> getSupers(OWLObject superCE, boolean direct) {
+		@Override
+        public Set<OWLClass> getSupers(OWLObject superCE, boolean direct) {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
 			Set<OWLClass> set = r.getSuperClasses(cex, direct).getFlattened();
 			if (!direct) {
@@ -667,28 +732,33 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 					asOWLClassExpression(complementG2)));
 		}
 
-		public Set<OWLClass> getTops() {
+		@Override
+        public Set<OWLClass> getTops() {
 			return Collections.singleton(f.getOWLThing());
 		}
 
-		public Set<OWLClass> getBottoms() {
+		@Override
+        public Set<OWLClass> getBottoms() {
 			return Collections.singleton(f.getOWLNothing());
 		}
 
-		public Set<OWLClass> getDisjoints(OWLObject disjointG) {
+		@Override
+        public Set<OWLClass> getDisjoints(OWLObject disjointG) {
 			return r.getDisjointClasses(asOWLClassExpression(disjointG))
 					.getFlattened();
 		}
 
 	};
 
-	public Hierarchy<OWLObject, OWLClass> getClassHierarchy() {
+	@Override
+    public Hierarchy<OWLObject, OWLClass> getClassHierarchy() {
 		return classHierarchy;
 	}
 
 	private final Hierarchy<OWLObject, OWLClass> toldClassHierarchy = new Hierarchy<OWLObject, OWLClass>() {
 
-		public Set<OWLClass> getEquivs(OWLObject ce) {
+		@Override
+        public Set<OWLClass> getEquivs(OWLObject ce) {
 			final OWLClassExpression cex = asOWLClassExpression(ce);
 			if (cex.isAnonymous()) {
 				return Collections.emptySet();
@@ -706,7 +776,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			}
 		}
 
-		public Set<OWLClass> getSubs(OWLObject superCE, boolean direct) {
+		@Override
+        public Set<OWLClass> getSubs(OWLObject superCE, boolean direct) {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
 			if (cex.isAnonymous()) {
 				return Collections.emptySet();
@@ -729,7 +800,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			}
 		}
 
-		public Set<OWLClass> getSupers(OWLObject superCE, boolean direct) {
+		@Override
+        public Set<OWLClass> getSupers(OWLObject superCE, boolean direct) {
 			final OWLClassExpression cex = asOWLClassExpression(superCE);
 			if (cex.isAnonymous()) {
 				return Collections.emptySet();
@@ -752,15 +824,18 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			}
 		}
 
-		public Set<OWLClass> getTops() {
+		@Override
+        public Set<OWLClass> getTops() {
 			return Collections.singleton(f.getOWLThing());
 		}
 
-		public Set<OWLClass> getBottoms() {
+		@Override
+        public Set<OWLClass> getBottoms() {
 			return Collections.singleton(f.getOWLNothing());
 		}
 
-		public Set<OWLClass> getDisjoints(OWLObject disjointG) {
+		@Override
+        public Set<OWLClass> getDisjoints(OWLObject disjointG) {
 			final OWLClassExpression cex = asOWLClassExpression(disjointG);
 			if (cex.isAnonymous()) {
 				return Collections.emptySet();
@@ -809,13 +884,15 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	};
 
-	public Hierarchy<OWLObject, OWLClass> getToldClassHierarchy() {
+	@Override
+    public Hierarchy<OWLObject, OWLClass> getToldClassHierarchy() {
 		return toldClassHierarchy;
 	}
 
 	private final Hierarchy<OWLObject, OWLProperty> propertyHierarchy = new Hierarchy<OWLObject, OWLProperty>() {
 
-		public Set<OWLProperty> getEquivs(OWLObject ce) {
+		@Override
+        public Set<OWLProperty> getEquivs(OWLObject ce) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(ce);
 
 			if (cex.isDataPropertyExpression()) {
@@ -838,7 +915,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			}
 		}
 
-		public Set<OWLProperty> getSubs(OWLObject superCE, boolean direct) {
+		@Override
+        public Set<OWLProperty> getSubs(OWLObject superCE, boolean direct) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);
 			// if (cex.equals(f.getOWLBottomObjectProperty())) {
 			// return Collections.singleton((OWLProperty)
@@ -908,7 +986,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			return set;
 		}
 
-		public Set<OWLProperty> getSupers(OWLObject superCE, boolean direct) {
+		@Override
+        public Set<OWLProperty> getSupers(OWLObject superCE, boolean direct) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(superCE);
 			//
 			// if (cex.equals(f.getOWLTopObjectProperty())) {
@@ -975,18 +1054,21 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			return set;
 		}
 
-		public Set<OWLProperty> getTops() {
+		@Override
+        public Set<OWLProperty> getTops() {
 			return new HashSet<OWLProperty>(Arrays.asList(
 					f.getOWLTopObjectProperty(), f.getOWLTopDataProperty()));
 		}
 
-		public Set<OWLProperty> getBottoms() {
+		@Override
+        public Set<OWLProperty> getBottoms() {
 			return new HashSet<OWLProperty>(Arrays.asList(
 					f.getOWLBottomObjectProperty(),
 					f.getOWLBottomDataProperty()));
 		}
 
-		public Set<OWLProperty> getDisjoints(OWLObject disjointG) {
+		@Override
+        public Set<OWLProperty> getDisjoints(OWLObject disjointG) {
 			final OWLPropertyExpression cex = asOWLPropertyExpression(disjointG);
 
 			if (cex.isDataPropertyExpression()) {
@@ -995,7 +1077,7 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 			} else if (cex.isObjectPropertyExpression()) {
 				final Set<OWLProperty> props = new HashSet<OWLProperty>();
 				for (final OWLObjectPropertyExpression ex : r
-						.getDisjointObjectProperties(((OWLObjectProperty) cex))
+						.getDisjointObjectProperties((OWLObjectProperty) cex)
 						.getFlattened()) {
 					if (ex.isAnonymous()) {
 						continue;
@@ -1053,11 +1135,13 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 
 	};
 
-	public Hierarchy<OWLObject, OWLProperty> getPropertyHierarchy() {
+	@Override
+    public Hierarchy<OWLObject, OWLProperty> getPropertyHierarchy() {
 		return propertyHierarchy;
 	}
 
-	public Set<OWLProperty> getFunctionalProperties() {
+	@Override
+    public Set<OWLProperty> getFunctionalProperties() {
 		final Set<OWLProperty> set = new HashSet<OWLProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1077,7 +1161,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getInverseFunctionalProperties() {
+	@Override
+    public Set<? extends OWLObject> getInverseFunctionalProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1089,7 +1174,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getIrreflexiveProperties() {
+	@Override
+    public Set<? extends OWLObject> getIrreflexiveProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1101,7 +1187,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getReflexiveProperties() {
+	@Override
+    public Set<? extends OWLObject> getReflexiveProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1113,7 +1200,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getSymmetricProperties() {
+	@Override
+    public Set<? extends OWLObject> getSymmetricProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1125,7 +1213,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<OWLObjectProperty> getAsymmetricProperties() {
+	@Override
+    public Set<OWLObjectProperty> getAsymmetricProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1137,7 +1226,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public Set<? extends OWLObject> getTransitiveProperties() {
+	@Override
+    public Set<? extends OWLObject> getTransitiveProperties() {
 		final Set<OWLObjectProperty> set = new HashSet<OWLObjectProperty>();
 
 		for (final OWLObjectProperty p : getObjectProperties()) {
@@ -1149,7 +1239,8 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		return set;
 	}
 
-	public boolean isFunctionalProperty(OWLObject Term) {
+	@Override
+    public boolean isFunctionalProperty(OWLObject Term) {
 		final OWLPropertyExpression p = asOWLPropertyExpression(Term);
 
 		if (p instanceof OWLObjectProperty) {
@@ -1163,38 +1254,45 @@ public class OWLAPIv3OWL2Ontology implements OWL2Ontology<OWLObject> {
 		}
 	}
 
-	public boolean isInverseFunctionalProperty(OWLObject Term) {
+	@Override
+    public boolean isInverseFunctionalProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLInverseFunctionalObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}
 
-	public boolean isIrreflexiveProperty(OWLObject Term) {
+	@Override
+    public boolean isIrreflexiveProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLIrreflexiveObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}
 
-	public boolean isReflexiveProperty(OWLObject Term) {
+	@Override
+    public boolean isReflexiveProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLReflexiveObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}
 
-	public boolean isSymmetricProperty(OWLObject Term) {
+	@Override
+    public boolean isSymmetricProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLSymmetricObjectPropertyAxiom(asOWLObjectProperty(Term)));
 
 	}
 
-	public boolean isAsymmetricProperty(OWLObject Term) {
+	@Override
+    public boolean isAsymmetricProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLAsymmetricObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}
 
-	public boolean isTransitiveProperty(OWLObject Term) {
+	@Override
+    public boolean isTransitiveProperty(OWLObject Term) {
 		return r.isEntailed(f
 				.getOWLTransitiveObjectPropertyAxiom(asOWLObjectProperty(Term)));
 	}
 
-	public String getDatatypeOfLiteral(OWLObject literal) {
+	@Override
+    public String getDatatypeOfLiteral(OWLObject literal) {
 		if (literal instanceof OWLLiteral) {
 			return ((OWLLiteral) literal).getDatatype().getIRI().toString();
 		} else {

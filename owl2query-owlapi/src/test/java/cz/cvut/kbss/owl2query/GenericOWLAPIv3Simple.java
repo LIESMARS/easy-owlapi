@@ -37,7 +37,7 @@ public class GenericOWLAPIv3Simple extends TestCase {
 		final OWLOntologyManager m = OWLManager.createOWLOntologyManager();
 		OWLOntology o;
 		try {
-			o = m.createOntology(IRI.create(URI.create(BASE_URI)));
+			o = m.createOntology(IRI.create(BASE_URI));
 
 			// data
 			final OWLIndividual i1 = m.getOWLDataFactory()
@@ -76,7 +76,7 @@ public class GenericOWLAPIv3Simple extends TestCase {
 		final OWLOntologyManager m = OWLManager.createOWLOntologyManager();
 		try {
 			// data
-			OWLOntology o = m.createOntology(IRI.create(URI.create(BASE_URI)));
+			OWLOntology o = m.createOntology(IRI.create(BASE_URI));
 
 			final OWLNamedIndividual i1 = m.getOWLDataFactory()
 					.getOWLNamedIndividual(IRI.create(BASE_URI + "i1"));

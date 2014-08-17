@@ -44,7 +44,7 @@ public class ABoxQueries {
         final OWLOntologyManager m = OWLManager.createOWLOntologyManager();
         OWLOntology o;
         try {
-            o = m.createOntology(IRI.create(URI.create(BASE_URI)));
+            o = m.createOntology(IRI.create(BASE_URI));
 
             final OWLIndividual i1 = m.getOWLDataFactory()
                     .getOWLNamedIndividual(IRI.create(BASE_URI + "i1"));

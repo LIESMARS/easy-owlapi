@@ -15,32 +15,6 @@
  */
 package cz.cvut.kbss.owl2query.protege;
 
-import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
-import cz.cvut.kbss.owl2query.engine.QueryGraphFactory;
-import cz.cvut.kbss.owl2query.graph.gui.QueryGraphPanel;
-import cz.cvut.kbss.owl2query.graph.gui.components.OWL2QueryResultTableModel;
-import cz.cvut.kbss.owl2query.graph.gui.components.ResultPanel;
-import cz.cvut.kbss.owl2query.graph.gui.components.StatusHandler;
-import cz.cvut.kbss.owl2query.graph.gui.jgraph.SDLJGraph;
-import cz.cvut.kbss.owl2query.graph.model.GroundTerm;
-import cz.cvut.kbss.owl2query.graph.model.IQueryGraph;
-import cz.cvut.kbss.owl2query.graph.model.QueryGraph;
-import cz.cvut.kbss.owl2query.graph.model.QueryGraphToOWL2QueryConverter;
-import cz.cvut.kbss.owl2query.graph.model.QuerySymbolDomain;
-import cz.cvut.kbss.owl2query.graph.model.SymbolDomain;
-import cz.cvut.kbss.owl2query.graph.model.Term;
-import cz.cvut.kbss.owl2query.graph.resources.ResourceLoader;
-import cz.cvut.kbss.owl2query.graph.util.GUIUtil;
-import cz.cvut.kbss.owl2query.graph.util.SDLSystem;
-import cz.cvut.kbss.owl2query.graph.util.TermSelection;
-import cz.cvut.kbss.owl2query.model.OWL2Ontology;
-import cz.cvut.kbss.owl2query.model.OWL2Query;
-import cz.cvut.kbss.owl2query.model.QueryResult;
-import cz.cvut.kbss.owl2query.model.ResultBinding;
-import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
-import cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser;
-import cz.cvut.kbss.owl2query.parser.arq.SparqlARQWriter;
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -85,6 +59,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -105,17 +80,43 @@ import org.protege.editor.owl.model.selection.OWLSelectionModelListener;
 import org.protege.editor.owl.ui.clsdescriptioneditor.ExpressionEditor;
 import org.protege.editor.owl.ui.clsdescriptioneditor.OWLExpressionChecker;
 import org.protege.editor.owl.ui.view.AbstractActiveOntologyViewComponent;
+import org.semanticweb.owlapi.formats.PrefixDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
-import org.semanticweb.owlapi.model.OWLOntologyFormat;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.vocab.PrefixOWLOntologyFormat;
+
+import cz.cvut.kbss.owl2query.engine.OWL2QueryEngine;
+import cz.cvut.kbss.owl2query.engine.QueryGraphFactory;
+import cz.cvut.kbss.owl2query.graph.gui.QueryGraphPanel;
+import cz.cvut.kbss.owl2query.graph.gui.components.OWL2QueryResultTableModel;
+import cz.cvut.kbss.owl2query.graph.gui.components.ResultPanel;
+import cz.cvut.kbss.owl2query.graph.gui.components.StatusHandler;
+import cz.cvut.kbss.owl2query.graph.gui.jgraph.SDLJGraph;
+import cz.cvut.kbss.owl2query.graph.model.GroundTerm;
+import cz.cvut.kbss.owl2query.graph.model.IQueryGraph;
+import cz.cvut.kbss.owl2query.graph.model.QueryGraph;
+import cz.cvut.kbss.owl2query.graph.model.QueryGraphToOWL2QueryConverter;
+import cz.cvut.kbss.owl2query.graph.model.QuerySymbolDomain;
+import cz.cvut.kbss.owl2query.graph.model.SymbolDomain;
+import cz.cvut.kbss.owl2query.graph.model.Term;
+import cz.cvut.kbss.owl2query.graph.resources.ResourceLoader;
+import cz.cvut.kbss.owl2query.graph.util.GUIUtil;
+import cz.cvut.kbss.owl2query.graph.util.SDLSystem;
+import cz.cvut.kbss.owl2query.graph.util.TermSelection;
+import cz.cvut.kbss.owl2query.model.OWL2Ontology;
+import cz.cvut.kbss.owl2query.model.OWL2Query;
+import cz.cvut.kbss.owl2query.model.QueryResult;
+import cz.cvut.kbss.owl2query.model.ResultBinding;
+import cz.cvut.kbss.owl2query.model.owlapi.OWLAPIv3OWL2Ontology;
+import cz.cvut.kbss.owl2query.parser.arq.SparqlARQParser;
+import cz.cvut.kbss.owl2query.parser.arq.SparqlARQWriter;
 
 /**
  * @author kostob1
@@ -167,13 +168,15 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 	private OWL2QueryRulesPanel pnlQueryRules;
 	// protected Object mutex = new Object();
 
-	protected void initialiseOntologyView() throws Exception {
+	@Override
+    protected void initialiseOntologyView() throws Exception {
 		sys = new SDLSystem<OWL2Ontology>(new QuerySymbolDomain());
 		owl2Ontology = createOWLOntology();
 		setCurrentFile(null);
 		initComponents();
 		modelListener = new OWLModelManagerListener() {
-			public void handleChange(OWLModelManagerChangeEvent event) {
+			@Override
+            public void handleChange(OWLModelManagerChangeEvent event) {
 				switch (event.getType()) {
 				case ONTOLOGY_LOADED:
 				case ONTOLOGY_RELOADED:
@@ -200,7 +203,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 		};
 		getOWLModelManager().addListener(modelListener);
 		ontologyChangeListener = new OWLOntologyChangeListener() {
-			public void ontologiesChanged(List<? extends OWLOntologyChange> arg0)
+			@Override
+            public void ontologiesChanged(List<? extends OWLOntologyChange> arg0)
 					throws OWLException {
 				owl2Ontology = createOWLOntology();
 				sys.updateDomain(owl2Ontology);
@@ -213,7 +217,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 
 		final TermSelection.SelectionPartner partner = new TermSelection.StringSelectionPartner(
 				sys.getSelection()) {
-			public void selectionChanged(Object[] sel) {
+			@Override
+            public void selectionChanged(Object[] sel) {
 
 				for (Object obj : sel) {
 					if (obj instanceof GroundTerm) {
@@ -221,7 +226,7 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 								.getOWLSelectionModel();
 						OWLDataFactory factory = getOWLDataFactory();
 						SymbolDomain domain = sys.getDomain();
-						Object wrappedobj = (GroundTerm) obj;
+						Object wrappedobj = obj;
 						IRI iri = IRI.create(wrappedobj.toString());
 						if (domain.isClass(wrappedobj)) {
 							model.setSelectedObject(factory.getOWLClass(iri));
@@ -293,7 +298,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 		};
 
 		selectionListener = new OWLSelectionModelListener() {
-			public void selectionChanged() throws Exception {
+			@Override
+            public void selectionChanged() throws Exception {
 				if (!partner.isAdjusting()) {
 					List l = new ArrayList(4);
 					OWLSelectionModel model = getOWLWorkspace()
@@ -361,9 +367,9 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 		List<OWLOntology> ontologies = new ArrayList<OWLOntology>(
 				modelManager.getActiveOntologies());
 		for (OWLOntology ontology : ontologies) {
-			OWLOntologyFormat format = owlManager.getOntologyFormat(ontology);
-			if (format instanceof PrefixOWLOntologyFormat) {
-				PrefixOWLOntologyFormat newPrefixes = (PrefixOWLOntologyFormat) format;
+            OWLDocumentFormat format = owlManager.getOntologyFormat(ontology);
+            if (format instanceof PrefixDocumentFormat) {
+                PrefixDocumentFormat newPrefixes = (PrefixDocumentFormat) format;
 				for (Map.Entry<String, String> entry : newPrefixes
 						.getPrefixName2PrefixMap().entrySet()) {
 					String prefixName = entry.getKey();
@@ -384,7 +390,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 	// e.getValue() + ")");
 	// }
 	// }
-	protected void disposeOntologyView() {
+	@Override
+    protected void disposeOntologyView() {
 		getOWLModelManager().removeListener(modelListener);
 		getOWLModelManager().removeOntologyChangeListener(
 				ontologyChangeListener);
@@ -498,11 +505,13 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 		txpQuery = new ExpressionEditor<OWL2Query<OWLObject>>(getOWLWorkspace()
 				.getOWLEditorKit(),
 				new OWLExpressionChecker<OWL2Query<OWLObject>>() {
-					public void check(String arg0)
+					@Override
+                    public void check(String arg0)
 							throws OWLExpressionParserException {
 					}
 
-					public OWL2Query<OWLObject> createObject(String arg0)
+					@Override
+                    public OWL2Query<OWLObject> createObject(String arg0)
 							throws OWLExpressionParserException {
 						return null;
 					}
@@ -640,7 +649,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 
 	private void handleNewGraph() {
 		graph.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
+			@Override
+            public void stateChanged(ChangeEvent e) {
 				pnlResult.setValidResults(false);
 				txaSparqlDL.setText(QueryGraphToOWL2QueryConverter
 						.convertQueryGraph(graph, domain).toString());
@@ -741,9 +751,9 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 
 		final JScrollPane scpSPARQLDL = new JScrollPane(txaSparqlDL);
 		scpSPARQLDL
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scpSPARQLDL
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		txaSparqlDL.setToolTipText(ResourceLoader.getResource(
 				"sparqldltxt_tooltip", this));
 		// scpSPARQLDL.getViewport().setPreferredSize(d);
@@ -751,7 +761,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 		pnlMain.add(scpSPARQLDL, BorderLayout.SOUTH);
 
 		ActionListener al = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
 				try {
 					if (rbtGraph.isSelected()) {
 						setQuery(true, txpQuery.getText());
@@ -883,7 +894,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 		btnRunQuery.setEnabled(!isNullReasoner());
 		// final JTable tblResults = new JTable();
 		btnRunQuery.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			@Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
 				final OWL2Query<OWLObject> query;
 				// owl2Ontology = createOWLOntology();
 				boolean isRunning = true;
@@ -911,7 +923,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 				// currentQueryExecutionThread =
 
 				s.submit(new Runnable() {
-					public void run() {
+					@Override
+                    public void run() {
 
 						// synchronized (mutex) {
 						try {
@@ -934,7 +947,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 							// +")");
 							if (this == currentQueryExecutionThread) {
 								SwingUtilities.invokeLater(new Runnable() {
-									public void run() {
+									@Override
+                                    public void run() {
 										pnlResult
 												.setResult(new OWL2QueryResultTableModel(
 														r));
@@ -987,7 +1001,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 
 		Action demoAction = new AbstractAction(null, new ImageIcon(getClass()
 				.getResource("icons/sample.png"))) {
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
 				if (queryChanged) {
 					if (!promptToSaveAQuery()) {
 						return;// the user has canceled the action
@@ -1004,7 +1019,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 
 		Action newAction = new AbstractAction(null, new ImageIcon(getClass()
 				.getResource("icons/new.png"))) {
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
 				if (queryChanged) {
 					if (!promptToSaveAQuery()) {
 						return;// the user has canceled the action
@@ -1029,7 +1045,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 
 		Action openAction = new AbstractAction(null, new ImageIcon(getClass()
 				.getResource("icons/open.png"))) {
-			public void actionPerformed(ActionEvent e) {
+			@Override
+            public void actionPerformed(ActionEvent e) {
 				try {
 
 					// if (currentFile != null) {
@@ -1089,7 +1106,8 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 				this.force = force;
 			}
 
-			public void actionPerformed(final ActionEvent e) {
+			@Override
+            public void actionPerformed(final ActionEvent e) {
 				if (force || currentFile == null) {
 					final JFileChooser fc = getFileChooser();
 					fc.setVisible(true);
@@ -1142,7 +1160,7 @@ public class OWL2QueryView extends AbstractActiveOntologyViewComponent {
 				sppResults);
 		sppPrefix.setDividerLocation(0.2);
 		sppPrefix.setOneTouchExpandable(true);
-		this.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		this.add(pnlToolbars, BorderLayout.PAGE_START);
 		this.add(sppPrefix, BorderLayout.CENTER);
 		StatusHandler.DefaultStatusHandler sh = new StatusHandler.DefaultStatusHandler();

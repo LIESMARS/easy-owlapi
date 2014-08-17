@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>owl2query-parent</artifactId>
 		<groupId>cz.cvut.kbss</groupId>
-		<version>0.3.1</version>
+		<version>0.3.2-SNAPSHOT</version>
         <relativePath>../owl2query-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>owl2query-api</artifactId>
@@ -17,8 +17,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-	                <source>1.6</source>
-					<target>1.6</target>
+	                <source>1.7</source>
+					<target>1.7</target>
         			<encoding>UTF-8</encoding>
                 </configuration>
             </plugin>

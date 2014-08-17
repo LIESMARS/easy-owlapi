@@ -19,7 +19,7 @@
     <artifactId>owl2query-parent</artifactId>
     <packaging>pom</packaging>
     <name>OWL2Query Parent POM</name>
-    <version>0.3.1</version>
+    <version>0.3.2-SNAPSHOT</version>
     <scm>
         <connection>scm:svn:http://krizik.felk.cvut.cz/km/owl2query/owl2query/trunk</connection>
         <url>http://krizik.felk.cvut.cz/km/owl2query</url>

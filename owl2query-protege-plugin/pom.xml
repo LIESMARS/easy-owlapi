@@ -5,7 +5,7 @@
     <parent>
         <artifactId>owl2query-parent</artifactId>
         <groupId>cz.cvut.kbss</groupId>
-        <version>0.3.1</version>
+        <version>0.3.2-SNAPSHOT</version>
         <relativePath>../owl2query-parent/pom.xml</relativePath>
     </parent>
 
@@ -47,8 +47,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protege.version>4.3.0</protege.version>
-        <slf4j.version>1.7.5</slf4j.version>
+        <protege.version>5.0.0-beta-16-SNAPSHOT</protege.version>
+        <slf4j.version>1.7.7</slf4j.version>
         <!--<manifest.template>${project.basedir}/META-INF/TEMPLATE_MANIFEST.MF</manifest.template>-->
         <!--<manifest.generated>META-INF/MANIFEST.MF</manifest.generated>-->
         <!--<properties.tmp>${project.build.directory}/properties.tmp</properties.tmp>-->
@@ -132,8 +132,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
