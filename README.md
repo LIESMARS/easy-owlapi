@@ -1,7 +1,7 @@
 Description
 =======
 
-original at https://krizik.felk.cvut.cz/km/owl2query
+Original at [OWL2Query](https://krizik.felk.cvut.cz/km/owl2query).
 
 Usage
 =======
