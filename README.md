@@ -32,8 +32,8 @@ Set<String> result = instance.readPropertyValueOfInstance(pvIri, ilIri);
 Set object value for instance:
 
 ```
-String iri         = "Building_One";    /* instance */
-String key         = "Own";             /* property */
-String val         = "A214";            /* another instance */
-boolean result     = instance.addObjectValueForInstance(iri, key, val);
+String iri     = "Building_One";      /* instance */
+String key     = "Own";               /* property */
+String val     = "A214";              /* another instance */
+boolean result = instance.addObjectValueForInstance(iri, key, val);
 ```
