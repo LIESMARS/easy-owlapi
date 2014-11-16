@@ -4,6 +4,8 @@ import cz.cvut.kbss.owl2query.model.OWLObjectType;
 import java.util.HashSet;
 import org.owlapi.impl.OWLAPIOntology;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLProperty;
@@ -23,9 +25,14 @@ public class OWL implements OWLIface {
     private Set<String> asStringSet(Set<? extends OWLObject> e) {
         Set<String> set = new HashSet();
         for (OWLObject next : e) {
-            String n = next.toString();
+            String n = String.valueOf(next);
+            Matcher m = Pattern
+                .compile("\"(.*?)\"")
+                .matcher(n);
             if(next.equals(o.getFactory().getNothing()))
                 continue;
+            else if(m.find())
+                n = m.group(1);
             set.add(n);
         }
         return set;
