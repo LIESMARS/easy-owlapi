@@ -1,0 +1,2484 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/gym/ontologies/2014/9/untitled-ontology-2"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www.semanticweb.org/gym/ontologies/2014/9/untitled-ontology-2">
+    <Prefix name="" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <DataProperty IRI="#PointOfInterest"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#condition"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#PassageID"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#name"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Stairway"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Doorway"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ramp"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Style"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#OwnerInformation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Chair"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#obstacleType"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#OpeningId"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Reserch_dir"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#addr_country"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PointOfInterest"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#facadeMaterial"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Has"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Object"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Contains"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#centroidLongitude"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Material"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#direction"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#functions"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Is_a"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#description"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#buildingDate"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Box3D"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Area"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#obstacleId"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#PoiId"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Radiator"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Type"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Exit"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#windowId"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#StairwayId"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#FurnitureId"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#BuildingPart"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#VerticalPassage"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Portal"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#height"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#centroidLatitude"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#StairwayType"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#ObjID_2d"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#addr_street"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#levelNo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#FurnitureType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ExitEntrance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Chimney"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Elevator"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Roof"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#addr_housenumber"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Lobby"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BuildingPart"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#VerticalPassage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#facadeColor"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#width"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#PoiType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ground"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#roofMaterial"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Storey"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Teacher"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Geometry3D"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Opening"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Room"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Entrance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pillar"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Barrier"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#OfficeDeskID"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#C207"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#meetingroom"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Window"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Bookcase"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#People"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#People"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Wall"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Passage"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Parition"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#doorType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BoudarySurface"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#numberOfLevels"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ControlDevice"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#CompuerRoom"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Balcony"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Storey"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Teacher"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Opening"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#objectLocationCol"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Room"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EscapeLadder"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Barrier"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#computerroom"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#BuildingInstallation"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Student"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Corridor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Window"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Table"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Architect"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Obstacle"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Taught"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Name"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Passage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#breast"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Box2D"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ConstructionWork"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#BuildingInfo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Age"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#centroidAltitude"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#functionroom"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Position"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Surface"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Owner"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BuildingInstallation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Student"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#InstallationID"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Office"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#StaffPosition"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Color"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Usage"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Rafter"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Lamp"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pipe"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#OfficeDesk"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Grade"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BuildingFurniture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ceiling"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#heights"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#url"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#toilet"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#laboratory"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#levelRasterMap"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ClosureSurface"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#HJ"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Objectimoortance"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#OpeningWidth"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OPQ"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Building"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Degree"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#ObjID_3d"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Container"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#connectrelation"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Mr.Su"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#usage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#OpeningHeight"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Sex"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#level"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OfficeDesk"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Geometry2D"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#objectId"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#objectType"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#windowType"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#PassageType"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#roofShape"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hole"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Doorway"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#buildingNo"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Building"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#roofColor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Escalator"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#addr_city"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#maxLevel"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#doorId"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Sofa"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#BoundarySurface"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#objectLocationRow"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Test"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Office"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#navigateMapFile"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#glass"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#minLevel"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Manage"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MovingWalkway"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#owner"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Area"/>
+        <Class IRI="#PointOfInterest"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Balcony"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Barrier"/>
+        <Class IRI="#Obstacle"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Bookcase"/>
+        <Class IRI="#BuildingFurniture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BoudarySurface"/>
+        <Class IRI="#Surface"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BoudarySurface"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Has"/>
+            <Class IRI="#Opening"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Building"/>
+        <Class IRI="#Container"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Building"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Has"/>
+            <Class IRI="#BoudarySurface"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Building"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Has"/>
+            <Class IRI="#Storey"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BuildingPart"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Has"/>
+            <Class IRI="#BoudarySurface"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BuildingPart"/>
+        <ObjectMaxCardinality cardinality="1">
+            <ObjectProperty IRI="#Contains"/>
+            <Class IRI="#BuildingFurniture"/>
+        </ObjectMaxCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BuildingPart"/>
+        <ObjectMaxCardinality cardinality="1">
+            <ObjectProperty IRI="#Contains"/>
+            <Class IRI="#BuildingInstallation"/>
+        </ObjectMaxCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BuildingPart"/>
+        <ObjectMaxCardinality cardinality="1">
+            <ObjectProperty IRI="#Contains"/>
+            <Class IRI="#PointOfInterest"/>
+        </ObjectMaxCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ceiling"/>
+        <Class IRI="#BoudarySurface"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Chair"/>
+        <Class IRI="#BuildingFurniture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Chimney"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ClosureSurface"/>
+        <Class IRI="#Barrier"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ClosureSurface"/>
+        <Class IRI="#BoudarySurface"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ConstructionWork"/>
+        <Class IRI="#Obstacle"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Corridor"/>
+        <Class IRI="#Passage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Doorway"/>
+        <Class IRI="#Barrier"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Doorway"/>
+        <Class IRI="#Opening"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Elevator"/>
+        <Class IRI="#VerticalPassage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Entrance"/>
+        <Class IRI="#Doorway"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Escalator"/>
+        <Class IRI="#VerticalPassage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EscapeLadder"/>
+        <Class IRI="#VerticalPassage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Exit"/>
+        <Class IRI="#Doorway"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ExitEntrance"/>
+        <Class IRI="#Doorway"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ground"/>
+        <Class IRI="#BoudarySurface"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Lamp"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Lobby"/>
+        <Class IRI="#Passage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#MovingWalkway"/>
+        <Class IRI="#Passage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Object"/>
+        <Class IRI="#PointOfInterest"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Office"/>
+        <Class IRI="#Room"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Office"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Owner"/>
+            <Class IRI="#Teacher"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#OfficeDesk"/>
+        <Class IRI="#BuildingFurniture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#OfficeDesk"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Owner"/>
+            <Class IRI="#Student"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Opening"/>
+        <Class IRI="#Portal"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Parition"/>
+        <Class IRI="#BuildingPart"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Passage"/>
+        <Class IRI="#BuildingPart"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Passage"/>
+        <Class IRI="#Container"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pillar"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pipe"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Radiator"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Rafter"/>
+        <Class IRI="#BuildingInstallation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ramp"/>
+        <Class IRI="#Passage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Roof"/>
+        <Class IRI="#BoudarySurface"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Room"/>
+        <Class IRI="#BuildingPart"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Room"/>
+        <Class IRI="#Container"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sofa"/>
+        <Class IRI="#BuildingFurniture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Stairway"/>
+        <Class IRI="#VerticalPassage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Storey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Has"/>
+            <Class IRI="#BoudarySurface"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Storey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Has"/>
+            <Class IRI="#BuildingPart"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Student"/>
+        <Class IRI="#People"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Student"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Taught"/>
+            <Class IRI="#Teacher"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Table"/>
+        <Class IRI="#BuildingFurniture"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Teacher"/>
+        <Class IRI="#People"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Teacher"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Manage"/>
+            <Class IRI="#Student"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Teacher"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Manage"/>
+            <Class IRI="#Teacher"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#VerticalPassage"/>
+        <Class IRI="#Passage"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Wall"/>
+        <Class IRI="#Barrier"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Wall"/>
+        <Class IRI="#BoudarySurface"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Window"/>
+        <Class IRI="#Barrier"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Window"/>
+        <Class IRI="#Opening"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#computerroom"/>
+        <Class IRI="#Room"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#computerroom"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Contains"/>
+            <Class IRI="#OfficeDesk"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#functionroom"/>
+        <Class IRI="#Room"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#laboratory"/>
+        <Class IRI="#Room"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#meetingroom"/>
+        <Class IRI="#Room"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#toilet"/>
+        <Class IRI="#Room"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#Is_a"/>
+            <Class IRI="#computerroom"/>
+        </ObjectSomeValuesFrom>
+        <NamedIndividual IRI="#C207"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Student"/>
+        <NamedIndividual IRI="#HJ"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Teacher"/>
+        <NamedIndividual IRI="#Mr.Su"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Student"/>
+        <NamedIndividual IRI="#Test"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#Contains"/>
+        <NamedIndividual IRI="#C207"/>
+        <NamedIndividual IRI="#HJ"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#Contains"/>
+        <NamedIndividual IRI="#C207"/>
+        <NamedIndividual IRI="#Mr.Su"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#Taught"/>
+        <NamedIndividual IRI="#HJ"/>
+        <NamedIndividual IRI="#Mr.Su"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#Owner"/>
+        <NamedIndividual IRI="#Mr.Su"/>
+        <NamedIndividual IRI="#C207"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#Has"/>
+        <NamedIndividual IRI="#Test"/>
+        <NamedIndividual IRI="#HJ"/>
+    </ObjectPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#levelNo"/>
+        <NamedIndividual IRI="#C207"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">2</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Age"/>
+        <NamedIndividual IRI="#HJ"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">24</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Age"/>
+        <NamedIndividual IRI="#Mr.Su"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">35</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Sex"/>
+        <NamedIndividual IRI="#Mr.Su"/>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">男</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Name"/>
+        <NamedIndividual IRI="#Test"/>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">ucansay</Literal>
+    </DataPropertyAssertion>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="#Is_a"/>
+    </TransitiveObjectProperty>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Age"/>
+        <DataProperty IRI="#People"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Age"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Age"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Architect"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#BoundarySurface"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box2D"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box2D"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box2D"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box2D"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box2D"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box3D"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box3D"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box3D"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box3D"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Box3D"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#BuildingInfo"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Color"/>
+        <DataProperty IRI="#BoundarySurface"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#CompuerRoom"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#CompuerRoom"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Degree"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#FurnitureId"/>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#FurnitureType"/>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry2D"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry2D"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry2D"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry2D"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry2D"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry3D"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry3D"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry3D"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry3D"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Geometry3D"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Grade"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#InstallationID"/>
+        <DataProperty IRI="#BuildingInstallation"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Material"/>
+        <DataProperty IRI="#BoundarySurface"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Name"/>
+        <DataProperty IRI="#People"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Name"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Name"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_2d"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_2d"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_2d"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_2d"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_2d"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_3d"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_3d"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_3d"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_3d"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#ObjID_3d"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Objectimoortance"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Objectimoortance"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Objectimoortance"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Objectimoortance"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Objectimoortance"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Office"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Office"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OfficeDeskID"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OpeningHeight"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OpeningId"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OpeningWidth"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OwnerInformation"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OwnerInformation"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OwnerInformation"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#OwnerInformation"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#PassageID"/>
+        <DataProperty IRI="#Passage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#PassageType"/>
+        <DataProperty IRI="#Passage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#PoiId"/>
+        <DataProperty IRI="#PointOfInterest"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#PoiType"/>
+        <DataProperty IRI="#PointOfInterest"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Position"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Position"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Position"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Position"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Reserch_dir"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Sex"/>
+        <DataProperty IRI="#People"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Sex"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Sex"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#StaffPosition"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#StairwayId"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#StairwayType"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Style"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Teacher"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Teacher"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Type"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Usage"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Usage"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Usage"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#Usage"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#addr_city"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#addr_country"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#addr_housenumber"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#addr_street"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#breast"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingDate"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Barrier"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#BuildingInstallation"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Passage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#PointOfInterest"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Storey"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#buildingNo"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#centroidAltitude"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#centroidLatitude"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#centroidLongitude"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#condition"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#connectrelation"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#description"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#direction"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#direction"/>
+        <DataProperty IRI="#Passage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#direction"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#doorId"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#doorType"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#facadeColor"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#facadeMaterial"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#functions"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#glass"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#height"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#height"/>
+        <DataProperty IRI="#Storey"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#height"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#heights"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#hole"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#level"/>
+        <DataProperty IRI="#Storey"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Barrier"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#BuildingInstallation"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Passage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#PointOfInterest"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Student"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelNo"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#levelRasterMap"/>
+        <DataProperty IRI="#Storey"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#maxLevel"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#minLevel"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#name"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#name"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#name"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#name"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#name"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#name"/>
+        <DataProperty IRI="#Storey"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#navigateMapFile"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#numberOfLevels"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectId"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#Barrier"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#BuildingInstallation"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#PointOfInterest"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationCol"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#Barrier"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#BuildingFurniture"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#BuildingInstallation"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#CompuerRoom"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#Office"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#OfficeDesk"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#Opening"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#PointOfInterest"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#Room"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#VerticalPassage"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectLocationRow"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#objectType"/>
+        <DataProperty IRI="#BuildingPart"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#obstacleId"/>
+        <DataProperty IRI="#Barrier"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#obstacleType"/>
+        <DataProperty IRI="#Barrier"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#owner"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#roofColor"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#roofMaterial"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#roofShape"/>
+        <DataProperty IRI="#Building"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#url"/>
+        <DataProperty IRI="#Teacher"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#usage"/>
+        <DataProperty IRI="#Storey"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#width"/>
+        <DataProperty IRI="#Doorway"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#width"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#windowId"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#windowType"/>
+        <DataProperty IRI="#Window"/>
+    </SubDataPropertyOf>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Age"/>
+        <Class IRI="#People"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Age"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Age"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Architect"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box2D"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box2D"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box2D"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box2D"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box2D"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box3D"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box3D"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box3D"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box3D"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Box3D"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#BuildingInfo"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Color"/>
+        <Class IRI="#BoudarySurface"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#CompuerRoom"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Degree"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#FurnitureId"/>
+        <Class IRI="#BuildingFurniture"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#FurnitureType"/>
+        <Class IRI="#BuildingFurniture"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry2D"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry2D"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry2D"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry2D"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry2D"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry3D"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry3D"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry3D"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry3D"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Geometry3D"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Grade"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#InstallationID"/>
+        <Class IRI="#BuildingInstallation"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Material"/>
+        <Class IRI="#BoudarySurface"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Name"/>
+        <Class IRI="#People"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Name"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Name"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_2d"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_2d"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_2d"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_2d"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_2d"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_3d"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_3d"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_3d"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_3d"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ObjID_3d"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Objectimoortance"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Objectimoortance"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Objectimoortance"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Objectimoortance"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Objectimoortance"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Office"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OfficeDeskID"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OpeningHeight"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OpeningId"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OpeningWidth"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OwnerInformation"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OwnerInformation"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OwnerInformation"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#OwnerInformation"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#PassageID"/>
+        <Class IRI="#Passage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#PassageType"/>
+        <Class IRI="#Passage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#PoiId"/>
+        <Class IRI="#PointOfInterest"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#PoiType"/>
+        <Class IRI="#PointOfInterest"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Position"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Position"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Position"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Position"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Reserch_dir"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Sex"/>
+        <Class IRI="#People"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Sex"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Sex"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#StaffPosition"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#StairwayId"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#StairwayType"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Style"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Type"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Usage"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Usage"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Usage"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Usage"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#addr_city"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#addr_country"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#addr_housenumber"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#addr_street"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#breast"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingDate"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Barrier"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#BuildingFurniture"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#BuildingInstallation"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Passage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#PointOfInterest"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Storey"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#buildingNo"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#centroidAltitude"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#centroidLatitude"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#centroidLongitude"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#condition"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#connectrelation"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#description"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#direction"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#direction"/>
+        <Class IRI="#Passage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#direction"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#doorId"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#doorType"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#facadeColor"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#facadeMaterial"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#functions"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#glass"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#height"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#height"/>
+        <Class IRI="#Storey"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#height"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#heights"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#hole"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#level"/>
+        <Class IRI="#Storey"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Barrier"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#BuildingFurniture"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#BuildingInstallation"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Passage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#PointOfInterest"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Student"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelNo"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#levelRasterMap"/>
+        <Class IRI="#Storey"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#maxLevel"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#minLevel"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#name"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#name"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#name"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#name"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#name"/>
+        <Class IRI="#Storey"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#name"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#navigateMapFile"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#numberOfLevels"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectId"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#Barrier"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#BuildingFurniture"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#BuildingInstallation"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#PointOfInterest"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationCol"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#Barrier"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#BuildingFurniture"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#BuildingInstallation"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#Office"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#OfficeDesk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#Opening"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#PointOfInterest"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#Room"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#VerticalPassage"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectLocationRow"/>
+        <Class IRI="#computerroom"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#objectType"/>
+        <Class IRI="#BuildingPart"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#obstacleId"/>
+        <Class IRI="#Barrier"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#obstacleType"/>
+        <Class IRI="#Barrier"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#owner"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#roofColor"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#roofMaterial"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#roofShape"/>
+        <Class IRI="#Building"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#url"/>
+        <Class IRI="#Teacher"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#usage"/>
+        <Class IRI="#Storey"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#width"/>
+        <Class IRI="#Doorway"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#width"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#windowId"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#windowType"/>
+        <Class IRI="#Window"/>
+    </DataPropertyDomain>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.0.0-RC2) http://owlapi.sourceforge.net -->
+

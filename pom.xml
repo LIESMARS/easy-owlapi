@@ -13,10 +13,9 @@
 
     <modules>
         <module>owl2query-parent</module>
-        <module>owl2query-api</module>
-        <module>owl2query-engine</module>
         <module>owl2query-owlapi</module>
-        <module>owl2query-protege-plugin</module>
+        <module>owl2query-engine</module>
+        <module>owl2query-api</module>
     </modules>
    
     <distributionManagement>
