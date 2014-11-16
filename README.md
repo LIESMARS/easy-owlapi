@@ -1,7 +1,7 @@
 Description
 =======
 
-Much easier user interface to use to edit OWL file.
+original at https://krizik.felk.cvut.cz/km/owl2query
 
 Usage
 =======
