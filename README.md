@@ -6,35 +6,34 @@ Much easier user interface to use to edit OWL file.
 Usage
 =======
 
-import:
+Import:
 
 ```
 import org.owlapi.OWL;
 ```
 
-reading sample:
+
+Create:
 
 ```
-public void ReadPropertyValueOfInstance() {
-        System.out.println("read property value of instance...");
-        String pvIri = "Name";           /* property */
-        String ilIri = "Building";       /* instance */
-        OWL instance = new OWL(owlFilePath);
-        Set<String> result = instance.readPropertyValueOfInstance(pvIri, ilIri);
-        System.out.println(String.valueOf(result));
-    }
+OWL instance = new OWL(owlFilePath);
 ```
 
-writing sample:
+
+Read property value of instance:
 
 ```
-public void AddObjectValueForInstance() {
-        System.out.println("set object value for instance");
-        String iri = "Building_One";         /* instance */
-        String key = "Own";                  /* property */
-        String val = "A214";                 /* another instance */
-        OWL instance = new OWL(owlFilePath);
-        boolean result = instance.addObjectValueForInstance(iri, key, val);
-        System.out.println(String.valueOf(result));
-    }
+String pvIri = "Name";           /* property */
+String ilIri = "Building";       /* instance */
+Set<String> result = instance.readPropertyValueOfInstance(pvIri, ilIri);
+```
+
+
+Set object value for instance:
+
+```
+String iri = "Building_One";         /* instance */
+String key = "Own";                  /* property */
+String val = "A214";                 /* another instance */
+boolean result = instance.addObjectValueForInstance(iri, key, val);
 ```
