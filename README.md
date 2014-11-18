@@ -22,7 +22,9 @@ OWL instance = new OWL(owlFilePath);
 ```
 
 
-4.1 Read property value of instance:
+4 Samples:
+
+a) Read property value of instance:
 
 ```
 String pvIri       = "Name";           /* property */
@@ -31,7 +33,7 @@ Set<String> result = instance.readPropertyValueOfInstance(pvIri, ilIri);
 ```
 
 
-4.2 Set object value for instance:
+b) Set object value for instance:
 
 ```
 String iri     = "Building_One";      /* instance */
@@ -39,3 +41,5 @@ String key     = "Own";               /* property */
 String val     = "A214";              /* another instance */
 boolean result = instance.addObjectValueForInstance(iri, key, val);
 ```
+
+c) [Etc.](https://github.com/goshx/easy-owlapi/blob/master/owl2query-owlapi/src/main/java/org/owlapi/OWLIface.java)
