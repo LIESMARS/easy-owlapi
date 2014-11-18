@@ -3,24 +3,26 @@ Description
 
 Original at [OWL2Query](https://krizik.felk.cvut.cz/km/owl2query).
 
-Usage
+Quick Start
 =======
 
-Import:
+1. Compile or download zip: [Binary Release](https://github.com/goshx/easy-owlapi/releases/tag/jars)
+
+2. Import:
 
 ```
 import org.owlapi.OWL;
 ```
 
 
-Create:
+3. Create:
 
 ```
 OWL instance = new OWL(owlFilePath);
 ```
 
 
-Read property value of instance:
+4. 1 Read property value of instance:
 
 ```
 String pvIri       = "Name";           /* property */
@@ -29,7 +31,7 @@ Set<String> result = instance.readPropertyValueOfInstance(pvIri, ilIri);
 ```
 
 
-Set object value for instance:
+4. 2 Set object value for instance:
 
 ```
 String iri     = "Building_One";      /* instance */
