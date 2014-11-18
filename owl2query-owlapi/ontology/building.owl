@@ -50,9 +50,6 @@
         <DataProperty IRI="#MaxLevel"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#SmallRoom"/>
-    </Declaration>
-    <Declaration>
         <NamedIndividual IRI="#327"/>
     </Declaration>
     <Declaration>
@@ -422,6 +419,9 @@
         <Class IRI="#Sofa"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#SomeWhat"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Bookcase"/>
     </Declaration>
     <Declaration>
@@ -595,10 +595,6 @@
     <SubClassOf>
         <Class IRI="#Room"/>
         <Class IRI="#Container"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#SmallRoom"/>
-        <Class IRI="#Room"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Sofa"/>
@@ -1514,6 +1510,10 @@
         <NamedIndividual IRI="#327"/>
         <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">机房</Literal>
     </DataPropertyAssertion>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#SomeWhat"/>
+        <ObjectProperty IRI="#Own"/>
+    </SubObjectPropertyOf>
     <InverseObjectProperties>
         <ObjectProperty IRI="#Teach"/>
         <ObjectProperty IRI="#BeTaught"/>
