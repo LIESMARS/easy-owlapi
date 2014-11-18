@@ -8,6 +8,7 @@ Quick Start
 
 1 Compile or download zip: [Binary Release](https://github.com/goshx/easy-owlapi/releases/tag/jars)
 
+
 2 Import:
 
 ```
@@ -23,6 +24,7 @@ OWL instance = new OWL(owlFilePath);
 
 
 4 Samples:
+
 
   a) Read property value of instance:
 
@@ -41,5 +43,6 @@ String key     = "Own";               /* property */
 String val     = "A214";              /* another instance */
 boolean result = instance.addObjectValueForInstance(iri, key, val);
 ```
+
 
   c) [etc.](https://github.com/goshx/easy-owlapi/blob/master/owl2query-owlapi/src/main/java/org/owlapi/OWLIface.java)
