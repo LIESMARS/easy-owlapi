@@ -391,7 +391,6 @@ public class OWLTest extends TestCase {
         Set<String> result = instance.readPropertyValueOfInstance(pvIri, ilIri);
         assertNotNull(result);
         System.out.println(String.valueOf(result));
-        fail(String.valueOf(result.toArray()[0]));
     }
 	
     ///////////////////////////////////////////////////////////////////////
