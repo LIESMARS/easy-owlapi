@@ -23,7 +23,7 @@ OWL instance = new OWL(owlFilePath);
 ```
 
 
-4 Samples:
+4 Usage:
 
 
   a) Read property value of instance:
